@@ -25,8 +25,14 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      style={{
+        padding: '0.5rem',
+        borderRadius: '9999px',
+        backgroundColor: theme === 'light' ? '#e5e7eb' : '#1f2937',
+        color: theme === 'light' ? '#1f2937' : '#e5e7eb',
+      }}
     >
       {theme === 'light' ? (
         // Moon icon for dark mode
