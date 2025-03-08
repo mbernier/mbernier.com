@@ -25,7 +25,7 @@ export default function Header() {
           </div>
           
           {/* Desktop navigation */}
-          <nav className="hidden md:ml-6 md:flex md:space-x-8">
+          <nav className="hidden md:flex md:ml-6 md:space-x-8">
             <Link 
               href="/" 
               className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${

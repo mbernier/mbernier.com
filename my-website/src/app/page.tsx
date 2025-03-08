@@ -33,12 +33,20 @@ export default async function Home() {
               <Link
                 href="/resume"
                 className="px-6 py-3 rounded-md bg-primary text-primary-foreground font-medium shadow-sm hover:bg-primary/90"
+                style={{
+                  backgroundColor: 'var(--primary-color)',
+                  color: 'var(--primary-foreground-color)',
+                }}
               >
                 View Resume
               </Link>
               <Link
                 href="/projects"
                 className="px-6 py-3 rounded-md bg-secondary text-secondary-foreground font-medium shadow-sm hover:bg-secondary/90"
+                style={{
+                  backgroundColor: 'var(--secondary-color)',
+                  color: 'var(--secondary-foreground-color)',
+                }}
               >
                 See Projects
               </Link>
@@ -59,11 +67,15 @@ export default async function Home() {
       </section>
 
       {/* Recent Articles Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-900/20">
+      <section className="py-16" style={{ backgroundColor: 'rgb(249, 250, 251)', color: 'inherit' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-baseline">
             <h2 className="text-3xl font-bold text-foreground">Recent Articles</h2>
-            <Link href="/articles" className="text-primary hover:underline">
+            <Link 
+              href="/articles" 
+              className="text-primary hover:underline"
+              style={{ color: 'var(--primary-color)' }}
+            >
               View all articles →
             </Link>
           </div>
@@ -77,7 +89,7 @@ export default async function Home() {
                       <h3 className="mt-2 text-xl font-semibold text-foreground hover:text-primary">{article.title}</h3>
                     </Link>
                     <p className="mt-3 text-gray-600 dark:text-gray-300">{article.excerpt}</p>
-                    <Link href={`/articles/${article.slug}`} className="mt-4 inline-block text-primary hover:underline">
+                    <Link href={`/articles/${article.slug}`} className="mt-4 inline-block text-primary hover:underline" style={{ color: 'var(--primary-color)' }}>
                       Read more →
                     </Link>
                   </div>
@@ -95,7 +107,11 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-baseline">
             <h2 className="text-3xl font-bold text-foreground">Recent Projects</h2>
-            <Link href="/projects" className="text-primary hover:underline">
+            <Link 
+              href="/projects" 
+              className="text-primary hover:underline"
+              style={{ color: 'var(--primary-color)' }}
+            >
               View all projects →
             </Link>
           </div>
@@ -118,7 +134,11 @@ export default async function Home() {
                       <h3 className="text-xl font-semibold text-foreground hover:text-primary">{project.title}</h3>
                     </Link>
                     <p className="mt-3 text-gray-600 dark:text-gray-300">{project.excerpt}</p>
-                    <Link href={`/projects/${project.slug}`} className="mt-4 inline-block text-primary hover:underline">
+                    <Link 
+                      href={`/projects/${project.slug}`} 
+                      className="mt-4 inline-block text-primary hover:underline"
+                      style={{ color: 'var(--primary-color)' }}
+                    >
                       Learn more →
                     </Link>
                   </div>
