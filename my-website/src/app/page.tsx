@@ -10,7 +10,7 @@ export default function Home() {
           <li><Link href="/resume">Resume</Link></li>
           <li><Link href="/articles">Articles</Link></li>
           <li><Link href="/projects">Projects</Link></li>
-          <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+          <li><Link href="/privacy-policy">Privacy Policy</Link> | <Link href="/terms-of-service">Terms of Service</Link></li>
         </ul>
       </nav>
     </main>

@@ -1,4 +1,4 @@
-import { getMarkdownBySlug } from '@/lib/markdown';
+import { getMarkdownBySlug } from '../../lib/markdown';
 
 export default async function PrivacyPolicy() {
   const { contentHtml } = await getMarkdownBySlug('legal', 'privacy_policy');

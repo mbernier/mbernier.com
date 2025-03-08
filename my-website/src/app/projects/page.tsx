@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getMarkdownFiles } from '@/lib/markdown';
+import { getMarkdownFiles } from '../../lib/markdown';
 
 export default async function Projects() {
   const projects = getMarkdownFiles('projects');

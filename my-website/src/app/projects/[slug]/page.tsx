@@ -1,4 +1,4 @@
-import { getMarkdownBySlug } from '@/lib/markdown';
+import { getMarkdownBySlug } from '../../../lib/markdown';
 
 export default async function Project({ params }: { params: { slug: string } }) {
   const { metadata, contentHtml } = await getMarkdownBySlug('projects', params.slug);
