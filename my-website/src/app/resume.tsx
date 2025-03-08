@@ -1,4 +1,4 @@
-import { getMarkdownFiles } from '@/lib/markdown';
+import { getMarkdownFiles } from '../../lib/markdown';
 import Link from 'next/link';
 
 export default function Resume({ jobs }: { jobs: any[] }) {

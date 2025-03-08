@@ -1,4 +1,4 @@
-import { getMarkdownBySlug } from '@/lib/markdown';
+import { getMarkdownBySlug } from '../../lib/markdown';
 
 export default async function TermsOfService() {
   const { contentHtml } = await getMarkdownBySlug('legal', 'terms_of_service');
