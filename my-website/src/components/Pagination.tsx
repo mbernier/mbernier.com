@@ -72,18 +72,18 @@ export default function Pagination({ currentPage, totalPages, basePath }: Pagina
           {currentPage > 1 ? (
             <Link 
               href={`${basePath}?page=${currentPage - 1}`}
-              className="px-3 py-2 rounded border border-gray-300 dark:border-gray-700 
-                        text-sm font-medium text-gray-700 dark:text-gray-300 
-                        hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              className="px-3 py-2 rounded text-sm font-medium bg-gray-200 text-gray-700 
+                        hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 
+                        dark:hover:bg-gray-600 transition-colors"
               aria-label="Previous page"
             >
               &larr;
             </Link>
           ) : (
             <span 
-              className="px-3 py-2 rounded border border-gray-200 dark:border-gray-800
-                        text-sm font-medium text-gray-400 dark:text-gray-600 
-                        cursor-not-allowed"
+              className="px-3 py-2 rounded 
+                        text-sm font-medium bg-gray-100 text-gray-400 dark:bg-gray-800 
+                        dark:text-gray-600 cursor-not-allowed"
               aria-disabled="true"
             >
               &larr;
@@ -99,11 +99,11 @@ export default function Pagination({ currentPage, totalPages, basePath }: Pagina
             ) : (
               <Link
                 href={`${basePath}?page=${page}`}
-                className={`px-3 py-2 rounded 
+                className={`px-3 py-2 rounded text-sm font-medium transition-colors
                           ${currentPage === page 
-                            ? 'bg-primary text-white font-medium' 
-                            : 'border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
-                          } transition-colors`}
+                            ? 'bg-primary text-black dark:text-white font-bold' 
+                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
+                          }`}
                 aria-label={`Page ${page}`}
                 aria-current={currentPage === page ? 'page' : undefined}
               >
@@ -118,18 +118,18 @@ export default function Pagination({ currentPage, totalPages, basePath }: Pagina
           {currentPage < totalPages ? (
             <Link 
               href={`${basePath}?page=${currentPage + 1}`}
-              className="px-3 py-2 rounded border border-gray-300 dark:border-gray-700 
-                        text-sm font-medium text-gray-700 dark:text-gray-300 
-                        hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              className="px-3 py-2 rounded text-sm font-medium bg-gray-200 text-gray-700 
+                        hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 
+                        dark:hover:bg-gray-600 transition-colors"
               aria-label="Next page"
             >
               &rarr;
             </Link>
           ) : (
             <span 
-              className="px-3 py-2 rounded border border-gray-200 dark:border-gray-800
-                        text-sm font-medium text-gray-400 dark:text-gray-600 
-                        cursor-not-allowed"
+              className="px-3 py-2 rounded 
+                        text-sm font-medium bg-gray-100 text-gray-400 dark:bg-gray-800 
+                        dark:text-gray-600 cursor-not-allowed"
               aria-disabled="true"
             >
               &rarr;
