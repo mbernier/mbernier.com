@@ -760,3 +760,13 @@ a:hover {
 .z-10 {
   z-index: 10;
 }
+
+/* Custom class for selected category buttons */
+.category-selected {
+  color: black !important;
+  font-weight: bold;
+}
+
+.dark .category-selected {
+  color: white !important;
+}

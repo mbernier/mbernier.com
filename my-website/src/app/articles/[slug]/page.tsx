@@ -3,7 +3,13 @@ import Link from 'next/link';
 import { getContentBySlug, getAllContentSlugs } from '../../../lib/content';
 import { constructMetadata } from '../../../lib/metadata';
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+interface PageParams {
+  params: {
+    slug: string;
+  };
+}
+
+export async function generateMetadata({ params }: PageParams) {
   const article = await getContentBySlug('articles', params.slug);
   
   if (!article) {
@@ -25,12 +31,24 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export default async function ArticlePage({ params }: { params: { slug: string } }) {
+export default async function ArticlePage({ params }: PageParams) {
   const article = await getContentBySlug('articles', params.slug);
   
   if (!article) {
     notFound();
   }
+  
+  // Check if article date is in the future
+  const articleDate = new Date(article.date);
+  const now = new Date();
+  const isFutureArticle = articleDate > now;
+  
+  // Format the date for display
+  const formattedDate = articleDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
   
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -38,17 +56,23 @@ export default async function ArticlePage({ params }: { params: { slug: string }
         <header className="mb-10">
           <div className="space-y-1 text-center">
             <div className="text-gray-500 dark:text-gray-400">
-              {new Date(article.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
+              {isFutureArticle ? (
+                <div className="flex items-center justify-center">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300 mb-2">
+                    UPCOMING
+                  </span>
+                </div>
+              ) : null}
+              {isFutureArticle 
+                ? `This article will be published on Medium on ${formattedDate}`
+                : formattedDate
+              }
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
               {article.title}
             </h1>
             
-            {article.tags && article.tags.length > 0 && (
+            {article.tags && Array.isArray(article.tags) && article.tags.length > 0 && (
               <div className="flex justify-center flex-wrap gap-2 mt-4">
                 {article.tags.map((tag: string) => (
                   <span 

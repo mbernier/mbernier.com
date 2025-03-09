@@ -1,7 +1,7 @@
 ---
 title: "Project Management Dashboard"
 date: "2024-03-08"
-category: "Coding"
+category: "Software, Contract Work, Project Management"
 description: "Built a dashboard integrating four task management systems for a public company."
 image: "/images/pm_dashboard.png"
 status: In Progress

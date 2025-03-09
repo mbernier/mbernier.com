@@ -3,7 +3,13 @@ import Link from 'next/link';
 import { getContentBySlug, getAllContentSlugs } from '../../../lib/content';
 import { constructMetadata } from '../../../lib/metadata';
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+interface PageParams {
+  params: {
+    slug: string;
+  };
+}
+
+export async function generateMetadata({ params }: PageParams) {
   const work = await getContentBySlug('work', params.slug);
   
   if (!work) {
@@ -14,9 +20,16 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     });
   }
   
+  // Safe type access
+  const title = typeof work.title === 'string' ? work.title : '';
+  const company = typeof work.company === 'string' ? work.company : '';
+  const description = typeof work.description === 'string' 
+    ? work.description 
+    : `Work experience as ${title} at ${company}`;
+  
   return constructMetadata({
-    title: `${work.title} at ${work.company}`,
-    description: work.description || `Work experience as ${work.title} at ${work.company}`,
+    title: `${title} at ${company}`,
+    description,
   });
 }
 
@@ -25,7 +38,7 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export default async function WorkPage({ params }: { params: { slug: string } }) {
+export default async function WorkPage({ params }: PageParams) {
   const work = await getContentBySlug('work', params.slug);
   
   if (!work) {

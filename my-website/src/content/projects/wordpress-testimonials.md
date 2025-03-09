@@ -7,6 +7,7 @@ image: "/images/wordpress.jpg"
 github: "https://github.com/mbernier/wordpress-testimonials"
 featured: false
 status: Completed
+category: Software
 canonical: "https://www.linkedin.com/in/mkbernier/details/projects/"
 ---
 

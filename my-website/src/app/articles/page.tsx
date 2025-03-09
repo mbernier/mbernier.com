@@ -11,15 +11,20 @@ export const metadata = constructMetadata({
 // Make the page component dynamic to handle searchParams properly
 export const dynamic = 'force-dynamic';
 
-export default async function ArticlesPage({ 
-  searchParams 
-}: { 
-  searchParams: { page?: string } 
-}) {
-  // Parse the page parameter safely
-  const currentPage = searchParams && searchParams.page 
-    ? parseInt(searchParams.page as string) 
-    : 1;
+interface PageProps {
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export default async function ArticlesPage({ searchParams }: PageProps) {
+  // Ensure searchParams is awaited
+  const resolvedSearchParams = await searchParams;
+  
+  // Parse the searchParams object safely without direct property access
+  const pageString = Array.isArray(resolvedSearchParams['page']) 
+    ? resolvedSearchParams['page'][0] 
+    : resolvedSearchParams['page'] || '1';
+  
+  const currentPage = parseInt(pageString, 10) || 1;
   
   const { items: articles, totalPages } = await getPaginatedContent('articles', currentPage, 9);
 
@@ -37,64 +42,64 @@ export default async function ArticlesPage({
       {articles.length > 0 ? (
         <>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {articles.map((article) => (
-              <article 
-                key={article.slug} 
-                className="bg-card rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-              >
-                <div className="p-6">
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    {new Date(article.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </div>
-                  <Link href={`/articles/${article.slug}`}>
-                    <h2 className="mt-2 text-xl font-semibold text-foreground hover:text-primary">
-                      {article.title}
-                    </h2>
-                  </Link>
-                  
-                  {article.tags && article.tags.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      {article.tags.map((tag: string) => (
-                        <span 
-                          key={tag} 
-                          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+            {articles.map((article) => {
+              // Check if article date is in the future
+              const articleDate = new Date(article.date);
+              const now = new Date();
+              const isFutureArticle = articleDate > now;
+              
+              // Format the date for display
+              const formattedDate = articleDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              });
+              
+              return (
+                <article 
+                  key={article.slug} 
+                  className="bg-card rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                >
+                  <div className="p-6">
+                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                      {isFutureArticle ? (
+                        <div className="flex items-start mb-1">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300 mr-2">
+                            UPCOMING
+                          </span>
+                        </div>
+                      ) : null}
+                      {isFutureArticle 
+                        ? `This article will be published on Medium on ${formattedDate}`
+                        : formattedDate
+                      }
                     </div>
-                  )}
-                  
-                  <p className="mt-3 text-gray-600 dark:text-gray-300">
-                    {article.excerpt}
-                  </p>
-                  <Link 
-                    href={`/articles/${article.slug}`} 
-                    className="mt-4 inline-flex items-center text-primary hover:underline"
-                  >
-                    Read more
-                    <svg 
-                      className="ml-1 h-4 w-4" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24" 
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M14 5l7 7m0 0l-7 7m7-7H3" 
-                      />
-                    </svg>
-                  </Link>
-                </div>
-              </article>
-            ))}
+                    <Link href={`/articles/${article.slug}`}>
+                      <h2 className="mt-2 text-xl font-semibold text-foreground hover:text-primary">
+                        {article.title}
+                      </h2>
+                    </Link>
+                    
+                    {article.tags && Array.isArray(article.tags) && article.tags.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {article.tags.map((tag: string) => (
+                          <span 
+                            key={tag} 
+                            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    
+                    <p className="mt-3 text-gray-600 dark:text-gray-300">
+                      {article.excerpt}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
           </div>
           
           <Pagination 

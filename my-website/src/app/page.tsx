@@ -119,7 +119,7 @@ export default async function Home() {
             {recentProjects.length > 0 ? (
               recentProjects.map((project) => (
                 <div key={project.slug} className="bg-card rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                  {project.image && (
+                  {project.image && typeof project.image === 'string' && (
                     <div className="relative h-48 w-full">
                       <Image
                         src={project.image}
