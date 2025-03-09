@@ -12,7 +12,7 @@ export interface ContentItem {
   date: string;
   excerpt: string;
   content: string;
-  [key: string]: any;
+  [key: string]: string | string[] | number | boolean | null | undefined;
 }
 
 export interface ContentDirectory {
