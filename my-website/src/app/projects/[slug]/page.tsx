@@ -7,15 +7,16 @@ import { constructMetadata } from '../../../lib/metadata';
 // Default image for projects that don't have their own image
 const DEFAULT_PROJECT_IMAGE = '/images/default-project.jpg';
 
+// Define params as a Promise per Next.js 15 requirements
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  // Ensure params is awaited
-  const resolvedParams = await params;
+export async function generateMetadata(props: PageProps) {
+  // Await the params promise to get the actual values
+  const { slug } = await props.params;
   
-  const project = await getContentBySlug('projects', resolvedParams.slug);
+  const project = await getContentBySlug('projects', slug);
   
   if (!project) {
     return constructMetadata({
@@ -37,11 +38,11 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export default async function ProjectPage({ params }: PageProps) {
-  // Ensure params is awaited
-  const resolvedParams = await params;
+export default async function ProjectPage(props: PageProps) {
+  // Await the params promise to get the actual values
+  const { slug } = await props.params;
   
-  const project = await getContentBySlug('projects', resolvedParams.slug);
+  const project = await getContentBySlug('projects', slug);
   
   if (!project) {
     notFound();
