@@ -7,14 +7,15 @@ import { constructMetadata } from '../../../lib/metadata';
 // Default image for projects that don't have their own image
 const DEFAULT_PROJECT_IMAGE = '/images/default-project.jpg';
 
-interface PageParams {
-  params: {
-    slug: string;
-  };
+interface PageProps {
+  params: { slug: string };
 }
 
-export async function generateMetadata({ params }: PageParams) {
-  const project = await getContentBySlug('projects', params.slug);
+export async function generateMetadata({ params }: PageProps) {
+  // Ensure params is awaited
+  const resolvedParams = await params;
+  
+  const project = await getContentBySlug('projects', resolvedParams.slug);
   
   if (!project) {
     return constructMetadata({
@@ -36,8 +37,11 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export default async function ProjectPage({ params }: PageParams) {
-  const project = await getContentBySlug('projects', params.slug);
+export default async function ProjectPage({ params }: PageProps) {
+  // Ensure params is awaited
+  const resolvedParams = await params;
+  
+  const project = await getContentBySlug('projects', resolvedParams.slug);
   
   if (!project) {
     notFound();
