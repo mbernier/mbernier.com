@@ -3,15 +3,16 @@ import Link from 'next/link';
 import { getContentBySlug, getAllContentSlugs } from '../../../lib/content';
 import { constructMetadata } from '../../../lib/metadata';
 
+// Define params as a Promise per Next.js 15 requirements
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
-  // Ensure params is awaited
-  const resolvedParams = await params;
+export async function generateMetadata(props: PageProps) {
+  // Await the params promise to get the actual values
+  const { slug } = await props.params;
   
-  const work = await getContentBySlug('work', resolvedParams.slug);
+  const work = await getContentBySlug('work', slug);
   
   if (!work) {
     return constructMetadata({
@@ -39,11 +40,11 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export default async function WorkPage({ params }: PageProps) {
-  // Ensure params is awaited
-  const resolvedParams = await params;
+export default async function WorkPage(props: PageProps) {
+  // Await the params promise to get the actual values
+  const { slug } = await props.params;
   
-  const work = await getContentBySlug('work', resolvedParams.slug);
+  const work = await getContentBySlug('work', slug);
   
   if (!work) {
     notFound();
