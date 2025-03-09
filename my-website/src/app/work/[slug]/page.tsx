@@ -3,14 +3,15 @@ import Link from 'next/link';
 import { getContentBySlug, getAllContentSlugs } from '../../../lib/content';
 import { constructMetadata } from '../../../lib/metadata';
 
-interface PageParams {
-  params: {
-    slug: string;
-  };
+interface PageProps {
+  params: { slug: string };
 }
 
-export async function generateMetadata({ params }: PageParams) {
-  const work = await getContentBySlug('work', params.slug);
+export async function generateMetadata({ params }: PageProps) {
+  // Ensure params is awaited
+  const resolvedParams = await params;
+  
+  const work = await getContentBySlug('work', resolvedParams.slug);
   
   if (!work) {
     return constructMetadata({
@@ -38,8 +39,11 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export default async function WorkPage({ params }: PageParams) {
-  const work = await getContentBySlug('work', params.slug);
+export default async function WorkPage({ params }: PageProps) {
+  // Ensure params is awaited
+  const resolvedParams = await params;
+  
+  const work = await getContentBySlug('work', resolvedParams.slug);
   
   if (!work) {
     notFound();
