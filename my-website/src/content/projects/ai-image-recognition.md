@@ -7,6 +7,7 @@ image: "/images/ai_images.png"
 featured: true
 status: In Progress
 canonical: "https://www.linkedin.com/in/mkbernier/details/projects/"
+category: Software
 ---
 
 # AI Image Recognition Project

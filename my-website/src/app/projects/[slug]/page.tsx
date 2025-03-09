@@ -7,7 +7,13 @@ import { constructMetadata } from '../../../lib/metadata';
 // Default image for projects that don't have their own image
 const DEFAULT_PROJECT_IMAGE = '/images/default-project.jpg';
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+interface PageParams {
+  params: {
+    slug: string;
+  };
+}
+
+export async function generateMetadata({ params }: PageParams) {
   const project = await getContentBySlug('projects', params.slug);
   
   if (!project) {
@@ -21,7 +27,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return constructMetadata({
     title: project.title,
     description: project.excerpt,
-    image: project.image,
+    image: typeof project.image === 'string' ? project.image : undefined,
   });
 }
 
@@ -30,12 +36,30 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug }));
 }
 
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
+export default async function ProjectPage({ params }: PageParams) {
   const project = await getContentBySlug('projects', params.slug);
   
   if (!project) {
     notFound();
   }
+  
+  // Get image source safely
+  const imageSrc = typeof project.image === 'string' 
+    ? project.image 
+    : DEFAULT_PROJECT_IMAGE;
+  
+  // Check if status exists and is a string
+  const hasInProgressStatus = typeof project.status === 'string' && 
+    project.status.toLowerCase() === 'in progress';
+  
+  // Check if github URL exists and is a string
+  const hasGithubLink = typeof project.github === 'string';
+  
+  // Check if liveUrl exists and is a string
+  const hasLiveUrl = typeof project.liveUrl === 'string';
+  
+  // Check if tech is an array with items
+  const hasTechItems = Array.isArray(project.tech) && project.tech.length > 0;
   
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -43,13 +67,13 @@ export default async function ProjectPage({ params }: { params: { slug: string }
         <header className="mb-10 p-6 pl-8">
           <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-lg shadow-md overflow-hidden mb-8">
             <Image
-              src={project.image || DEFAULT_PROJECT_IMAGE}
+              src={imageSrc}
               alt={project.title}
               fill
               className="object-cover"
               priority
             />
-            {project.status && project.status.toLowerCase() === 'in progress' && (
+            {hasInProgressStatus && (
               <div className="absolute top-0 left-0 w-full bg-blue-500 text-white py-1 text-center text-sm font-bold shadow-md z-10">
                 IN PROGRESS
               </div>
@@ -62,7 +86,7 @@ export default async function ProjectPage({ params }: { params: { slug: string }
                 {project.title}
               </h1>
               
-              {project.date && (
+              {typeof project.date === 'string' && (
                 <div className="mt-2 text-gray-500 dark:text-gray-400">
                   {new Date(project.date).toLocaleDateString('en-US', {
                     year: 'numeric',
@@ -72,9 +96,9 @@ export default async function ProjectPage({ params }: { params: { slug: string }
               )}
             </div>
             
-            {project.github && (
+            {hasGithubLink && (
               <a
-                href={project.github}
+                href={project.github as string}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 md:mt-0 inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-800 hover:bg-gray-700"
@@ -96,23 +120,23 @@ export default async function ProjectPage({ params }: { params: { slug: string }
             )}
           </div>
           
-          {project.tech && project.tech.length > 0 && (
+          {hasTechItems && (
             <div className="flex flex-wrap gap-2 mt-4">
-              {project.tech.map((tech: string, index: number) => (
+              {(project.tech as string[]).map((tech: string, index: number) => (
                 <span 
                   key={tech} 
                   className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-800/30 dark:text-indigo-300"
                 >
-                  {tech}{index < project.tech.length - 1 ? ', ' : ''}
+                  {tech}{index < (project.tech as string[]).length - 1 ? ', ' : ''}
                 </span>
               ))}
             </div>
           )}
           
-          {project.liveUrl && (
+          {hasLiveUrl && (
             <div className="mt-6">
               <a
-                href={project.liveUrl}
+                href={project.liveUrl as string}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90"

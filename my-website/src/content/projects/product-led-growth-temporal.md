@@ -1,12 +1,12 @@
 ---
 title: "Product-Led Growth at Temporal"
 date: "2024-03-08"
-category: "Business"
-description: "Led the PLG initiative at Temporal, increasing self-signup conversions by 14%."
+category: "Product Management, Jobs"
+description: "Implemented a product-led growth strategy for a cloud-based workflow platform."
 image: "/images/plg.png"
-status: Completed
+status: Complete
 links:
-  - name: "Company Website"
+  - name: "Temporal Website"
     url: "https://temporal.io"
 ---
 

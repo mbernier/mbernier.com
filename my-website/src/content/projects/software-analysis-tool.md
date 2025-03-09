@@ -7,6 +7,7 @@ image: "/images/software_analysis.png"
 github: "https://github.com/mbernier/software-analysis"
 featured: true
 status: In Progress
+category: Software
 canonical: "https://www.linkedin.com/in/mkbernier/details/projects/"
 ---
 

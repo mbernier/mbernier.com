@@ -7,6 +7,7 @@ image: "/images/ignite_denver.png"
 liveUrl: "http://www.ignitedenver.org"
 featured: true
 status: Completed
+category: Community
 canonical: "https://www.linkedin.com/in/mkbernier/details/projects/"
 ---
 

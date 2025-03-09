@@ -1,6 +1,6 @@
 ---
 title: "How Should We Share the Customer Feedback and Trends to the Product Team"
-date: 2018-09-01
+date: 2023-10-25
 canonical_url: "https://medium.com/@mbernier/how-should-we-share-the-customer-feedback-and-trends-to-the-product-team-0edd7ef98237"
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: "How Can We Collect Information for the Product Team, without Blowing Up Our Support Teams"
-date: 2018-09-15
+date: 2023-10-25
 canonical_url: "https://medium.com/@mbernier/how-can-we-collect-information-for-the-product-team-without-blowing-up-our-support-teams-e36087750376"
 ---
 

@@ -6,6 +6,7 @@ tech: ["API Design", "SDK Development", "Developer Relations", "Documentation"]
 image: "/images/dev_experience.png"
 featured: true
 status: Completed
+category: "Product Management"
 canonical: "https://www.linkedin.com/in/mkbernier/details/projects/"
 ---
 
