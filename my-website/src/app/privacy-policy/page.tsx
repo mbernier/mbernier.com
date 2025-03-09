@@ -1,7 +1,10 @@
 import { getMarkdownBySlug } from '../../lib/markdown';
 
 export default async function PrivacyPolicy() {
-  const { contentHtml } = await getMarkdownBySlug('legal', 'privacy_policy');
+  const result = await getMarkdownBySlug('legal', 'privacy_policy');
+  
+  // Default content in case the markdown file doesn't exist
+  const contentHtml = result?.contentHtml || '<p>Privacy policy content not found.</p>';
 
   return (
     <main className="p-8">
