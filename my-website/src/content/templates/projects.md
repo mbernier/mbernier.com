@@ -1,10 +1,10 @@
 # Markdown Template for Projects
 ---
-title: "Project Name"
-date: "2024-03-08"
-category: "Coding" # Options: Writing, Coding, Businesses, Hobbies
-description: "Short summary of the project."
-image: "/public/project-image.jpg"
+title: "Your Project Title"
+date: "YYYY-MM-DD"
+category: "Category" # Options: Writing, Coding, Businesses, Hobbies
+description: "A brief description of your project."
+image: "/images/project-image.jpg"
 links:
   - name: "GitHub Repo"
     url: "https://github.com/user/project"

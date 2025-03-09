@@ -70,7 +70,7 @@ export default async function Home() {
       <section className="py-16" style={{ backgroundColor: 'rgb(249, 250, 251)', color: 'inherit' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-baseline">
-            <h2 className="text-3xl font-bold text-foreground">Recent Articles</h2>
+            <h2 className="text-3xl font-bold" style={{ color: 'rgb(31, 41, 55)' }}>Recent Articles</h2>
             <Link 
               href="/articles" 
               className="text-primary hover:underline"

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { getContentBySlug, getContentByDirectory } from '../../lib/content';
 import { constructMetadata } from '../../lib/metadata';
 
@@ -61,82 +62,60 @@ export default async function ResumePage() {
         </div>
       </div>
 
-      {resumeContent ? (
-        <div className="prose prose-lg dark:prose-invert max-w-none">
-          <div dangerouslySetInnerHTML={{ __html: resumeContent.content }} />
-        </div>
-      ) : (
-        <div className="bg-card rounded-lg shadow-md p-8">
-          <h2 className="text-2xl font-bold text-foreground">Professional Summary</h2>
-          <p className="mt-4 text-gray-600 dark:text-gray-300">
-            Experienced software professional with a strong background in web development, API design, and technical leadership.
-          </p>
+      <div className="bg-card rounded-lg shadow-md p-8">
+        {resumeContent && (
+          <div className="mb-10">
+            <h2 className="text-2xl font-bold text-foreground">Professional Summary</h2>
+            <div className="prose prose-lg dark:prose-invert max-w-none mt-4">
+              <div dangerouslySetInnerHTML={{ __html: resumeContent.content }} />
+            </div>
+          </div>
+        )}
 
-          <h2 className="mt-8 text-2xl font-bold text-foreground">Experience</h2>
-          
-          <div className="mt-6 space-y-8">
-            {jobs.length > 0 ? (
-              jobs.map((job) => (
-                <div key={job.slug} className="relative pl-8 border-l-2 border-gray-200 dark:border-gray-800 pb-2">
-                  <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-primary"></div>
-                  <h3 className="text-xl font-semibold text-foreground">{job.title}</h3>
+        <h2 className="text-2xl font-bold text-foreground">Work Experience</h2>
+        
+        <div className="mt-6 space-y-8">
+          {jobs.length > 0 ? (
+            jobs.map((job) => (
+              <div key={job.slug} className="relative pl-8 border-l-2 border-gray-200 dark:border-gray-800 pb-2">
+                <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-primary"></div>
+                <div className="pl-3">
+                  <Link href={`/work/${job.slug}`} className="group">
+                    <h3 className="text-xl font-semibold text-foreground group-hover:text-primary">
+                      {job.title}
+                    </h3>
+                  </Link>
                   <div className="text-primary font-medium">{job.company}</div>
                   <div className="text-sm text-gray-500 dark:text-gray-400">{job.date}</div>
                   {job.description && (
                     <p className="mt-2 text-gray-600 dark:text-gray-300">{job.description}</p>
                   )}
+                  <Link 
+                    href={`/work/${job.slug}`}
+                    className="mt-2 inline-block text-primary hover:underline"
+                  >
+                    Read more →
+                  </Link>
                 </div>
-              ))
-            ) : (
-              <>
-                <div className="relative pl-8 border-l-2 border-gray-200 dark:border-gray-800 pb-2">
-                  <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-primary"></div>
-                  <h3 className="text-xl font-semibold text-foreground">Senior Software Engineer</h3>
-                  <div className="text-primary font-medium">Example Company</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">January 2020 - Present</div>
-                  <ul className="mt-4 space-y-2 text-gray-600 dark:text-gray-300">
-                    <li>- Led development of key platform features resulting in 30% user growth</li>
-                    <li>- Architected and implemented RESTful APIs used by over 100,000 daily active users</li>
-                    <li>- Mentored junior developers and conducted code reviews to ensure quality standards</li>
-                  </ul>
-                </div>
-                
-                <div className="relative pl-8 border-l-2 border-gray-200 dark:border-gray-800 pb-2">
-                  <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-primary"></div>
-                  <h3 className="text-xl font-semibold text-foreground">Software Developer</h3>
-                  <div className="text-primary font-medium">Previous Company</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">June 2017 - December 2019</div>
-                  <ul className="mt-4 space-y-2 text-gray-600 dark:text-gray-300">
-                    <li>- Developed and maintained web applications using React and Node.js</li>
-                    <li>- Collaborated with design team to implement responsive UI components</li>
-                    <li>- Optimized database queries resulting in 40% faster page load times</li>
-                  </ul>
-                </div>
-              </>
-            )}
-          </div>
-
-          <h2 className="mt-8 text-2xl font-bold text-foreground">Skills</h2>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {['JavaScript', 'TypeScript', 'React', 'Node.js', 'Next.js', 'RESTful APIs', 
-              'GraphQL', 'SQL', 'NoSQL', 'Git', 'CI/CD', 'Docker'].map((skill) => (
-              <span 
-                key={skill} 
-                className="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-
-          <h2 className="mt-8 text-2xl font-bold text-foreground">Education</h2>
-          <div className="mt-4">
-            <h3 className="text-xl font-semibold text-foreground">Bachelor of Science in Computer Science</h3>
-            <div className="text-primary font-medium">University Name</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">Graduated: May 2017</div>
-          </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500 dark:text-gray-400">No work experience found.</p>
+          )}
         </div>
-      )}
+
+        <h2 className="mt-8 text-2xl font-bold text-foreground">Education</h2>
+        <div className="mt-4">
+          <h3 className="text-xl font-semibold text-foreground">Bachelor of Science in Computer Science</h3>
+          <div className="text-primary font-medium">University of Missouri-Columbia</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">Graduated: 2007</div>
+        </div>
+        <div className="mt-4">
+          <h3 className="text-xl font-semibold text-foreground">Bachelor of Science in Information Technology</h3>
+          <div className="text-primary font-medium">University of Missouri-Columbia</div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">Graduated: 2007</div>
+        </div>
+      </div>
     </div>
   );
 }

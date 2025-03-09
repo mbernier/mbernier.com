@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { getContentBySlug, getAllContentSlugs } from '../../../lib/content';
 import { constructMetadata } from '../../../lib/metadata';
 
+// Default image for projects that don't have their own image
+const DEFAULT_PROJECT_IMAGE = '/images/default-project.jpg';
+
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const project = await getContentBySlug('projects', params.slug);
   
@@ -37,18 +40,21 @@ export default async function ProjectPage({ params }: { params: { slug: string }
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <article>
-        <header className="mb-10">
-          {project.image && (
-            <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-lg shadow-md overflow-hidden mb-8">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          )}
+        <header className="mb-10 p-6 pl-8">
+          <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-lg shadow-md overflow-hidden mb-8">
+            <Image
+              src={project.image || DEFAULT_PROJECT_IMAGE}
+              alt={project.title}
+              fill
+              className="object-cover"
+              priority
+            />
+            {project.status && project.status.toLowerCase() === 'in progress' && (
+              <div className="absolute top-0 left-0 w-full bg-blue-500 text-white py-1 text-center text-sm font-bold shadow-md z-10">
+                IN PROGRESS
+              </div>
+            )}
+          </div>
           
           <div className="flex flex-col md:flex-row md:items-end md:justify-between">
             <div>
@@ -92,12 +98,12 @@ export default async function ProjectPage({ params }: { params: { slug: string }
           
           {project.tech && project.tech.length > 0 && (
             <div className="flex flex-wrap gap-2 mt-4">
-              {project.tech.map((tech: string) => (
+              {project.tech.map((tech: string, index: number) => (
                 <span 
                   key={tech} 
                   className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-800/30 dark:text-indigo-300"
                 >
-                  {tech}
+                  {tech}{index < project.tech.length - 1 ? ', ' : ''}
                 </span>
               ))}
             </div>
