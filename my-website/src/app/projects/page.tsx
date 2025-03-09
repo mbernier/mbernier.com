@@ -16,33 +16,31 @@ export const metadata = constructMetadata({
 export const dynamic = 'force-dynamic';
 
 interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function ProjectsPage({ searchParams }: PageProps) {
-  // Ensure searchParams is awaited
   const resolvedSearchParams = await searchParams;
   
-  // Parse the searchParams object safely without direct property access
-  const pageString = Array.isArray(resolvedSearchParams['page']) 
-    ? resolvedSearchParams['page'][0] 
-    : resolvedSearchParams['page'] || '1';
-  
-  const categoryString = Array.isArray(resolvedSearchParams['category']) 
-    ? resolvedSearchParams['category'][0] 
-    : resolvedSearchParams['category'];
-  
+  const pageString = Array.isArray(resolvedSearchParams["page"])
+    ? resolvedSearchParams["page"][0]
+    : resolvedSearchParams["page"] || "1";
+
+  const categoryString = Array.isArray(resolvedSearchParams["category"])
+    ? resolvedSearchParams["category"][0]
+    : resolvedSearchParams["category"];
+
   const currentPage = parseInt(pageString, 10) || 1;
-  const selectedCategory = categoryString || undefined;
+  const selectedCategory = categoryString ||
   
-  // Get all unique categories for the filter buttons
-  const categories = await getUniqueCategories('projects');
-  
-  // Get paginated projects with optional category filter
+    undefined;
+
+  // Fetch categories and paginated projects
+  const categories = await getUniqueCategories("projects");
   const { items: projects, totalPages } = await getPaginatedContent(
-    'projects', 
-    currentPage, 
-    9, 
+    "projects",
+    currentPage,
+    9,
     selectedCategory
   );
 

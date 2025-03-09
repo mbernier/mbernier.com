@@ -12,21 +12,19 @@ export const metadata = constructMetadata({
 export const dynamic = 'force-dynamic';
 
 interface PageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function ArticlesPage({ searchParams }: PageProps) {
-  // Ensure searchParams is awaited
-  const resolvedSearchParams = await searchParams;
-  
-  // Parse the searchParams object safely without direct property access
-  const pageString = Array.isArray(resolvedSearchParams['page']) 
-    ? resolvedSearchParams['page'][0] 
-    : resolvedSearchParams['page'] || '1';
-  
+  const resolvedSearchParams = await searchParams; // Await searchParams before accessing it
+
+  const pageString = Array.isArray(resolvedSearchParams["page"])
+    ? resolvedSearchParams["page"][0]
+    : resolvedSearchParams["page"] || "1";
+
   const currentPage = parseInt(pageString, 10) || 1;
-  
-  const { items: articles, totalPages } = await getPaginatedContent('articles', currentPage, 9);
+
+  const { items: articles, totalPages } = await getPaginatedContent("articles", currentPage, 9);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
