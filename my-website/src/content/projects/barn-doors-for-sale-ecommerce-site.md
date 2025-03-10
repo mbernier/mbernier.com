@@ -1,6 +1,6 @@
 ---
 title: "BarnDoors.ForSale"
-date: "2024-03-08"
+date: "2020-04-20"
 category: "Business, ECommerce"
 description: "Co-founded an e-commerce platform specializing in barn doors."
 image: "/images/barn_door.png"
