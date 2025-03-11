@@ -74,7 +74,7 @@ export default function Footer() {
                   </a>
                 </li>
                 <li className="text-sm text-gray-500 dark:text-gray-400">
-                  matt@bernier.dev
+                  mkbernier@gmail.com
                 </li>
               </ul>
             </div>
