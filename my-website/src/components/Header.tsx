@@ -126,6 +126,16 @@ export default function Header() {
               Projects
             </Link>
             <Link 
+              href="/services" 
+              className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
+                isActive('/services') 
+                  ? 'border-blue-500 text-foreground' 
+                  : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'
+              }`}
+            >
+              Services
+            </Link>
+            <Link 
               href="/resume" 
               className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                 isActive('/resume') 
@@ -195,6 +205,17 @@ export default function Header() {
               onClick={() => setIsMenuOpen(false)}
             >
               Projects
+            </Link>
+            <Link
+              href="/services"
+              className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                isActive('/services')
+                  ? 'border-blue-500 text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Services
             </Link>
             <Link
               href="/resume"
