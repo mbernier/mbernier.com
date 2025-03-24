@@ -1,5 +1,5 @@
 ---
-title: "Want better outcomes for your team? Start by asking: "What didn't work? And what will we do about that?""
+title: "Want better outcomes for your team? Start by asking: \"What didn't work? And what will we do about that?\""
 date: 2025-03-17
 canonical_url: "https://mbernier.medium.com/chaos-is-part-and-parcel-with-tech-5965d67aabef"
 ---
