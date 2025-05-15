@@ -1,7 +1,13 @@
 ---
-title: Do Product Managers and Engineers Even Care What Support Teams are Hearing from Customers?"
-date: 2024-10-25
-canonical_url: "https://medium.com/@mbernier/do-product-managers-and-engineers-even-care-what-support-teams-are-hearing-from-customers-2feee8fcde06"
+title: >-
+  Do Product Managers and Engineers Even Care What Support Teams are Hearing
+  from Customers?"
+date: 2024-10-25T00:00:00.000Z
+canonical_url: >-
+  https://medium.com/@mbernier/do-product-managers-and-engineers-even-care-what-support-teams-are-hearing-from-customers-2feee8fcde06
+categories:
+  - Product Management
+  - Team Collaboration
 ---
 
 ## Preface / Before you read

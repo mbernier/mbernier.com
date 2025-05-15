@@ -1,7 +1,10 @@
 ---
-title: "How to Hide from Recruiters"
-date: 2018-10-30
-canonical_url: "https://medium.com/@mbernier/how-to-hide-from-recruiters-a5f11ff51bc8"
+title: How to Hide from Recruiters
+date: 2018-10-30T00:00:00.000Z
+canonical_url: 'https://medium.com/@mbernier/how-to-hide-from-recruiters-a5f11ff51bc8'
+categories:
+  - Career Development
+  - Job Search
 ---
 
 *Note: This was written in 2018 when the hiring market was significantly different from 2025.*

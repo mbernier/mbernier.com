@@ -1,7 +1,12 @@
 ---
-title: "Bulk Adding Shopify Products to Sales Channels"
-date: 2018-10-15
-canonical_url: "https://medium.com/@mbernier/bulk-adding-shopify-products-to-sales-channels-f13018b083e7"
+title: Bulk Adding Shopify Products to Sales Channels
+date: 2018-10-15T00:00:00.000Z
+canonical_url: >-
+  https://medium.com/@mbernier/bulk-adding-shopify-products-to-sales-channels-f13018b083e7
+categories:
+  - E-commerce
+  - Tutorials
+  - Shopify
 ---
 
 Expanding your product reach across multiple sales channels in Shopify can be achieved efficiently through bulk actions:

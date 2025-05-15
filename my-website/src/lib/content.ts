@@ -75,6 +75,11 @@ export async function getContentByDirectory(type: string): Promise<ContentItem[]
       // Use gray-matter to parse the content metadata section
       const matterResult = matter(fileContents);
       
+      // For articles, verify they have a category
+      if (type === 'articles' && !matterResult.data.categories) {
+        throw new Error(`Article "${slug}" is missing required "categories" field.`);
+      }
+      
       // Use remark to convert markdown into HTML string
       const processedContent = await remark()
         .use(html)
@@ -84,6 +89,20 @@ export async function getContentByDirectory(type: string): Promise<ContentItem[]
       // Strip markdown from content for the excerpt
       const plainTextContent = stripMarkdown(matterResult.content);
       const excerpt = plainTextContent.slice(0, 200) + '...';
+      
+      // Ensure date is properly formatted
+      const itemDate = matterResult.data.date;
+      if (itemDate && !(itemDate instanceof Date)) {
+        // If date isn't a Date object already, convert it if needed
+        if (typeof itemDate === 'string') {
+          // Try to ensure consistent date format
+          const parsedDate = new Date(itemDate);
+          if (!isNaN(parsedDate.getTime())) {
+            // Valid date, use ISO format for consistent sorting
+            matterResult.data.date = parsedDate.toISOString();
+          }
+        }
+      }
       
       // Combine the data with the slug and content
       return {
@@ -95,8 +114,21 @@ export async function getContentByDirectory(type: string): Promise<ContentItem[]
     })
   );
   
-  // Sort content by date
-  return allContent.sort((a, b) => (a.date < b.date ? 1 : -1));
+  // Add debugging logs
+  console.log(`Sorting ${type} by date: ${allContent.map(item => `${item.slug}: ${item.date}`).join(', ')}`);
+  
+  // Sort content by date using ISO date strings for reliable comparison
+  const sortedContent = allContent.sort((a, b) => {
+    // Ensure both dates are strings in ISO format
+    const dateA = new Date(a.date).toISOString();
+    const dateB = new Date(b.date).toISOString();
+    return dateB.localeCompare(dateA); // Sort most recent first
+  });
+  
+  // Log after sorting
+  console.log(`Sorted ${type} order: ${sortedContent.map(item => `${item.slug}: ${item.date}`).join(', ')}`);
+  
+  return sortedContent;
 }
 
 /**
@@ -119,13 +151,22 @@ export async function getPaginatedContent(
   const filteredContent = category 
     ? allContent.filter(item => {
         // Handle array of categories
-        if (Array.isArray(item.category)) {
-          return item.category.some(cat => 
+        if (Array.isArray(item.categories)) {
+          return item.categories.some(cat => 
             typeof cat === 'string' && 
             cat.trim().toLowerCase() === category.toLowerCase()
           );
         } 
-        // Handle string category, possibly with commas
+        // Handle string categories, possibly with commas - for backward compatibility
+        else if (typeof item.categories === 'string') {
+          if (item.categories.includes(',')) {
+            // Handle comma-separated categories
+            const categories = item.categories.split(',').map(c => c.trim().toLowerCase());
+            return categories.includes(category.toLowerCase());
+          }
+          return item.categories.trim().toLowerCase() === category.toLowerCase();
+        }
+        // Legacy support for old category field
         else if (typeof item.category === 'string') {
           if (item.category.includes(',')) {
             // Handle comma-separated categories
@@ -205,16 +246,27 @@ export async function getUniqueCategories(type: string): Promise<string[]> {
   const categoriesArray: string[] = [];
   
   allContent.forEach(item => {
-    // Handle array of categories
-    if (Array.isArray(item.category)) {
-      item.category.forEach(cat => {
+    // Handle array of categories (new format)
+    if (Array.isArray(item.categories)) {
+      item.categories.forEach(cat => {
         if (typeof cat === 'string') {
           // Trim any whitespace that might exist
           categoriesArray.push(cat.trim());
         }
       });
     } 
-    // Handle single category as string
+    // Handle single categories as string (for backward compatibility)
+    else if (typeof item.categories === 'string') {
+      // Check if it contains commas (multiple categories as CSV)
+      if (item.categories.includes(',')) {
+        // Split by comma and add each category
+        const cats = item.categories.split(',');
+        cats.forEach(cat => categoriesArray.push(cat.trim()));
+      } else {
+        categoriesArray.push(item.categories.trim());
+      }
+    }
+    // Legacy support for old category field
     else if (typeof item.category === 'string') {
       // Check if it contains commas (multiple categories as CSV)
       if (item.category.includes(',')) {

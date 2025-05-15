@@ -1,7 +1,10 @@
 ---
-title: "Product Managers end up doing a lot of different things"
-date: 2025-05-21
-image: "/images/pm_stretch.png"
+title: Product Managers end up doing a lot of different things
+date: 2025-05-21T00:00:00.000Z
+image: /images/pm_stretch.png
+categories:
+  - Product Management
+  - Career Development
 ---
 Recently, I commented on a post about all the jobs Product Managers end up doing, because the post was effectively saying "If a PM doesn't have an active github account GTFO." It kind of pissed me off.
 

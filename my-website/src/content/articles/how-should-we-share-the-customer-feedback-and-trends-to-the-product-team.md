@@ -1,7 +1,11 @@
 ---
-title: "How Should We Share the Customer Feedback and Trends to the Product Team"
-date: 2023-10-25
-canonical_url: "https://medium.com/@mbernier/how-should-we-share-the-customer-feedback-and-trends-to-the-product-team-0edd7ef98237"
+title: How Should We Share the Customer Feedback and Trends to the Product Team
+date: 2023-10-25T00:00:00.000Z
+canonical_url: >-
+  https://medium.com/@mbernier/how-should-we-share-the-customer-feedback-and-trends-to-the-product-team-0edd7ef98237
+categories:
+  - Product Management
+  - Customer Feedback
 ---
 
 Effective communication of customer feedback to the product team can be achieved through:

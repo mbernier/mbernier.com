@@ -1,10 +1,15 @@
 ---
-title: "Downloading Videos from SquareSpace"
-date: "2025-05-03"
-description: "Download videos, images, and other assets from Squarespace quickly."
-tech: ["squarespace", "website", "videos"]
-image: "/images/watches.jpg" 
-category: Websites
+title: Downloading Videos from SquareSpace
+date: '2025-05-03'
+description: 'Download videos, images, and other assets from Squarespace quickly.'
+tech:
+  - squarespace
+  - website
+  - videos
+image: /images/watches.jpg
+categories:
+  - Website Management
+  - Tutorials
 ---
 
 I spent more time searching for a download button in SquareSpace than it took me to find the solution so I could download what I needed. (Affiliate link at the bottom)

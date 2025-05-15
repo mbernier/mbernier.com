@@ -1,6 +1,9 @@
 ---
-title: "Memorizing every project detail? Stop. Here's why iteration - and not memory - is your key tool for success."
-date: 2025-03-24
+title: "Memorizing every project detail? Stop. Here's why iteration - and not memory - is your key tool for\_success."
+date: 2025-03-24T00:00:00.000Z
+categories:
+  - Productivity
+  - Process Improvement
 ---
 
 Memorizing every project detail? Stop. Here's why iteration - and not memory - is your key tool for success.

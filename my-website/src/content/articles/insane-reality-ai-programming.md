@@ -1,7 +1,12 @@
 ---
-title: "The Insane Reality of AI-Powered Development"
-date: 2025-03-04
-canonical_url: "https://mbernier.medium.com/the-insane-reality-of-ai-powered-development-8ca2d111a91e"
+title: The Insane Reality of AI-Powered Development
+date: 2025-03-04T00:00:00.000Z
+canonical_url: >-
+  https://mbernier.medium.com/the-insane-reality-of-ai-powered-development-8ca2d111a91e
+categories:
+  - AI
+  - Software Development
+  - Tech Industry
 ---
 
 ## This is insane.

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { getPaginatedContent } from '../../lib/content';
+import { getPaginatedContent, getUniqueCategories } from '../../lib/content';
 import { constructMetadata } from '../../lib/metadata';
 import Pagination from '../../components/Pagination';
 
@@ -23,8 +23,28 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
     : resolvedSearchParams["page"] || "1";
 
   const currentPage = parseInt(pageString, 10) || 1;
-
-  const { items: articles, totalPages } = await getPaginatedContent("articles", currentPage, 9);
+  
+  // Handle category filter
+  const categoryParam = Array.isArray(resolvedSearchParams["category"])
+    ? resolvedSearchParams["category"][0]
+    : resolvedSearchParams["category"];
+  
+  // Get all unique categories for the filter display
+  const allCategories = await getUniqueCategories("articles");
+  
+  const { items: articles, totalPages } = await getPaginatedContent(
+    "articles", 
+    currentPage, 
+    9, 
+    categoryParam
+  );
+  
+  // Validate that all articles have categories
+  for (const article of articles) {
+    if (!article.categories && !article.category) {
+      throw new Error(`Article "${article.title}" is missing required categories field`);
+    }
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -36,6 +56,37 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
           Thoughts, ideas, and insights on Product Management, Project Management, Software Development, technology, and more.
         </p>
       </div>
+      
+      {/* Category filter */}
+      {allCategories.length > 0 && (
+        <div className="mb-10">
+          <div className="flex justify-center flex-wrap gap-2">
+            <Link 
+              href="/articles" 
+              className={`inline-flex items-center px-3 py-1 rounded-md text-sm font-medium ${
+                !categoryParam
+                  ? 'bg-indigo-600 text-white'
+                  : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700'
+              }`}
+            >
+              All
+            </Link>
+            {allCategories.map(category => (
+              <Link 
+                key={category} 
+                href={`/articles?category=${encodeURIComponent(category)}`}
+                className={`inline-flex items-center px-3 py-1 rounded-md text-sm font-medium ${
+                  categoryParam === category
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                {category}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       {articles.length > 0 ? (
         <>
@@ -53,6 +104,28 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
                 day: 'numeric',
               });
               
+              // Process categories
+              let categories: string[] = [];
+              if (Array.isArray(article.categories)) {
+                categories = article.categories as string[];
+              } else if (typeof article.categories === 'string') {
+                if (article.categories.includes(',')) {
+                  categories = article.categories.split(',').map(cat => cat.trim());
+                } else {
+                  categories = [article.categories.trim()];
+                }
+              }
+              // Legacy support for old category field
+              else if (Array.isArray(article.category)) {
+                categories = article.category as string[];
+              } else if (typeof article.category === 'string') {
+                if (article.category.includes(',')) {
+                  categories = article.category.split(',').map(cat => cat.trim());
+                } else {
+                  categories = [article.category.trim()];
+                }
+              }
+              
               return (
                 <article 
                   key={article.slug} 
@@ -63,12 +136,12 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
                       {isFutureArticle ? (
                         <div className="flex items-start mb-1">
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300 mr-2">
-                            UPCOMING
+                            EARLY ACCESS
                           </span>
                         </div>
                       ) : null}
                       {isFutureArticle 
-                        ? `This article will be published on Medium on ${formattedDate}`
+                        ? `Early access - releasing on ${formattedDate}`
                         : formattedDate
                       }
                     </div>
@@ -78,12 +151,29 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
                       </h2>
                     </Link>
                     
+                    {/* Display categories */}
+                    {categories.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {categories.map(category => (
+                          <Link
+                            key={category}
+                            href={`/articles?category=${encodeURIComponent(category)}`}
+                            className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-800/30 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-800/50"
+                          >
+                            {category}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                    
+                    {/* Display tags */}
                     {article.tags && Array.isArray(article.tags) && article.tags.length > 0 && (
-                      <div className="mt-2 flex flex-wrap gap-2">
+                      <div className="mt-2 flex flex-wrap gap-1 items-center">
+                        <span className="text-xs text-gray-500 dark:text-gray-400">Tags:</span>
                         {article.tags.map((tag: string) => (
                           <span 
                             key={tag} 
-                            className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300"
+                            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300"
                           >
                             {tag}
                           </span>
@@ -103,7 +193,7 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
           <Pagination 
             currentPage={currentPage} 
             totalPages={totalPages} 
-            basePath="/articles"
+            basePath={categoryParam ? `/articles?category=${encodeURIComponent(categoryParam)}` : "/articles"}
           />
         </>
       ) : (

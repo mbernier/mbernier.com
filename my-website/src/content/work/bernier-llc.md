@@ -1,7 +1,7 @@
 ---
 title: "Founder / Consultant"
 company: "Bernier LLC"
-date: "Nov 2024 – Present"
+date: "2024-Present"
 description: "Building AI software, contracting for projects, and creating online content."
 header_image: "/images/bernier-llc.jpg"
 ---
