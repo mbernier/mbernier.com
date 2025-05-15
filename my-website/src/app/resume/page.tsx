@@ -18,6 +18,11 @@ export default async function ResumePage() {
     .sort((a, b) => {
       // Parse dates to compare - handling date ranges like "2020-2022"
       const getYearValue = (dateStr: string) => {
+        // For "Present" dates, return a far future year to sort at the top
+        if (dateStr.includes('Present')) {
+          return 9999;
+        }
+        
         // For date ranges, use the end year or most recent year
         if (dateStr.includes('-')) {
           const years = dateStr.split('-');
