@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Script from "next/script";
 import { constructMetadata } from "../lib/metadata";
 
 const geistSans = Geist({
@@ -25,18 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-EHZ8F1GBXV"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-EHZ8F1GBXV');
-            `,
-          }}
-        />
+        {/* Theme script to prevent flashing */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -61,6 +51,17 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        
+        {/* Google Analytics */}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-EHZ8F1GBXV" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-EHZ8F1GBXV');
+          `}
+        </Script>
       </body>
     </html>
   );

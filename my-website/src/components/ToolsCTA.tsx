@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 interface ToolsCTAProps {
   className?: string;
 }
@@ -10,7 +8,7 @@ export default function ToolsCTA({ className = '' }: ToolsCTAProps) {
       <h3 className="text-xl font-bold mb-2">Check Out My Favorite Tools</h3>
       <p className="mb-4 text-gray-600 dark:text-gray-400">
         Curious about the software I use for development, productivity, and content creation? 
-        I've compiled a list of my favorite tools that help me be more effective.
+        I&apos;ve compiled a list of my favorite tools that help me be more effective.
       </p>
       <a 
         href="https://links.mbernier.com" 
