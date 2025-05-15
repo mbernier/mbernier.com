@@ -49,10 +49,10 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
+        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl dark:text-white">
           Articles
         </h1>
-        <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-300">
+        <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-800 dark:text-gray-200">
           Thoughts, ideas, and insights on Product Management, Project Management, Software Development, technology, and more.
         </p>
       </div>
@@ -60,12 +60,12 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
       {/* Category filter */}
       {allCategories.length > 0 && (
         <div className="mb-10">
-          <div className="flex justify-center flex-wrap gap-2">
+          <div className="flex justify-center flex-wrap gap-4 mb-8">
             <Link 
               href="/articles" 
               className={`inline-flex items-center px-3 py-1 rounded-md text-sm font-medium ${
                 !categoryParam
-                  ? 'bg-indigo-600 text-white'
+                  ? 'bg-indigo-600 text-white dark:bg-indigo-500 dark:text-white'
                   : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
@@ -77,7 +77,7 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
                 href={`/articles?category=${encodeURIComponent(category)}`}
                 className={`inline-flex items-center px-3 py-1 rounded-md text-sm font-medium ${
                   categoryParam === category
-                    ? 'bg-indigo-600 text-white'
+                    ? 'bg-indigo-600 text-white dark:bg-indigo-500 dark:text-white'
                     : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}
               >
@@ -129,13 +129,13 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
               return (
                 <article 
                   key={article.slug} 
-                  className="bg-card rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+                  className="bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
                 >
                   <div className="p-6">
                     <div className="text-sm text-gray-500 dark:text-gray-400">
                       {isFutureArticle ? (
                         <div className="flex items-start mb-1">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300 mr-2">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-200 mr-2">
                             EARLY ACCESS
                           </span>
                         </div>
@@ -146,19 +146,19 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
                       }
                     </div>
                     <Link href={`/articles/${article.slug}`}>
-                      <h2 className="mt-2 text-xl font-semibold text-foreground hover:text-primary">
+                      <h2 className="mt-2 text-xl font-semibold text-foreground hover:text-primary dark:text-white dark:hover:text-blue-300">
                         {article.title}
                       </h2>
                     </Link>
                     
                     {/* Display categories */}
                     {categories.length > 0 && (
-                      <div className="mt-2 flex flex-wrap gap-1">
+                      <div className="mt-2 flex flex-wrap gap-2">
                         {categories.map(category => (
                           <Link
                             key={category}
                             href={`/articles?category=${encodeURIComponent(category)}`}
-                            className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-800/30 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-800/50"
+                            className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-800/30 dark:text-indigo-200 hover:bg-indigo-200 dark:hover:bg-indigo-700"
                           >
                             {category}
                           </Link>
@@ -173,7 +173,7 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
                         {article.tags.map((tag: string) => (
                           <span 
                             key={tag} 
-                            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300"
+                            className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-200"
                           >
                             {tag}
                           </span>
@@ -190,11 +190,13 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
             })}
           </div>
           
-          <Pagination 
-            currentPage={currentPage} 
-            totalPages={totalPages} 
-            basePath={categoryParam ? `/articles?category=${encodeURIComponent(categoryParam)}` : "/articles"}
-          />
+          <div className="mt-12 flex justify-center">
+            <Pagination 
+              currentPage={currentPage} 
+              totalPages={totalPages} 
+              basePath={categoryParam ? `/articles?category=${encodeURIComponent(categoryParam)}` : "/articles"}
+            />
+          </div>
         </>
       ) : (
         <div className="text-center py-16">
