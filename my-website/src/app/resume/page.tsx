@@ -16,10 +16,35 @@ export default async function ResumePage() {
   const jobs = workExperiences
     .filter(job => job.slug !== 'resume' && job.company && job.title && job.date)
     .sort((a, b) => {
-      // Parse dates to compare - assuming date format like "2020-2022" or "2015-2018"
-      const aStartYear = parseInt(a.date.split('-')[0]);
-      const bStartYear = parseInt(b.date.split('-')[0]);
-      return bStartYear - aStartYear; // Sort descending (most recent first)
+      // Parse dates to compare - handling date ranges like "2020-2022"
+      const getYearValue = (dateStr: string) => {
+        // For date ranges, use the end year or most recent year
+        if (dateStr.includes('-')) {
+          const years = dateStr.split('-');
+          // If we have a range, use the end year (or start year if no end year)
+          const year = years.length === 2 ? (years[1] || years[0]) : years[0];
+          return parseInt(year.trim());
+        }
+        
+        // Try to parse as a year or full date
+        if (/^\d{4}$/.test(dateStr)) {
+          return parseInt(dateStr);
+        }
+        
+        // Try as a full date
+        const date = new Date(dateStr);
+        if (!isNaN(date.getTime())) {
+          return date.getFullYear();
+        }
+        
+        return 0; // Fallback for unparseable dates
+      };
+      
+      // Use sortDate if available (added by the getContentByDirectory function)
+      const yearA = a.sortDate ? parseInt(a.sortDate) : getYearValue(a.date);
+      const yearB = b.sortDate ? parseInt(b.sortDate) : getYearValue(b.date);
+      
+      return yearB - yearA; // Sort descending (most recent first)
     });
 
   return (
