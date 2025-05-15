@@ -30,6 +30,6 @@ This experience reminded me how powerful the *right tools* can be. They don’t 
 If you’re wrangling with SquareSpace or struggling with content migrations, BeyondSpace might be worth a look. They have a ton of other features I haven't had a reason to explore, but if I was using SquareSpace all the time, I would start with this plugin.
 
 This is an affiliate link, I get 30% of whatever you opt in to pay for the plugin -
-[https://beyondspace.studio/?ref=MATTBERNIER](https://beyondspace.studio/?ref=MATTBERNIER) - it is WORTH EVERY PENNY.
+[https://beyondspace.studio/?ref=MATTBERNIER](https://beyondspace.studio/?ref=MATTBERNIER) - it is WORTH EVERY PENNY if you need to get your images out.
 
 Photo Note: I asked the AI for "stop watch" and this is what I got. Oh well.
