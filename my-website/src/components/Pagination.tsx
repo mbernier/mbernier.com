@@ -65,25 +65,21 @@ export default function Pagination({ currentPage, totalPages, basePath }: Pagina
   const pageNumbers = getPageNumbers();
   
   return (
-    <nav className="flex justify-center mt-12" aria-label="Pagination">
-      <ul className="flex items-center space-x-2">
+    <nav className="flex justify-center my-16" aria-label="Pagination">
+      <ul className="flex items-center" style={{ gap: '1.5rem' }}>
         {/* Previous page button */}
         <li>
           {currentPage > 1 ? (
             <Link 
               href={`${basePath}?page=${currentPage - 1}`}
-              className="px-3 py-2 rounded text-sm font-medium bg-gray-200 text-gray-700 
-                        hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 
-                        dark:hover:bg-gray-600 transition-colors"
+              className="px-5 py-3 rounded-md text-base font-medium transition-colors pagination-btn"
               aria-label="Previous page"
             >
               &larr;
             </Link>
           ) : (
             <span 
-              className="px-3 py-2 rounded 
-                        text-sm font-medium bg-gray-100 text-gray-400 dark:bg-gray-800 
-                        dark:text-gray-600 cursor-not-allowed"
+              className="px-5 py-3 rounded-md text-base font-medium transition-colors pagination-btn pagination-btn-disabled cursor-not-allowed"
               aria-disabled="true"
             >
               &larr;
@@ -95,15 +91,11 @@ export default function Pagination({ currentPage, totalPages, basePath }: Pagina
         {pageNumbers.map((page, index) => (
           <li key={index}>
             {page === '...' ? (
-              <span className="px-3 py-2 text-gray-500 dark:text-gray-400">...</span>
+              <span className="px-5 py-3 text-base transition-colors pagination-btn bg-transparent">...</span>
             ) : (
               <Link
                 href={`${basePath}?page=${page}`}
-                className={`px-3 py-2 rounded text-sm font-medium transition-colors
-                          ${currentPage === page 
-                            ? 'bg-primary text-black dark:text-white font-bold' 
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
-                          }`}
+                className={`px-5 py-3 rounded-md text-base font-medium transition-colors pagination-btn${currentPage === page ? ' pagination-btn-active font-bold' : ''}`}
                 aria-label={`Page ${page}`}
                 aria-current={currentPage === page ? 'page' : undefined}
               >
@@ -118,18 +110,14 @@ export default function Pagination({ currentPage, totalPages, basePath }: Pagina
           {currentPage < totalPages ? (
             <Link 
               href={`${basePath}?page=${currentPage + 1}`}
-              className="px-3 py-2 rounded text-sm font-medium bg-gray-200 text-gray-700 
-                        hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 
-                        dark:hover:bg-gray-600 transition-colors"
+              className="px-5 py-3 rounded-md text-base font-medium transition-colors pagination-btn"
               aria-label="Next page"
             >
               &rarr;
             </Link>
           ) : (
             <span 
-              className="px-3 py-2 rounded 
-                        text-sm font-medium bg-gray-100 text-gray-400 dark:bg-gray-800 
-                        dark:text-gray-600 cursor-not-allowed"
+              className="px-5 py-3 rounded-md text-base font-medium transition-colors pagination-btn pagination-btn-disabled cursor-not-allowed"
               aria-disabled="true"
             >
               &rarr;

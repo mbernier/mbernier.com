@@ -121,16 +121,20 @@ a:hover {
   color: rgb(75, 85, 99);
 }
 
-.dark .text-gray-300 {
+.dark .text-gray-600 {
   color: rgb(209, 213, 219);
+}
+
+.dark .text-gray-300 {
+  color: rgb(229, 231, 235);
 }
 
 .text-gray-500 {
   color: rgb(107, 114, 128);
 }
 
-.dark .text-gray-400 {
-  color: rgb(156, 163, 175);
+.dark .text-gray-500 {
+  color: rgb(229, 231, 235);
 }
 
 .border-gray-200 {
@@ -622,7 +626,7 @@ a:hover {
   color: rgb(31, 41, 55);
 }
 
-.dark .text-gray-200 {
+.dark .text-gray-800 {
   color: rgb(229, 231, 235);
 }
 
@@ -769,4 +773,37 @@ a:hover {
 
 .dark .category-selected {
   color: white !important;
+}
+
+/* Pagination custom styles */
+.pagination-btn {
+  background: #e5e7eb; /* gray-200 */
+  color: #374151;      /* gray-700 */
+  transition: background 0.2s, color 0.2s;
+}
+.pagination-btn:hover {
+  background: #d1d5db; /* gray-300 */
+}
+.pagination-btn-active {
+  background: var(--primary-color);
+  color: var(--primary-foreground-color);
+}
+.pagination-btn-disabled {
+  background: #f3f4f6; /* gray-100 */
+  color: #9ca3af;      /* gray-400 */
+}
+.dark .pagination-btn {
+  background: #1f2937; /* gray-800 */
+  color: #e5e7eb;      /* gray-200 */
+}
+.dark .pagination-btn:hover {
+  background: #374151; /* gray-700 */
+}
+.dark .pagination-btn-active {
+  background: var(--primary-color);
+  color: var(--primary-foreground-color);
+}
+.dark .pagination-btn-disabled {
+  background: #111827; /* gray-900 */
+  color: #6b7280;      /* gray-600 */
 }
