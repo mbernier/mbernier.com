@@ -10,6 +10,7 @@ export interface ContentItem {
   slug: string;
   title: string;
   date: string;
+  sortDate?: string;
   excerpt: string;
   content: string;
   [key: string]: string | string[] | number | boolean | null | undefined;
@@ -95,11 +96,33 @@ export async function getContentByDirectory(type: string): Promise<ContentItem[]
       if (itemDate && !(itemDate instanceof Date)) {
         // If date isn't a Date object already, convert it if needed
         if (typeof itemDate === 'string') {
-          // Try to ensure consistent date format
-          const parsedDate = new Date(itemDate);
-          if (!isNaN(parsedDate.getTime())) {
-            // Valid date, use ISO format for consistent sorting
-            matterResult.data.date = parsedDate.toISOString();
+          // If date contains "Present", use a far future year for sorting
+          if (itemDate.includes('Present')) {
+            matterResult.data.sortDate = '9999'; // Far future date to ensure it's sorted first
+          }
+          // For date ranges like "2018-2019", use the first year for sorting
+          else if (itemDate.includes('-')) {
+            const years = itemDate.split('-');
+            if (years.length === 2 && !isNaN(parseInt(years[0])) && !isNaN(parseInt(years[1]))) {
+              // Keep the original date string for display, but add a sortDate for sorting
+              matterResult.data.sortDate = years[1] || years[0]; // Use end year or start year if no end
+            } else {
+              // Try to treat as a regular date
+              const parsedDate = new Date(itemDate);
+              if (!isNaN(parsedDate.getTime())) {
+                matterResult.data.sortDate = parsedDate.getFullYear().toString();
+              } else {
+                matterResult.data.sortDate = '0'; // Fallback for invalid dates
+              }
+            }
+          } else {
+            // Try to parse as a regular date
+            const parsedDate = new Date(itemDate);
+            if (!isNaN(parsedDate.getTime())) {
+              matterResult.data.sortDate = parsedDate.getFullYear().toString();
+            } else {
+              matterResult.data.sortDate = '0'; // Fallback for invalid dates
+            }
           }
         }
       }
@@ -115,18 +138,41 @@ export async function getContentByDirectory(type: string): Promise<ContentItem[]
   );
   
   // Add debugging logs
-  console.log(`Sorting ${type} by date: ${allContent.map(item => `${item.slug}: ${item.date}`).join(', ')}`);
+  console.log(`Sorting ${type} by date: ${allContent.map(item => `${item.slug}: ${item.date}${item.sortDate ? ` (sort: ${item.sortDate})` : ''}`).join(', ')}`);
   
-  // Sort content by date using ISO date strings for reliable comparison
+  // Sort content by date using the sortDate field or falling back to date
   const sortedContent = allContent.sort((a, b) => {
-    // Ensure both dates are strings in ISO format
-    const dateA = new Date(a.date).toISOString();
-    const dateB = new Date(b.date).toISOString();
-    return dateB.localeCompare(dateA); // Sort most recent first
+    // Use sortDate if available, otherwise extract year from date string
+    const getYearValue = (item: ContentItem) => {
+      if (item.sortDate) return parseInt(item.sortDate);
+      
+      if (typeof item.date === 'string') {
+        // For date ranges like "2018-2019", use the most recent year
+        if (item.date.includes('-')) {
+          const years = item.date.split('-');
+          // Use the end year (or start year if no end)
+          const year = years.length === 2 ? (years[1] || years[0]) : years[0];
+          return parseInt(year);
+        }
+        
+        // Try to parse as a regular date
+        const parsedDate = new Date(item.date);
+        if (!isNaN(parsedDate.getTime())) {
+          return parsedDate.getFullYear();
+        }
+      }
+      
+      return 0; // Fallback for invalid dates
+    };
+    
+    const yearA = getYearValue(a);
+    const yearB = getYearValue(b);
+    
+    return yearB - yearA; // Sort descending (most recent first)
   });
   
   // Log after sorting
-  console.log(`Sorted ${type} order: ${sortedContent.map(item => `${item.slug}: ${item.date}`).join(', ')}`);
+  console.log(`Sorted ${type} order: ${sortedContent.map(item => `${item.slug}: ${item.date}${item.sortDate ? ` (sort: ${item.sortDate})` : ''}`).join(', ')}`);
   
   return sortedContent;
 }
