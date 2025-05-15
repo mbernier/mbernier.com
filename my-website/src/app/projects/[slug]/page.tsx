@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getContentBySlug, getAllContentSlugs } from '../../../lib/content';
 import { constructMetadata } from '../../../lib/metadata';
+import ToolsCTA from '../../../components/ToolsCTA';
 
 // Default image for projects that don't have their own image
 const DEFAULT_PROJECT_IMAGE = '/images/default-project.jpg';
@@ -169,6 +170,8 @@ export default async function ProjectPage(props: PageProps) {
         <div className="prose prose-lg dark:prose-invert mx-auto">
           <div dangerouslySetInnerHTML={{ __html: project.content }} />
         </div>
+        
+        <ToolsCTA className="mt-12" />
         
         <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800">
           <Link 

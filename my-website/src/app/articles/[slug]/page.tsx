@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getContentBySlug, getAllContentSlugs } from '../../../lib/content';
 import { constructMetadata } from '../../../lib/metadata';
+import ToolsCTA from '../../../components/ToolsCTA';
 
 // Define params as a Promise per Next.js 15 requirements
 interface PageProps {
@@ -95,6 +96,8 @@ export default async function ArticlePage(props: PageProps) {
         <div className="prose prose-lg dark:prose-invert mx-auto">
           <div dangerouslySetInnerHTML={{ __html: article.content }} />
         </div>
+        
+        <ToolsCTA className="mt-12" />
         
         <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800">
           <Link 

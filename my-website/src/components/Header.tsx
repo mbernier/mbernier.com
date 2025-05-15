@@ -135,6 +135,14 @@ export default function Header() {
             >
               Services
             </Link>
+            <a 
+              href="https://links.mbernier.com" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+            >
+              Tools
+            </a>
             <Link 
               href="/resume" 
               className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
@@ -217,6 +225,15 @@ export default function Header() {
             >
               Services
             </Link>
+            <a
+              href="https://links.mbernier.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block pl-3 pr-4 py-2 border-l-4 text-base font-medium border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Tools
+            </a>
             <Link
               href="/resume"
               className={`block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
