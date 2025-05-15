@@ -1,6 +1,9 @@
 ---
-title: "Why \"process\" is a 4-letter word"
-date: 2025-03-31
+title: "Why \"process\" is a 4-letter\_word"
+date: 2025-03-31T00:00:00.000Z
+categories:
+  - Process Improvement
+  - Team Collaboration
 ---
 
 The reason people don't like process or people who bring process, is that they often don't take the time to understand why things are the way they are today before trying to change them.

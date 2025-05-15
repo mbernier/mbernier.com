@@ -1,7 +1,7 @@
 ---
 title: "Product Manager & Project Manager"
 company: "ShapeShift"
-date: "Feb 2018 – Jan 2019"
+date: "2018-2019"
 description: "Led product strategy for DevOps teams and drove authentication security improvements."
 header_image: "/images/shapeshift.jpg"
 ---

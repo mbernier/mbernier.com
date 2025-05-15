@@ -1,7 +1,7 @@
 ---
 title: "Founder"
 company: "BarnDoors.ForSale"
-date: "2014 – 2017"
+date: "2014-2017"
 description: "Co-founded an e-commerce business, handling UX, marketing, and operations."
 header_image: "/images/barndoors.jpg"
 ---

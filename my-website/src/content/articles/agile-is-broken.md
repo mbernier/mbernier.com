@@ -1,7 +1,11 @@
 ---
-title: "Agile is broken — but not for the reasons you think."
-date: 2025-03-04
-canonical_url: "https://mbernier.medium.com/agile-is-broken-but-not-for-the-reasons-you-think-d87ecd45ba46"
+title: Agile is broken — but not for the reasons you think.
+date: 2025-03-04T00:00:00.000Z
+canonical_url: >-
+  https://mbernier.medium.com/agile-is-broken-but-not-for-the-reasons-you-think-d87ecd45ba46
+categories:
+  - Agile
+  - Project Management
 ---
 
 

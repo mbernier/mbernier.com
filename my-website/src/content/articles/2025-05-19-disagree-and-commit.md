@@ -1,7 +1,11 @@
 ---
-title: "The Art of Disagree and Commit is crap without follow up"
-date: 2025-05-19
-image: "/images/decision-chaos.png" 
+title: The Art of Disagree and Commit is crap without follow up
+date: 2025-05-19T00:00:00.000Z
+image: /images/decision-chaos.png
+categories:
+  - Leadership
+  - Team Collaboration
+  - Decision Making
 ---
 I don't like the way most people try to use Disagree and Commit. It can be used as a tool to close (and win) a conversation, rather than as a tool for collaboration and learning.
 

@@ -1,7 +1,10 @@
 ---
-title: "Chaos is part and parcel with tech."
-date: 2025-03-11
-canonical_url: "https://mbernier.medium.com/chaos-is-part-and-parcel-with-tech-5965d67aabef"
+title: "Chaos is part and parcel with\_tech."
+date: 2025-03-11T00:00:00.000Z
+canonical_url: 'https://mbernier.medium.com/chaos-is-part-and-parcel-with-tech-5965d67aabef'
+categories:
+  - Project Management
+  - Tech Industry
 ---
 
 

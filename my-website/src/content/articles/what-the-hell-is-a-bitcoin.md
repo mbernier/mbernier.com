@@ -1,7 +1,10 @@
 ---
-title: "What the Hell is a Bitcoin"
-date: 2018-11-15
-canonical_url: "https://medium.com/@mbernier/what-the-hell-is-a-bitcoin-d8c7cf028d61"
+title: What the Hell is a Bitcoin
+date: 2018-11-15T00:00:00.000Z
+canonical_url: 'https://medium.com/@mbernier/what-the-hell-is-a-bitcoin-d8c7cf028d61'
+categories:
+  - Cryptocurrency
+  - Technology Explainers
 ---
 
 Bitcoin is a decentralized digital currency that enables peer-to-peer transactions without the need for intermediaries like banks. Key characteristics include:

@@ -1,7 +1,12 @@
 ---
-title: "Making Jira do more so you don't have to"
-date: 2025-03-12
-canonical_url: "https://mbernier.medium.com/making-jira-do-more-so-you-dont-have-to-0dd06c32b5f9"
+title: "Making Jira do more so you don't have\_to"
+date: 2025-03-12T00:00:00.000Z
+canonical_url: >-
+  https://mbernier.medium.com/making-jira-do-more-so-you-dont-have-to-0dd06c32b5f9
+categories:
+  - Project Management
+  - Productivity
+  - Tools
 ---
 
 I have been a long-time user of Jira, originally unwillingly, until I figured out how to make it sing and dance for me.

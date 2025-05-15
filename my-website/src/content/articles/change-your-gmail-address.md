@@ -1,12 +1,15 @@
 ---
-title: "Updating Your Gmail Address After a Name Change (Personal & Workspace)"
-date: 2025-05-15
+title: Updating Your Gmail Address After a Name Change (Personal & Workspace)
+date: 2025-05-15T00:00:00.000Z
 description: |
   A step‑by‑step guide for anyone who’s changed their name—whether through
   marriage, divorce, gender transition, or another life event—and now needs
   their email address to match. Covers both free @gmail.com accounts and
   Google Workspace business accounts, with tips to keep every message and stay
   in control of how you reply.
+categories:
+  - Tutorials
+  - Productivity
 ---
 
 > **why this guide matters 💌**

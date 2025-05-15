@@ -1,7 +1,7 @@
 ---
 title: "Head of Product (Contract)"
 company: "Stealth Startup - API Proxy for Security"
-date: "Aug 2024 – Oct 2024"
+date: "2024-2024"
 description: "Defined Product-Market Fit, improved API consumer experience, and drove early product strategy."
 header_image: "/images/stealth-startup.jpg"
 ---

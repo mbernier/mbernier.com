@@ -1,7 +1,12 @@
 ---
-title: "Double Your Development Velocity without Growing Your Team"
-date: 2018-12-01
-canonical_url: "https://medium.com/@mbernier/double-your-development-velocity-without-growing-your-team-bbea26355132"
+title: Double Your Development Velocity without Growing Your Team
+date: 2018-12-01T00:00:00.000Z
+canonical_url: >-
+  https://medium.com/@mbernier/double-your-development-velocity-without-growing-your-team-bbea26355132
+categories:
+  - Software Development
+  - Productivity
+  - Prioritization
 ---
 
 In today's fast-paced tech environment, increasing development velocity is crucial. However, expanding your team isn't always feasible. Here are strategies to double your development speed without adding more personnel:

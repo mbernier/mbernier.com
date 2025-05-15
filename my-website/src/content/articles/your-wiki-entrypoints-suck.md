@@ -1,7 +1,12 @@
 ---
-title: "Your wiki doesn’t suck. Your wiki entry points suck."
-date: 2024-11-25
-canonical_url: "https://mbernier.medium.com/your-wiki-doesnt-suck-your-wiki-entry-points-suck-d16497539056"
+title: Your wiki doesn’t suck. Your wiki entry points suck.
+date: 2024-11-25T00:00:00.000Z
+canonical_url: >-
+  https://mbernier.medium.com/your-wiki-doesnt-suck-your-wiki-entry-points-suck-d16497539056
+categories:
+  - Knowledge Management
+  - Productivity
+  - Documentation
 ---
 
 ## The Symptoms of a Wiki that Sucks

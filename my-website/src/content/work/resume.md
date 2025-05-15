@@ -1,6 +1,6 @@
 ---
 title: "Matt Bernier's Resume"
-date: "2025-03-08"
+date: "2025-03-08T00:00:00.000Z"
 description: "Professional experience and skills of Matt Bernier."
 header_image: "/images/resume.jpg"
 ---

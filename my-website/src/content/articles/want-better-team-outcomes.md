@@ -1,7 +1,10 @@
 ---
-title: "Want better outcomes for your team? Start by asking: \"What didn't work? And what will we do about that?\""
-date: 2025-03-17
-canonical_url: "https://mbernier.medium.com/chaos-is-part-and-parcel-with-tech-5965d67aabef"
+title: "Want better outcomes for your team? Start by asking: \"What didn't work? And what will we do about\_that?\""
+date: 2025-03-17T00:00:00.000Z
+canonical_url: 'https://mbernier.medium.com/chaos-is-part-and-parcel-with-tech-5965d67aabef'
+categories:
+  - Leadership
+  - Team Collaboration
 ---
 
 Looking back is underrated. Reflection isn't just about celebrating wins and it should never be about punishing mistakes; it's about digging deep, asking tough questions, and finding improved ways forward. You have only made a mistake if you don't learn from what happened and change as a result.

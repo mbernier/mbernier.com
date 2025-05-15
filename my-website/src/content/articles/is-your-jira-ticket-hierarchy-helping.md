@@ -1,7 +1,12 @@
 ---
-title: "Is your Jira Cloud Ticket Hierarchy helping you?"
-date: 2024-11-05
-canonical_url: "https://mbernier.medium.com/is-your-jira-cloud-ticket-hierarchy-helping-you-d3476f8be59e"
+title: Is your Jira Cloud Ticket Hierarchy helping you?
+date: 2024-11-05T00:00:00.000Z
+canonical_url: >-
+  https://mbernier.medium.com/is-your-jira-cloud-ticket-hierarchy-helping-you-d3476f8be59e
+categories:
+  - Project Management
+  - Productivity
+  - Tools
 ---
 
 I have seen some messy Jira Cloud instances… like really messy. It is rare to get the opportunity to set up Jira from scratch, but I had just that opportunity once before and it solidified the importance of having a holistic view of the configuration. We got to see the impact on our teams of every configuration decision. We couldn’t avoid every pothole. We learned as we went by making 2-way doors whenever possible. The result was that we created a configuration that worked way better than anything we had seen previously.
