@@ -1,7 +1,7 @@
 ---
 title: Downloading Videos from SquareSpace
-date: '2025-05-03'
-description: 'Download videos, images, and other assets from Squarespace quickly.'
+date: 2025-05-03T00:00:00.000Z
+description: "Download videos, images, and other assets from Squarespace quickly."
 tech:
   - squarespace
   - website
@@ -18,19 +18,19 @@ A friend needed help migrating their online course from SquareSpace to another p
 
 I couldn’t figure out how to download the videos from SquareSpace. There wasn’t a clear option anywhere. Frustration set in.
 
-Then I found *BeyondSpace*. It’s a browser plugin designed to simplify SquareSpace workflows. And let me tell you—it was a lifesaver.
+Then I found _BeyondSpace_. It’s a browser plugin designed to simplify SquareSpace workflows. And let me tell you—it was a lifesaver.
 
 Here’s how it worked:
 → I installed the plugin.
 → Went to the asset library.
-→ Clicked a dropdown menu that *magically appeared*.
+→ Clicked a dropdown menu that _magically appeared_.
 → Downloaded everything I needed.
 
 What wasn’t possible by default became a 5-minute task, including setup and download time. It felt like magic.
 
 Oh, and the best part? BeyondSpace lets you pay what you think the tool is worth. I chipped in, got the plugin link and instructions via email, and was downloading the content I needed in no time.
 
-This experience reminded me how powerful the *right tools* can be. They don’t just save time—they save sanity.
+This experience reminded me how powerful the _right tools_ can be. They don’t just save time—they save sanity.
 
 If you’re wrangling with SquareSpace or struggling with content migrations, BeyondSpace might be worth a look. They have a ton of other features I haven't had a reason to explore, but if I was using SquareSpace all the time, I would start with this plugin.
 
