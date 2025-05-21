@@ -1,7 +1,7 @@
 ---
 title: "How to Connect Your Google Workspace Inbox to Personal Gmail (2025)"
 date: 2025-05-21T17:10:00.000Z
-image: /images/pm_stretch.png
+image: /images/gmail+gmail.png
 categories:
   - Tools
   - Productivity
@@ -144,3 +144,6 @@ reading_time: "6 min"
 [3]: https://support.google.com/mail/answer/7104828?hl=en&utm_source=chatgpt.com "Read Gmail messages on other email clients using POP - Google Help"
 [4]: https://developers.google.com/workspace/gmail/imap/imap-smtp?utm_source=chatgpt.com "IMAP, POP, and SMTP | Gmail - Google for Developers"
 [5]: https://www.theverge.com/24260399/gmail-email-inbox-import-how-to?utm_source=chatgpt.com "How to import email from other accounts into Gmail"
+
+
+Photo Note: I asked ChatGPT for "two gmail logos with a plus sign in between" this is what it gave me.
