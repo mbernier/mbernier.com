@@ -1,6 +1,6 @@
 ---
 title: Customer Experience is about taking care of new and loyal customers.
-date: 2025-05-02T10:42:00.000Z
+date: 2025-06-02T10:43:00.000Z
 image: /images/internet_prices.png
 categories:
   - Customer Experience
