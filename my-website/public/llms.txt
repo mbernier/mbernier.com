@@ -1,0 +1,44 @@
+# Matt Bernier
+
+> Personal website and blog of Matt Bernier, a Product Management Leader with deep expertise in Developer Tools, Developer Experience, and Product Operations. The site features articles on product management, project showcases, professional experience, and consulting services.
+
+Matt Bernier is a fractional Chief Product Officer and consultant who writes extensively about product management, developer experience, team collaboration, and product operations. His work focuses on helping teams build better products through improved processes, better feedback loops, and more effective cross-functional collaboration.
+
+The website is built with Next.js and contains a collection of articles, project case studies, professional work history, and information about consulting services. Content covers practical product management topics, developer tools, process improvement, and real-world project experiences.
+
+## Articles
+
+- [Do Product Managers and Engineers Even Care What Support Teams are Hearing from Customers?](https://mbernier.com/articles/do-product-managers-even): Deep dive into improving feedback loops between support and product teams
+- [Is Your Jira Ticket Hierarchy Helping?](https://mbernier.com/articles/is-your-jira-ticket-hierarchy-helping): Analysis of effective project management and ticket organization
+- [Why Process Is a 4-Letter Word](https://mbernier.com/articles/why-process-4-letter-word): Thoughts on process improvement and team dynamics
+- [The Insane Reality of AI Programming](https://mbernier.com/articles/insane-reality-ai-programming): Perspectives on AI tools in development workflows
+- [Double Developer Velocity with RICE](https://mbernier.com/articles/double-developer-velocity-with-rice): Framework for prioritizing development work
+- [Evolution of Product Management](https://mbernier.com/articles/2025-05-21-evolution-of-product-management): How the role has changed over time
+
+## Professional Experience
+
+- [Resume](https://mbernier.com/resume): Professional experience and skills summary
+- [Fractional Consulting](https://mbernier.com/work/fractional-consulting): Current consulting services and approach
+- [Temporal](https://mbernier.com/work/temporal): Experience as VP of Product at Temporal
+- [Twilio/SendGrid](https://mbernier.com/work/twilio): Product management work at Twilio and SendGrid
+- [mParticle](https://mbernier.com/work/mparticle): Product leadership experience
+
+## Projects
+
+- [AI Text Processing Pipeline](https://mbernier.com/projects/ai-text-processing-pipeline): Building automated content processing systems
+- [Developer Experience Projects](https://mbernier.com/projects/developer-experience): Improving developer workflows and tools
+- [Product Management Dashboard](https://mbernier.com/projects/project-management-dashboard-202503): Custom tooling for product teams
+- [WordPress Testimonials Plugin](https://mbernier.com/projects/wordpress-testimonials): Custom WordPress development
+- [Ignite Denver](https://mbernier.com/projects/ignite-denver): Community event organization
+
+## Services
+
+- [Consulting Services](https://mbernier.com/services): Product management, project management, and fractional CPO services
+- [Privacy Policy](https://mbernier.com/privacy-policy): Website privacy information
+- [Terms of Service](https://mbernier.com/terms-of-service): Website terms and conditions
+
+## Optional
+
+- [All Articles Archive](https://mbernier.com/articles): Complete listing of all blog posts and articles
+- [All Projects Archive](https://mbernier.com/projects): Full portfolio of project case studies
+- [Complete Work History](https://mbernier.com/work): Detailed professional experience timeline 
