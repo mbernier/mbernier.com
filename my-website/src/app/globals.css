@@ -1,42 +1,27 @@
 @import "tailwindcss/preflight";
 @tailwind utilities;
 
-:root {
-  --background-color: rgb(255, 255, 255);
-  --foreground-color: rgb(23, 23, 23);
-  --card-color: rgb(255, 255, 255);
-  --card-foreground-color: rgb(23, 23, 23);
-  --popover-color: rgb(255, 255, 255);
-  --popover-foreground-color: rgb(23, 23, 23);
-  --primary-color: rgb(59, 130, 246);
-  --primary-foreground-color: rgb(255, 255, 255);
-  --secondary-color: rgb(243, 244, 246);
-  --secondary-foreground-color: rgb(23, 23, 23);
-  --muted-color: rgb(243, 244, 246);
-  --muted-foreground-color: rgb(107, 114, 128);
-  --accent-color: rgb(243, 244, 246);
-  --accent-foreground-color: rgb(23, 23, 23);
-  --border-color: rgb(229, 231, 235);
-  --ring-color: rgb(59, 130, 246);
-}
+/* Import shared design system */
+@import "../../../../shared/styles/design-system.css";
 
-.dark {
-  --background-color: rgb(10, 10, 10);
-  --foreground-color: rgb(237, 237, 237);
-  --card-color: rgb(10, 10, 10);
-  --card-foreground-color: rgb(237, 237, 237);
-  --popover-color: rgb(10, 10, 10);
-  --popover-foreground-color: rgb(237, 237, 237);
-  --primary-color: rgb(59, 130, 246);
-  --primary-foreground-color: rgb(255, 255, 255);
-  --secondary-color: rgb(31, 41, 55);
-  --secondary-foreground-color: rgb(237, 237, 237);
-  --muted-color: rgb(31, 41, 55);
-  --muted-foreground-color: rgb(156, 163, 175);
-  --accent-color: rgb(31, 41, 55);
-  --accent-foreground-color: rgb(237, 237, 237);
-  --border-color: rgb(31, 41, 55);
-  --ring-color: rgb(59, 130, 246);
+/* Legacy color variables for backward compatibility */
+:root {
+  --background-color: var(--color-background);
+  --foreground-color: var(--color-foreground);
+  --card-color: var(--color-card);
+  --card-foreground-color: var(--color-card-foreground);
+  --popover-color: var(--color-card);
+  --popover-foreground-color: var(--color-card-foreground);
+  --primary-color: var(--color-primary);
+  --primary-foreground-color: var(--color-primary-foreground);
+  --secondary-color: var(--color-secondary);
+  --secondary-foreground-color: var(--color-secondary-foreground);
+  --muted-color: var(--color-muted);
+  --muted-foreground-color: var(--color-muted-foreground);
+  --accent-color: var(--color-accent);
+  --accent-foreground-color: var(--color-accent-foreground);
+  --border-color: var(--color-border);
+  --ring-color: var(--color-ring);
 }
 
 /* Base styles */
