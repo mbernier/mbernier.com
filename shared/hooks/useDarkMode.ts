@@ -13,8 +13,8 @@ export const useDarkMode = (): [boolean, () => void] => {
       return saved === 'dark';
     }
     
-    // Fall back to system preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Default to light mode (not system preference)
+    return false;
   });
 
   // Apply theme to document and save to localStorage
@@ -50,7 +50,10 @@ export const useDarkMode = (): [boolean, () => void] => {
       // Only update if no explicit theme is set in localStorage
       const saved = localStorage.getItem('theme');
       if (!saved) {
-        setIsDarkMode(e.matches);
+        // Even with no saved preference, default to light mode
+        // (don't automatically follow system preference)
+        // Users can manually toggle if they want dark mode
+        return;
       }
     };
 
