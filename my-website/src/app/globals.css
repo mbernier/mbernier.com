@@ -2,7 +2,7 @@
 @tailwind utilities;
 
 /* Import shared design system */
-@import "../../shared/styles/design-system.css";
+@import "../styles/design-system.css";
 
 /* Legacy color variables for backward compatibility */
 :root {
