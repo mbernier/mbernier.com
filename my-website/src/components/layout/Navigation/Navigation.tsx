@@ -116,7 +116,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   };
 
   const containerClasses = cn(
-    variant === "header" && "flex items-center space-x-1",
+    variant === "header" && "flex items-center space-x-4",
     variant === "sidebar" && "flex flex-col space-y-1",
     variant === "footer" && "grid grid-cols-2 md:grid-cols-4 gap-4",
     className
