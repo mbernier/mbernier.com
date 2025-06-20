@@ -13,7 +13,7 @@ export default function Footer() {
               Matt Bernier
             </Link>
             <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-              Developer, writer, and creator.
+              Fractional Product Management Leader, Developer, writer, and creator.
             </p>
           </div>
           

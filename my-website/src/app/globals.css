@@ -574,6 +574,18 @@ a:hover {
   margin-top: 0.25rem;
 }
 
+.space-x-2 > * + * {
+  margin-left: 0.5rem;
+}
+
+.space-x-4 > * + * {
+  margin-left: 1rem;
+}
+
+.space-x-8 > * + * {
+  margin-left: 2rem;
+}
+
 .inline-flex {
   display: inline-flex;
 }
