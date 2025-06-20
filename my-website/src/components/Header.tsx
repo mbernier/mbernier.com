@@ -14,7 +14,7 @@ export default function Header() {
   const [isDarkMode, toggleDarkMode] = useDarkMode();
 
   return (
-    <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+    <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-sm border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
@@ -24,18 +24,18 @@ export default function Header() {
               </Link>
               
               {/* Social Media Icons */}
-              <div className="ml-4">
+              <div className="ml-6">
                 <SocialIcons 
                   size="sm"
                   showLabels={false}
-                  className="flex space-x-2"
+                  className="flex space-x-3"
                 />
               </div>
             </div>
           </div>
           
           {/* Desktop navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-4">
+          <div className="hidden md:flex md:items-center md:space-x-6">
             <Navigation 
               items={mainSiteNavigation}
               variant="header"
@@ -50,7 +50,7 @@ export default function Header() {
           </div>
           
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="md:hidden flex items-center space-x-3">
             <ThemeToggle 
               isDarkMode={isDarkMode}
               toggleDarkMode={toggleDarkMode}
@@ -79,7 +79,7 @@ export default function Header() {
       {/* Mobile menu */}
       {isMenuOpen && (
         <div className="md:hidden">
-          <div className="pt-2 pb-3 space-y-1 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg border-t border-border">
+          <div className="pt-2 pb-3 space-y-1 bg-background/80 backdrop-blur-sm shadow-lg border-t border-border">
             <Navigation 
               items={mainSiteNavigation}
               variant="sidebar"
