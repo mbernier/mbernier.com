@@ -26,33 +26,25 @@ export default async function Home() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
               Hi, I&apos;m Matt Bernier
             </h1>
-            <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">
+            <p className="mt-4 text-xl text-muted-foreground">
               Developer, writer, and creator focused on building great products and experiences.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="/services"
-                className="px-6 py-3 rounded-md bg-primary text-primary-foreground font-medium shadow-sm hover:bg-primary/90"
-                style={{
-                  backgroundColor: 'var(--primary-color)',
-                  color: 'var(--primary-foreground-color)',
-                }}
+                className="px-6 py-3 rounded-md bg-primary text-primary-foreground font-medium shadow-sm hover:bg-primary/90 transition-colors"
               >
                 Hire Me
               </Link>
               <Link
                 href="/resume"
-                className="px-6 py-3 rounded-md bg-secondary text-secondary-foreground font-medium shadow-sm hover:bg-secondary/90"
-                style={{
-                  backgroundColor: 'var(--secondary-color)',
-                  color: 'var(--secondary-foreground-color)',
-                }}
+                className="px-6 py-3 rounded-md bg-secondary text-secondary-foreground font-medium shadow-sm hover:bg-secondary/90 transition-colors"
               >
                 View Resume
               </Link>
               <Link
                 href="/projects"
-                className="px-6 py-3 rounded-md border border-gray-300 dark:border-gray-700 text-foreground font-medium shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="px-6 py-3 rounded-md border border-border text-foreground font-medium shadow-sm hover:bg-muted transition-colors"
               >
                 See Projects
               </Link>
@@ -73,14 +65,13 @@ export default async function Home() {
       </section>
 
       {/* Recent Articles Section */}
-      <section className="py-16" style={{ backgroundColor: 'rgb(249, 250, 251)', color: 'inherit' }}>
+      <section className="py-16 bg-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-baseline">
-            <h2 className="text-3xl font-bold" style={{ color: 'rgb(31, 41, 55)' }}>Recent Articles</h2>
+            <h2 className="text-3xl font-bold text-foreground">Recent Articles</h2>
             <Link 
               href="/articles" 
-              className="text-primary hover:underline"
-              style={{ color: 'var(--primary-color)' }}
+              className="text-primary hover:underline transition-colors"
             >
               View all articles →
             </Link>
@@ -90,19 +81,19 @@ export default async function Home() {
               recentArticles.map((article) => (
                 <div key={article.slug} className="bg-card rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                   <div className="p-6">
-                    <div className="text-sm text-gray-500 dark:text-gray-400">{new Date(article.date).toLocaleDateString()}</div>
+                    <div className="text-sm text-muted-foreground">{new Date(article.date).toLocaleDateString()}</div>
                     <Link href={`/articles/${article.slug}`}>
-                      <h3 className="mt-2 text-xl font-semibold text-foreground hover:text-primary">{article.title}</h3>
+                      <h3 className="mt-2 text-xl font-semibold text-card-foreground hover:text-primary transition-colors">{article.title}</h3>
                     </Link>
-                    <p className="mt-3 text-gray-600 dark:text-gray-300">{article.excerpt}</p>
-                    <Link href={`/articles/${article.slug}`} className="mt-4 inline-block text-primary hover:underline" style={{ color: 'var(--primary-color)' }}>
+                    <p className="mt-3 text-muted-foreground">{article.excerpt}</p>
+                    <Link href={`/articles/${article.slug}`} className="mt-4 inline-block text-primary hover:underline transition-colors">
                       Read more →
                     </Link>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="col-span-3 text-gray-500 dark:text-gray-400">No articles found. Check back soon!</p>
+              <p className="col-span-3 text-muted-foreground">No articles found. Check back soon!</p>
             )}
           </div>
         </div>
@@ -115,13 +106,12 @@ export default async function Home() {
             <h2 className="text-3xl font-bold text-foreground">Services</h2>
             <Link 
               href="/services" 
-              className="text-primary hover:underline"
-              style={{ color: 'var(--primary-color)' }}
+              className="text-primary hover:underline transition-colors"
             >
               More Information →
             </Link>
           </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+          <div className="bg-card rounded-lg shadow p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
               <div className="flex items-center">
                 <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
@@ -189,8 +179,7 @@ export default async function Home() {
             <h2 className="text-3xl font-bold text-foreground">Recent Projects</h2>
             <Link 
               href="/projects" 
-              className="text-primary hover:underline"
-              style={{ color: 'var(--primary-color)' }}
+              className="text-primary hover:underline transition-colors"
             >
               View all projects →
             </Link>

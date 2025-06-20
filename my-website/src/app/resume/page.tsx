@@ -58,7 +58,7 @@ export default async function ResumePage() {
         <h1 className="text-4xl font-bold tracking-tight text-foreground">
           Resume
         </h1>
-        <p className="mt-4 text-xl text-gray-600 dark:text-gray-300">
+        <p className="mt-4 text-xl text-muted-foreground">
           My professional experience, skills, and qualifications.
         </p>
         <div className="mt-6">
@@ -66,12 +66,7 @@ export default async function ResumePage() {
             href="/Matt Bernier_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center px-4 py-2 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-800 bg-gray-200 hover:bg-primary hover:text-gray-800 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
-            style={{
-              backgroundColor: 'rgb(229, 231, 235)', // gray-200
-              color: 'rgb(31, 41, 55)', // gray-800
-              borderColor: 'rgb(209, 213, 219)', // gray-300
-            }}
+            className="inline-flex items-center px-4 py-2 border border-border text-base font-medium rounded-md shadow-sm bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground hover:border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors"
           >
             Download PDF
             <svg 
@@ -107,43 +102,43 @@ export default async function ResumePage() {
         <div className="mt-6 space-y-8">
           {jobs.length > 0 ? (
             jobs.map((job) => (
-              <div key={job.slug} className="relative pl-8 border-l-2 border-gray-200 dark:border-gray-800 pb-2">
+              <div key={job.slug} className="relative pl-8 border-l-2 border-border pb-2">
                 <div className="absolute -left-2 top-0 w-4 h-4 rounded-full bg-primary"></div>
                 <div className="pl-3">
                   <Link href={`/work/${job.slug}`} className="group">
-                    <h3 className="text-xl font-semibold text-foreground group-hover:text-primary">
+                    <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
                       {job.title}
                     </h3>
                   </Link>
                   <div className="text-primary font-medium">{job.company}</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">{job.date}</div>
+                  <div className="text-sm text-muted-foreground">{job.date}</div>
                   {job.description && (
-                    <p className="mt-2 text-gray-600 dark:text-gray-300">{job.description}</p>
+                    <p className="mt-2 text-muted-foreground">{job.description}</p>
                   )}
                   <Link 
                     href={`/work/${job.slug}`}
-                    className="mt-2 inline-block text-primary hover:underline"
+                    className="mt-2 inline-block text-primary hover:underline transition-colors"
                   >
                     Read more →
                   </Link>
                 </div>
               </div>
             ))
-          ) : (
-            <p className="text-gray-500 dark:text-gray-400">No work experience found.</p>
-          )}
+                      ) : (
+              <p className="text-muted-foreground">No work experience found.</p>
+            )}
         </div>
 
         <h2 className="mt-8 text-2xl font-bold text-foreground">Education</h2>
         <div className="mt-4">
           <h3 className="text-xl font-semibold text-foreground">Bachelor of Science in Computer Science</h3>
           <div className="text-primary font-medium">University of Missouri-Columbia</div>
-          <div className="text-sm text-gray-500 dark:text-gray-400">Graduated: 2007</div>
+          <div className="text-sm text-muted-foreground">Graduated: 2007</div>
         </div>
         <div className="mt-4">
           <h3 className="text-xl font-semibold text-foreground">Bachelor of Science in Information Technology</h3>
           <div className="text-primary font-medium">University of Missouri-Columbia</div>
-          <div className="text-sm text-gray-500 dark:text-gray-400">Graduated: 2007</div>
+          <div className="text-sm text-muted-foreground">Graduated: 2007</div>
         </div>
       </div>
     </div>

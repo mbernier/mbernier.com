@@ -50,7 +50,7 @@ export default async function ProjectsPage({ searchParams }: PageProps) {
         <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
           Projects
         </h1>
-        <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-300">
+        <p className="mt-4 max-w-2xl mx-auto text-xl text-muted-foreground">
           A showcase of my work, including web applications, open-source contributions, and more.
         </p>
       </div>
@@ -63,8 +63,8 @@ export default async function ProjectsPage({ searchParams }: PageProps) {
               href="/projects"
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 !selectedCategory
-                  ? 'bg-primary category-selected'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
               }`}
             >
               All
@@ -76,8 +76,8 @@ export default async function ProjectsPage({ searchParams }: PageProps) {
                 href={`/projects?category=${encodeURIComponent(category)}`}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   selectedCategory === category
-                    ? 'bg-primary category-selected'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
                 }`}
               >
                 {category}
@@ -190,7 +190,7 @@ export default async function ProjectsPage({ searchParams }: PageProps) {
                       </div>
                     )}
                     
-                    <p className="mt-3 text-gray-600 dark:text-gray-300">
+                    <p className="mt-3 text-muted-foreground">
                       {project.excerpt}
                     </p>
                   </div>
