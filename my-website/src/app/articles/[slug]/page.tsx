@@ -96,7 +96,7 @@ export default async function ArticlePage(props: PageProps) {
       <article className="bg-card rounded-lg shadow-md overflow-hidden">
         <header className="mb-10 p-6">
           <div className="space-y-1 text-center">
-            <div className="text-gray-500 dark:text-gray-400">
+            <div className="text-muted-foreground">
               {isFutureArticle ? (
                 <div className="flex items-center justify-center">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300 mb-2">
@@ -133,7 +133,7 @@ export default async function ArticlePage(props: PageProps) {
             {/* Display tags if they exist */}
             {article.tags && Array.isArray(article.tags) && article.tags.length > 0 && (
               <div className="flex justify-center flex-wrap gap-2 mt-3">
-                <div className="text-sm text-gray-500 dark:text-gray-400 mr-2">Tags:</div>
+                <div className="text-sm text-muted-foreground mr-2">Tags:</div>
                 {article.tags.map((tag: string) => (
                   <span 
                     key={tag} 
@@ -154,10 +154,10 @@ export default async function ArticlePage(props: PageProps) {
         <div className="p-6">
           <ToolsCTA className="mt-6" />
           
-          <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <div className="mt-12 pt-6 border-t border-border">
             <Link 
               href="/articles" 
-              className="inline-flex items-center text-primary hover:underline"
+              className="inline-flex items-center text-primary hover:underline transition-colors"
             >
               <svg 
                 className="mr-2 h-4 w-4" 

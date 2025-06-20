@@ -49,10 +49,10 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl dark:text-white">
+        <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
           Articles
         </h1>
-        <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-800 dark:text-gray-200">
+        <p className="mt-4 max-w-2xl mx-auto text-xl text-muted-foreground">
           Thoughts, ideas, and insights on Product Management, Project Management, Software Development, technology, and more.
         </p>
       </div>
@@ -63,26 +63,26 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
           <div className="flex justify-center flex-wrap gap-4 mb-8">
             <Link 
               href="/articles" 
-              className={`inline-flex items-center px-3 py-1 rounded-md text-sm font-medium ${
+              className={`inline-flex items-center px-3 py-1 rounded-md text-sm font-medium transition-colors ${
                 !categoryParam
-                  ? 'bg-indigo-600 text-white dark:bg-indigo-500 dark:text-white'
-                  : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
               }`}
             >
               All
             </Link>
             {allCategories.map(category => (
-              <Link 
-                key={category} 
-                href={`/articles?category=${encodeURIComponent(category)}`}
-                className={`inline-flex items-center px-3 py-1 rounded-md text-sm font-medium ${
-                  categoryParam === category
-                    ? 'bg-indigo-600 text-white dark:bg-indigo-500 dark:text-white'
-                    : 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700'
-                }`}
-              >
-                {category}
-              </Link>
+                              <Link 
+                  key={category} 
+                  href={`/articles?category=${encodeURIComponent(category)}`}
+                  className={`inline-flex items-center px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+                    categoryParam === category
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                  }`}
+                >
+                  {category}
+                </Link>
             ))}
           </div>
         </div>
@@ -129,10 +129,10 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
               return (
                 <article 
                   key={article.slug} 
-                  className="bg-gray-50 dark:bg-gray-900 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow"
+                  className="bg-card rounded-lg shadow-md overflow-hidden border border-border hover:shadow-lg transition-shadow"
                 >
                   <div className="p-6">
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                    <div className="text-sm text-muted-foreground">
                       {isFutureArticle ? (
                         <div className="flex items-start mb-1">
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-200 mr-2">
@@ -146,7 +146,7 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
                       }
                     </div>
                     <Link href={`/articles/${article.slug}`}>
-                      <h2 className="mt-2 text-xl font-semibold text-foreground hover:text-primary dark:text-white dark:hover:text-blue-300">
+                      <h2 className="mt-2 text-xl font-semibold text-card-foreground hover:text-primary transition-colors">
                         {article.title}
                       </h2>
                     </Link>
@@ -181,7 +181,7 @@ export default async function ArticlesPage({ searchParams }: PageProps) {
                       </div>
                     )}
                     
-                    <p className="mt-3 text-gray-600 dark:text-gray-300">
+                    <p className="mt-3 text-muted-foreground">
                       {article.excerpt}
                     </p>
                   </div>

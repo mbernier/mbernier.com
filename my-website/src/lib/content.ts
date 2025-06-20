@@ -137,42 +137,44 @@ export async function getContentByDirectory(type: string): Promise<ContentItem[]
     })
   );
   
-  // Add debugging logs
-  console.log(`Sorting ${type} by date: ${allContent.map(item => `${item.slug}: ${item.date}${item.sortDate ? ` (sort: ${item.sortDate})` : ''}`).join(', ')}`);
-  
-  // Sort content by date using the sortDate field or falling back to date
+  // Sort content by date using full date comparison (not just year)
   const sortedContent = allContent.sort((a, b) => {
-    // Use sortDate if available, otherwise extract year from date string
-    const getYearValue = (item: ContentItem) => {
-      if (item.sortDate) return parseInt(item.sortDate);
-      
+    const getDateValue = (item: ContentItem) => {
       if (typeof item.date === 'string') {
-        // For date ranges like "2018-2019", use the most recent year
-        if (item.date.includes('-')) {
-          const years = item.date.split('-');
-          // Use the end year (or start year if no end)
-          const year = years.length === 2 ? (years[1] || years[0]) : years[0];
-          return parseInt(year);
+        // Handle "Present" dates by using far future date
+        if (item.date.toLowerCase().includes('present')) {
+          return new Date('2099-12-31').getTime();
         }
         
-        // Try to parse as a regular date
+        // For date ranges like "2018-2019", use the end year as Dec 31
+        if (item.date.includes('-') && !item.date.includes('T')) {
+          const years = item.date.split('-');
+          if (years.length === 2 && !isNaN(parseInt(years[0])) && !isNaN(parseInt(years[1]))) {
+            const endYear = years[1] || years[0];
+            return new Date(`${endYear}-12-31`).getTime();
+          }
+        }
+        
+        // Try to parse as full date (ISO format, etc.)
         const parsedDate = new Date(item.date);
         if (!isNaN(parsedDate.getTime())) {
-          return parsedDate.getFullYear();
+          return parsedDate.getTime();
+        }
+        
+        // Fallback: if it's just a year, treat as Dec 31 of that year
+        if (/^\d{4}$/.test(item.date)) {
+          return new Date(`${item.date}-12-31`).getTime();
         }
       }
       
-      return 0; // Fallback for invalid dates
+      return 0; // Fallback for invalid dates (will sort to bottom)
     };
     
-    const yearA = getYearValue(a);
-    const yearB = getYearValue(b);
+    const dateA = getDateValue(a);
+    const dateB = getDateValue(b);
     
-    return yearB - yearA; // Sort descending (most recent first)
+    return dateB - dateA; // Sort descending (most recent first)
   });
-  
-  // Log after sorting
-  console.log(`Sorted ${type} order: ${sortedContent.map(item => `${item.slug}: ${item.date}${item.sortDate ? ` (sort: ${item.sortDate})` : ''}`).join(', ')}`);
   
   return sortedContent;
 }

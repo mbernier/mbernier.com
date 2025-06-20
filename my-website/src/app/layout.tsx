@@ -35,7 +35,7 @@ export default function RootLayout({
                   if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
                     return localStorage.getItem('theme');
                   }
-                  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  return 'light'; // Default to light mode, not system preference
                 }
                 
                 const theme = getThemePreference();
