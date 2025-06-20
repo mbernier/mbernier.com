@@ -228,7 +228,7 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
             {showSocialLinks && socialLinks.length > 0 && (
               <div className="px-3 py-4 border-t border-border">
                 <div className="text-xs font-medium text-muted-foreground mb-2">Connect</div>
-                <div className="flex space-x-4">
+                <div className="flex space-x-2">
                   {socialLinks.map((social, index) => (
                     <a
                       key={index}
