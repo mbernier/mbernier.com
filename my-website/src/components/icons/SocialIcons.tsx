@@ -57,7 +57,7 @@ export const SocialIcons: React.FC<SocialIconsProps> = ({
   ];
 
   return (
-    <div className={cn("flex items-center", className)}>
+    <div className={cn("flex items-center space-x-2", className)}>
       {socialLinks.map((link) => (
         <a
           key={link.name}

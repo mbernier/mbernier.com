@@ -26,14 +26,14 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-8">
             <Navigation 
               items={mainSiteNavigation} 
               currentPath={pathname}
               variant="header"
             />
             
-            <div className="flex items-center ml-6 space-x-3">
+            <div className="flex items-center space-x-4 ml-8">
               <SocialIcons size="sm" />
               <ThemeToggle 
                 isDarkMode={isDarkMode}
