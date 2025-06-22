@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getContentBySlug, getAllContentSlugs } from '../../../lib/content';
 import { constructMetadata } from '../../../lib/metadata';
+import { constructEnhancedMetadata } from '../../../lib/enhanced-metadata';
+import SEOHead from '../../../components/SEOHead';
 import ToolsCTA from '../../../components/ToolsCTA';
 
 // Define params as a Promise per Next.js 15 requirements
@@ -23,9 +25,11 @@ export async function generateMetadata(props: PageProps) {
     });
   }
   
-  return constructMetadata({
-    title: article.title,
-    description: article.excerpt,
+  // Generate enhanced metadata using the new system
+  return constructEnhancedMetadata({ 
+    content: article,
+    type: 'article',
+    canonical: `https://mbernier.com/articles/${slug}`
   });
 }
 
@@ -90,94 +94,115 @@ export default async function ArticlePage(props: PageProps) {
     month: 'long',
     day: 'numeric',
   });
-  
+
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <article className="bg-card rounded-lg shadow-md overflow-hidden">
-        <header className="mb-10 p-6">
-          <div className="space-y-1 text-center">
-            <div className="text-muted-foreground">
-              {isFutureArticle ? (
-                <div className="flex items-center justify-center">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300 mb-2">
-                    EARLY ACCESS
-                  </span>
+    <>
+      <SEOHead 
+        content={article} 
+        type="article" 
+        url={`https://mbernier.com/articles/${slug}`} 
+      />
+      
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <article className="bg-card rounded-lg shadow-md overflow-hidden">
+          <header className="mb-10 p-6">
+            <div className="space-y-1 text-center">
+              <div className="text-muted-foreground">
+                {isFutureArticle ? (
+                  <div className="flex items-center justify-center">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300 mb-2">
+                      EARLY ACCESS
+                    </span>
+                  </div>
+                ) : null}
+                {isFutureArticle 
+                  ? `Early access article - officially releasing on ${formattedDate}`
+                  : formattedDate
+                }
+                {article.reading_time && (
+                  <span className="mx-2">•</span>
+                )}
+                {article.reading_time && (
+                  <span>{article.reading_time} read</span>
+                )}
+              </div>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
+                {article.title}
+              </h1>
+              
+              {/* Add excerpt/description if available */}
+              {article.description && (
+                <p className="text-lg text-muted-foreground mt-4 max-w-3xl mx-auto">
+                  {article.description}
+                </p>
+              )}
+              
+              {/* Display categories in a more prominent way */}
+              {categories.length > 0 && (
+                <div className="flex justify-center mt-4">
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {categories.map((category) => (
+                      <Link 
+                        key={category} 
+                        href={`/articles?category=${encodeURIComponent(category)}`}
+                        className="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-800/30 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-800/50"
+                      >
+                        {category}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              ) : null}
-              {isFutureArticle 
-                ? `Early access article - officially releasing on ${formattedDate}`
-                : formattedDate
-              }
-            </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
-              {article.title}
-            </h1>
-            
-            {/* Display categories in a more prominent way */}
-            {categories.length > 0 && (
-              <div className="flex justify-center mt-4">
-                <div className="flex flex-wrap gap-2 justify-center">
-                  {categories.map((category) => (
-                    <Link 
-                      key={category} 
-                      href={`/articles?category=${encodeURIComponent(category)}`}
-                      className="inline-flex items-center px-3 py-1 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-800/30 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-800/50"
+              )}
+              
+              {/* Display tags if they exist */}
+              {article.tags && Array.isArray(article.tags) && article.tags.length > 0 && (
+                <div className="flex justify-center flex-wrap gap-2 mt-3">
+                  <div className="text-sm text-muted-foreground mr-2">Tags:</div>
+                  {article.tags.map((tag: string) => (
+                    <span 
+                      key={tag} 
+                      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300"
                     >
-                      {category}
-                    </Link>
+                      {tag}
+                    </span>
                   ))}
                 </div>
-              </div>
-            )}
-            
-            {/* Display tags if they exist */}
-            {article.tags && Array.isArray(article.tags) && article.tags.length > 0 && (
-              <div className="flex justify-center flex-wrap gap-2 mt-3">
-                <div className="text-sm text-muted-foreground mr-2">Tags:</div>
-                {article.tags.map((tag: string) => (
-                  <span 
-                    key={tag} 
-                    className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        </header>
-        
-        <div className="prose prose-lg dark:prose-invert mx-auto p-6">
-          <div dangerouslySetInnerHTML={{ __html: article.content }} />
-        </div>
-        
-        <div className="p-6">
-          <ToolsCTA className="mt-6" />
+              )}
+            </div>
+          </header>
           
-          <div className="mt-12 pt-6 border-t border-border">
-            <Link 
-              href="/articles" 
-              className="inline-flex items-center text-primary hover:underline transition-colors"
-            >
-              <svg 
-                className="mr-2 h-4 w-4" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24" 
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18" 
-                />
-              </svg>
-              Back to articles
-            </Link>
+          <div className="prose prose-lg dark:prose-invert mx-auto p-6">
+            <div dangerouslySetInnerHTML={{ __html: article.content }} />
           </div>
-        </div>
-      </article>
-    </div>
+          
+          <div className="p-6">
+            <ToolsCTA className="mt-6" />
+            
+            <div className="mt-12 pt-6 border-t border-border">
+              <Link 
+                href="/articles" 
+                className="inline-flex items-center text-primary hover:underline transition-colors"
+              >
+                <svg 
+                  className="mr-2 h-4 w-4" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24" 
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18" 
+                  />
+                </svg>
+                Back to articles
+              </Link>
+            </div>
+          </div>
+        </article>
+      </div>
+    </>
   );
 }
