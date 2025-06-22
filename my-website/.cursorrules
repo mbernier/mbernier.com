@@ -1,0 +1,57 @@
+# Matt Bernier Website - Development Rules
+
+## SEO & Social Media Optimization Standards
+
+### Content Requirements
+
+- Every article/project MUST have title (30-60 chars), description (120-160 chars), and focus keyword
+- Images MUST include alt text for accessibility and SEO
+- Categories and tags are required for content organization
+- Use enhanced frontmatter templates for new content
+
+### Technical SEO Implementation
+
+- All pages use SEOHead component for comprehensive meta tags
+- Dynamic Open Graph image generation via /api/og route
+- Schema.org structured data (JSON-LD) for articles and projects
+- Canonical URLs, robots meta, and sitemap optimization
+- Performance monitoring with Web Vitals tracking
+
+### Social Media Optimization
+
+- Open Graph tags for Facebook, LinkedIn, WhatsApp
+- Twitter Card optimization with large image support
+- Platform-specific descriptions and image sizing
+- Social media preview testing before publishing
+
+### Search Engine Features
+
+- Rich snippets with article/project structured data
+- Breadcrumb navigation with schema markup
+- Author and organization information
+- Reading time and publication dates
+- Mobile-first optimization
+
+### SEO Validation Process
+
+- Use validateSEO() function before publishing content
+- Score must be 85+ for excellent optimization
+- Test social previews with generateSocialPreviews()
+- Validate structured data with Google Rich Results Test
+
+### Development Guidelines
+
+- Use parallel tool calls for performance
+- Implement error handling for SEO functions
+- Follow conventional commit style
+- Create feature branches for SEO improvements
+- Document all SEO-related functionality
+
+## Content Creation Workflow
+
+1. Use enhanced frontmatter templates
+2. Validate SEO with built-in tools
+3. Test social media previews
+4. Verify structured data validity
+5. Check performance impact
+6. Deploy and monitor results
