@@ -16,34 +16,23 @@ export default async function HomePage() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="hero-gradient py-24">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="mb-8">
-              <Image
-                src="/matt.hat.jpg"
-                alt="Matt Bernier"
-                width={128}
-                height={128}
-                className="mx-auto rounded-full shadow-lg ring-4 ring-[var(--color-secondary-100)] mb-6 animate-fade-in"
-                priority
-              />
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-graphite-500 mb-8 animate-slide-up">
-              Fractional Product Management &{' '}
-              <span className="text-gradient">Technical Consulting</span>
-            </h1>
-            <p className="text-xl text-graphite-600 mb-10 max-w-3xl mx-auto text-balance animate-slide-up">
-              Product Management Leader, Developer, writer, and creator. I help companies build better products through strategic product management and technical expertise.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
-              <Link href="/services" className="btn-primary">
-                Explore Services
-              </Link>
-              <Link href="/contact" className="btn-secondary">
-                Get Started
-              </Link>
-            </div>
+      <section className="hero-gradient py-20 text-center">
+        <div className="max-w-3xl mx-auto space-y-6 px-4">
+          <img
+            src="/matt.hat.jpg"
+            alt="Matt Bernier"
+            className="w-32 h-32 rounded-full mx-auto border-4 border-white shadow-md"
+          />
+          <h1 className="text-3xl md:text-5xl font-bold text-graphite-800">
+            Fractional Product Management &{' '}
+            <span className="text-gradient">Technical Consulting</span>
+          </h1>
+          <p className="text-lg text-graphite-600">
+            Product Management Leader, Developer, writer, and creator. I help companies build better products through strategic product management and technical expertise.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6">
+            <a href="/services" className="btn-primary">Explore Services</a>
+            <a href="/contact" className="btn-secondary">Get Started</a>
           </div>
         </div>
       </section>
