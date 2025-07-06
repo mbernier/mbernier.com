@@ -19,6 +19,7 @@ export default function ContactPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -28,12 +29,29 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubmitted(true);
-    setIsSubmitting(false);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to submit form');
+      }
+      
+      setIsSubmitted(true);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'An error occurred');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSubmitted) {
@@ -47,9 +65,9 @@ export default function ContactPage() {
           </div>
           <h1 className="text-3xl font-bold text-graphite mb-4">Thank You!</h1>
           <p className="text-lg text-gray-600 mb-8">
-            Your message has been received. I'll get back to you within 1 business day with next steps.
+            Your message has been received and saved. I'll get back to you within 1 business day with next steps.
           </p>
-          <div className="bg-gray-50 rounded-xl p-6">
+          <div className="bg-gray-50 rounded-xl p-6 mb-6">
             <p className="text-sm text-gray-600">
               <strong>What happens next:</strong><br />
               1. I'll review your project details<br />
@@ -57,6 +75,26 @@ export default function ContactPage() {
               3. Provide a tailored proposal
             </p>
           </div>
+          <Button 
+            variant="outline" 
+            onClick={() => {
+              setIsSubmitted(false);
+              setFormData({
+                name: "",
+                email: "",
+                company: "",
+                serviceType: "",
+                projectType: "",
+                urgency: "",
+                budget: "",
+                timeline: "",
+                message: "",
+                hearAbout: ""
+              });
+            }}
+          >
+            Submit Another Message
+          </Button>
         </div>
       </div>
     );
@@ -96,6 +134,17 @@ export default function ContactPage() {
             <div className="grid lg:grid-cols-3 gap-12">
               {/* Form */}
               <div className="lg:col-span-2">
+                {error && (
+                  <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
+                    <div className="flex items-center">
+                      <svg className="w-5 h-5 text-red-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                      </svg>
+                      <span className="text-red-800 font-medium">Error: {error}</span>
+                    </div>
+                  </div>
+                )}
+                
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Basic Information */}
                   <div className="bg-gray-50 rounded-xl p-6">
