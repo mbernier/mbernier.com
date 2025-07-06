@@ -1,0 +1,196 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Article {
+  id                    String   @id @default(cuid())
+  slug                  String   @unique
+  title                 String
+  excerpt               String?
+  content               String?
+  description           String?
+  focusKeyword          String?
+  secondaryKeywords     String[]
+  metaTitle             String?
+  canonicalUrl          String?
+  categories            String[]
+  tags                  String[]
+  topic                 String?
+  status                String   @default("draft")
+  featured              Boolean  @default(false)
+  tech                  String[]
+  projectType           String?
+  complexity            String?
+  duration              String?
+  teamSize              String?
+  image                 String?
+  imageAlt              String?
+  ogImage               String?
+  readingTime           Int?
+  wordCount             Int?
+  commentsEnabled       Boolean  @default(true)
+  callToAction          String?
+  googleAnalyticsEvent  String?
+  conversionGoal        String?
+  utmCampaign           String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model Project {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  title             String
+  url               String?
+  description       String?
+  features          String[]
+  image             String?
+  showOnOffersPage  Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  appUpdates        AppUpdate[]
+}
+
+model Offer {
+  id        String   @id @default(cuid())
+  section   String?
+  company   String?
+  offer     String?
+  link      String?
+  g2Link    String?
+  tags      String[]
+  logo      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model WorkHistory {
+  id          String   @id @default(cuid())
+  companyName String
+  logo        String?
+  url         String?
+  description String?
+  showOnSite  Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  author    String
+  company   String?
+  title     String?
+  quote     String
+  sourceUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id          String   @id @default(cuid())
+  name        String?
+  email       String?
+  subject     String?
+  message     String?
+  company     String?
+  budget      String?
+  timeline    String?
+  serviceType String?
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  type        String?
+  relatedId   String?
+  isRead      Boolean  @default(false)
+  triggeredBy String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AppUpdate {
+  id        String   @id @default(cuid())
+  app       String
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  link      String?
+  summary   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Additional tables from migration 02
+model ClientApp {
+  id           String   @id @default(cuid())
+  name         String
+  apiKey       String   @unique
+  defaultLogo  String?
+  permissions  String[]
+  purposes     String[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  usage        ClientAppUsage[]
+}
+
+model ActivityItem {
+  id          String   @id @default(cuid())
+  type        String   // article, project, app_update, offer
+  itemId      String
+  sourceUrl   String?
+  publishedAt DateTime @default(now())
+  contextJson Json?    // post metadata and social push logs
+  status      String   @default("posted") // draft, queued, posted, failed
+  scheduledAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  socialMetrics SocialMetric[]
+}
+
+model SocialMetric {
+  id         String   @id @default(cuid())
+  activityId String
+  activity   ActivityItem @relation(fields: [activityId], references: [id])
+  platform   String?  // linkedin, x, ig
+  impressions Int?
+  likes      Int?
+  shares     Int?
+  comments   Int?
+  postTime   DateTime?
+  fetchedAt  DateTime @default(now())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// Additional tables from migration 03
+model ClientAppUsage {
+  id          String   @id @default(cuid())
+  clientAppId String
+  clientApp   ClientApp @relation(fields: [clientAppId], references: [id], onDelete: Cascade)
+  endpoint    String
+  ipAddress   String?
+  timestamp   DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AdminAction {
+  id        String   @id @default(cuid())
+  actorId   String   // Clerk user ID
+  action    String   // create, edit, delete
+  target    String   // article, project, etc.
+  targetId  String
+  timestamp DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
