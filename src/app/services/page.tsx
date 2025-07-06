@@ -12,192 +12,168 @@ export default async function ServicesPage() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-20">
+      <section className="hero-gradient py-24">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-graphite-500 mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-graphite-500 mb-8 animate-slide-up">
               Services That Drive{' '}
               <span className="text-gradient">Real Results</span>
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-graphite-600 mb-10 max-w-3xl mx-auto text-balance animate-slide-up">
               Strategic product management and technical consulting designed to accelerate your growth. 
               Get the expertise you need without the full-time commitment.
             </p>
-            <Button size="lg" asChild>
-              <Link href="/contact">Start a Conversation</Link>
-            </Button>
+            <Link href="/contact" className="btn-primary animate-slide-up">
+              Start a Conversation
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Two-Lane Services */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
             {/* Fractional Product Management */}
             <div className="space-y-8">
               <div className="text-center lg:text-left">
-                <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-primary-600)] mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-primary-600 mb-6">
                   Fractional Product Management
                 </h2>
-                <p className="text-xl text-gray-600">
+                <p className="text-xl text-graphite-600 text-balance">
                   Strategic product leadership without the full-time commitment
                 </p>
               </div>
 
               {/* Problem */}
-              <Card variant="outline">
-                <CardHeader>
-                  <CardTitle className="text-red-600">The Challenge</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">
-                    You need senior product management expertise but can't justify a full-time hire. 
-                    Your product roadmap lacks clarity, feature prioritization is chaotic, and your team 
-                    is building without strategic direction.
-                  </p>
-                </CardContent>
-              </Card>
+              <div className="card shadow-card bg-white rounded-2xl p-6 border-l-4 border-error-500">
+                <h3 className="text-xl font-semibold text-error-600 mb-4">The Challenge</h3>
+                <p className="text-graphite-600 text-balance">
+                  You need senior product management expertise but can't justify a full-time hire. 
+                  Your product roadmap lacks clarity, feature prioritization is chaotic, and your team 
+                  is building without strategic direction.
+                </p>
+              </div>
 
               {/* Solution */}
-              <Card variant="gradient">
-                <CardHeader>
-                  <CardTitle className="text-[var(--color-primary-600)]">The Solution</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-4">
-                    Get seasoned product management leadership on a fractional basis. I'll work directly 
-                    with your team to establish product strategy, optimize processes, and drive execution.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <Tag variant="primary" size="sm">Product Strategy</Tag>
-                    <Tag variant="primary" size="sm">User Research</Tag>
-                    <Tag variant="primary" size="sm">Roadmap Planning</Tag>
-                    <Tag variant="primary" size="sm">Team Leadership</Tag>
-                    <Tag variant="primary" size="sm">Stakeholder Management</Tag>
-                    <Tag variant="primary" size="sm">Metrics & Analytics</Tag>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="card shadow-card bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-6 border-l-4 border-primary-500">
+                <h3 className="text-xl font-semibold text-primary-600 mb-4">The Solution</h3>
+                <p className="text-graphite-600 mb-6 text-balance">
+                  Get seasoned product management leadership on a fractional basis. I'll work directly 
+                  with your team to establish product strategy, optimize processes, and drive execution.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="tag-pill bg-primary-100 text-primary-700">Product Strategy</span>
+                  <span className="tag-pill bg-primary-100 text-primary-700">User Research</span>
+                  <span className="tag-pill bg-primary-100 text-primary-700">Roadmap Planning</span>
+                  <span className="tag-pill bg-primary-100 text-primary-700">Team Leadership</span>
+                  <span className="tag-pill bg-primary-100 text-primary-700">Stakeholder Management</span>
+                  <span className="tag-pill bg-primary-100 text-primary-700">Metrics & Analytics</span>
+                </div>
+              </div>
 
               {/* Benefits */}
-              <Card variant="outline">
-                <CardHeader>
-                  <CardTitle className="text-green-600">The Benefits</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3 text-gray-600">
-                    <li className="flex items-start space-x-2">
-                      <span className="text-green-500 mt-1">•</span>
-                      <span>Clear product vision and strategic direction</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <span className="text-green-500 mt-1">•</span>
-                      <span>Improved feature prioritization and roadmap clarity</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <span className="text-green-500 mt-1">•</span>
-                      <span>Better cross-functional team collaboration</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <span className="text-green-500 mt-1">•</span>
-                      <span>Data-driven decision making processes</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <span className="text-green-500 mt-1">•</span>
-                      <span>Faster time-to-market for new features</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
+              <div className="card shadow-card bg-white rounded-2xl p-6 border-l-4 border-success-500">
+                <h3 className="text-xl font-semibold text-success-600 mb-4">The Benefits</h3>
+                <ul className="space-y-3 text-graphite-600">
+                  <li className="flex items-start space-x-3">
+                    <span className="text-success-500 mt-1 text-lg">✓</span>
+                    <span>Clear product vision and strategic direction</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <span className="text-success-500 mt-1 text-lg">✓</span>
+                    <span>Improved feature prioritization and roadmap clarity</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <span className="text-success-500 mt-1 text-lg">✓</span>
+                    <span>Better cross-functional team collaboration</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <span className="text-success-500 mt-1 text-lg">✓</span>
+                    <span>Data-driven decision making processes</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <span className="text-success-500 mt-1 text-lg">✓</span>
+                    <span>Faster time-to-market for new features</span>
+                  </li>
+                </ul>
+              </div>
 
               <div className="text-center">
-                <Button size="lg" asChild>
-                  <Link href="/contact?service=fractional-pm">Get Started</Link>
-                </Button>
+                <Link href="/contact?service=fractional-pm" className="btn-primary">
+                  Get Started
+                </Link>
               </div>
             </div>
 
             {/* Technical Consulting */}
             <div className="space-y-8">
               <div className="text-center lg:text-left">
-                <h2 className="text-3xl md:text-4xl font-bold text-secondary-600 mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-secondary-600 mb-6">
                   Technical Consulting
                 </h2>
-                <p className="text-xl text-gray-600">
+                <p className="text-xl text-graphite-600 text-balance">
                   Expert technical guidance for complex development challenges
                 </p>
               </div>
 
               {/* Problem */}
-              <Card variant="outline">
-                <CardHeader>
-                  <CardTitle className="text-red-600">The Challenge</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">
-                    Your team is stuck on technical decisions, architecture choices are causing delays, 
-                    and you need expertise in areas like AI integration, developer tooling, or process optimization.
-                  </p>
-                </CardContent>
-              </Card>
+              <div className="card shadow-card bg-white rounded-2xl p-6 border-l-4 border-error-500">
+                <h3 className="text-xl font-semibold text-error-600 mb-4">The Challenge</h3>
+                <p className="text-graphite-600 text-balance">
+                  Your team is stuck on technical decisions, architecture choices are causing delays, 
+                  and you need expertise in areas like AI integration, developer tooling, or process optimization.
+                </p>
+              </div>
 
               {/* Solution */}
-              <Card variant="gradient">
-                <CardHeader>
-                  <CardTitle className="text-secondary-600">The Solution</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 mb-4">
-                    Get hands-on technical consulting to solve complex challenges. I'll work directly 
-                    with your engineering team to architect solutions, implement best practices, and optimize your development process.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <Tag variant="secondary" size="sm">Architecture Review</Tag>
-                    <Tag variant="secondary" size="sm">AI Integration</Tag>
-                    <Tag variant="secondary" size="sm">Developer Tools</Tag>
-                    <Tag variant="secondary" size="sm">Process Optimization</Tag>
-                    <Tag variant="secondary" size="sm">Code Review</Tag>
-                    <Tag variant="secondary" size="sm">Technical Strategy</Tag>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="card shadow-card bg-gradient-to-br from-secondary-50 to-secondary-100 rounded-2xl p-6 border-l-4 border-secondary-500">
+                <h3 className="text-xl font-semibold text-secondary-600 mb-4">The Solution</h3>
+                <p className="text-graphite-600 mb-6 text-balance">
+                  Get hands-on technical consulting to solve complex challenges. I'll work directly 
+                  with your engineering team to architect solutions, implement best practices, and optimize your development process.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="tag-pill bg-secondary-100 text-secondary-700">Architecture Review</span>
+                  <span className="tag-pill bg-secondary-100 text-secondary-700">AI Integration</span>
+                  <span className="tag-pill bg-secondary-100 text-secondary-700">Developer Tools</span>
+                  <span className="tag-pill bg-secondary-100 text-secondary-700">Process Optimization</span>
+                  <span className="tag-pill bg-secondary-100 text-secondary-700">Code Review</span>
+                  <span className="tag-pill bg-secondary-100 text-secondary-700">Technical Strategy</span>
+                </div>
+              </div>
 
               {/* Benefits */}
-              <Card variant="outline">
-                <CardHeader>
-                  <CardTitle className="text-green-600">The Benefits</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3 text-gray-600">
-                    <li className="flex items-start space-x-2">
-                      <span className="text-green-500 mt-1">•</span>
-                      <span>Faster resolution of technical blockers</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <span className="text-green-500 mt-1">•</span>
-                      <span>Improved code quality and architecture</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <span className="text-green-500 mt-1">•</span>
-                      <span>Enhanced developer productivity and tooling</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <span className="text-green-500 mt-1">•</span>
-                      <span>Successful AI and modern tech integration</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <span className="text-green-500 mt-1">•</span>
-                      <span>Reduced technical debt and maintenance costs</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
+              <div className="card shadow-card bg-white rounded-2xl p-6 border-l-4 border-success-500">
+                <h3 className="text-xl font-semibold text-success-600 mb-4">The Benefits</h3>
+                <ul className="space-y-3 text-graphite-600">
+                  <li className="flex items-start space-x-3">
+                    <span className="text-success-500 mt-1 text-lg">✓</span>
+                    <span>Faster resolution of technical blockers</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <span className="text-success-500 mt-1 text-lg">✓</span>
+                    <span>Improved code quality and architecture</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <span className="text-success-500 mt-1 text-lg">✓</span>
+                    <span>Enhanced developer productivity and tooling</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <span className="text-success-500 mt-1 text-lg">✓</span>
+                    <span>Successful AI and modern tech integration</span>
+                  </li>
+                  <li className="flex items-start space-x-3">
+                    <span className="text-success-500 mt-1 text-lg">✓</span>
+                    <span>Reduced technical debt and maintenance costs</span>
+                  </li>
+                </ul>
+              </div>
 
               <div className="text-center">
-                <Button size="lg" asChild>
-                  <Link href="/contact?service=technical-consulting">Get Started</Link>
-                </Button>
+                <Link href="/contact?service=technical-consulting" className="btn-secondary">
+                  Get Started
+                </Link>
               </div>
             </div>
           </div>
