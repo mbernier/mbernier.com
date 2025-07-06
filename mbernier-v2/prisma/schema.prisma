@@ -194,3 +194,17 @@ model AdminAction {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model SocialMediaConfig {
+  id           String    @id @default(cuid())
+  platform     String
+  userId       String
+  accessToken  String?
+  refreshToken String?
+  expiresAt    DateTime?
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([platform, userId])
+}
