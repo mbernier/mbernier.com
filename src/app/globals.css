@@ -251,6 +251,40 @@ body {
     background-clip: text;
     color: transparent;
   }
+  
+  /* Footer-specific styles to ensure proper color application */
+  footer {
+    background-color: var(--color-graphite-900) !important;
+    color: var(--color-graphite-100) !important;
+  }
+  
+  footer .bg-graphite-900 {
+    background-color: var(--color-graphite-900) !important;
+  }
+  
+  footer .text-graphite-100 {
+    color: var(--color-graphite-100) !important;
+  }
+  
+  footer .text-graphite-300 {
+    color: var(--color-graphite-300) !important;
+  }
+  
+  footer .text-graphite-400 {
+    color: var(--color-graphite-400) !important;
+  }
+  
+  footer .bg-graphite-800 {
+    background-color: var(--color-graphite-800) !important;
+  }
+  
+  footer .hover\:bg-graphite-700:hover {
+    background-color: var(--color-graphite-700) !important;
+  }
+  
+  footer .border-graphite-800 {
+    border-color: var(--color-graphite-800) !important;
+  }
 }
 
 /* Custom utility classes */
