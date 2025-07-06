@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/Button";
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-white">
@@ -13,12 +15,12 @@ export default function Home() {
               I help companies build better products and solve complex technical challenges.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="btn-primary">
+              <Button variant="primary" size="lg">
                 Hire Me
-              </button>
-              <button className="btn-outline">
+              </Button>
+              <Button variant="outline" size="lg">
                 View My Work
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -49,6 +51,11 @@ export default function Home() {
                   <li>• OKR/KPI establishment and tracking</li>
                   <li>• Product-market fit optimization</li>
                 </ul>
+                <div className="mt-6">
+                  <Button variant="primary" size="sm">
+                    Learn More
+                  </Button>
+                </div>
               </div>
             </div>
 
@@ -70,6 +77,11 @@ export default function Home() {
                   <li>• Technical mentoring & workshops</li>
                   <li>• Performance optimization</li>
                 </ul>
+                <div className="mt-6">
+                  <Button variant="primary" size="sm">
+                    Learn More
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -128,9 +140,9 @@ export default function Home() {
                   Ready to accelerate your product development or solve 
                   technical challenges? Let's discuss how I can help.
                 </p>
-                <button className="btn-secondary w-full">
+                <Button variant="secondary" className="w-full">
                   Contact Me
-                </button>
+                </Button>
               </div>
             </div>
           </div>
