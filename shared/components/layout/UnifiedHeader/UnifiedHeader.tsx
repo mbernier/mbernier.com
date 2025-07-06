@@ -214,7 +214,7 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
                 rel={item.isExternal ? 'noopener noreferrer' : undefined}
                 className={`flex items-center pl-3 pr-4 py-2 border-l-4 text-base font-medium transition-colors ${
                   item.isActive
-                    ? 'border-primary text-primary bg-primary/10'
+                    ? 'border-primary-500 text-primary-500 bg-primary-50'
                     : 'border-transparent text-muted-foreground hover:text-foreground hover:bg-muted hover:border-muted'
                 }`}
                 onClick={() => handleNavClick(item)}

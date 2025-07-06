@@ -1,154 +1,211 @@
-import { Button } from "@/components/ui/Button";
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Layout } from '@/components/layout/Layout';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
+import { Tag } from '@/components/ui/Tag';
+import { Pagination } from '@/components/ui/Pagination';
+
+interface Project {
+  id: string;
+  slug: string;
+  title: string;
+  description?: string;
+  features: string[];
+  image?: string;
+  url?: string;
+  projectType: 'Client' | 'Personal';
+  tech: string[];
+  createdAt: string;
+  showOnOffersPage: boolean;
+  recentlyUpdated?: boolean;
+}
+
+const PROJECTS_PER_PAGE = 9;
 
 export default function ProjectsPage() {
-  // Sample projects data - in real implementation, this would come from database
-  const projects = [
-    {
-      id: "1",
-      title: "AI-Powered Content Processing Pipeline",
-      description: "Built an automated content processing system that reduced manual work by 80% for a growing SaaS company. Integrated OpenAI APIs with custom validation and workflow automation.",
-      category: "Client Work",
-      type: "Technical Consulting",
-      technologies: ["Next.js", "OpenAI API", "Prisma", "PostgreSQL", "Webhooks"],
-      status: "Completed",
-      duration: "3 months",
-      impact: "80% reduction in manual work, $50K/year savings",
-      featured: true,
-      liveUrl: null,
-      githubUrl: null // Client work - private
-    },
-    {
-      id: "2", 
-      title: "Product Strategy & Roadmap Optimization",
-      description: "Led product strategy transformation for a B2B fintech startup. Implemented OKRs, customer feedback loops, and feature prioritization framework that doubled release velocity.",
-      category: "Client Work",
-      type: "Fractional Product Management",
-      technologies: ["Product Strategy", "OKRs", "Customer Research", "Roadmap Planning"],
-      status: "Completed",
-      duration: "6 months",
-      impact: "2x release velocity, 40% increase in customer satisfaction",
-      featured: true,
-      liveUrl: null,
-      githubUrl: null
-    },
-    {
-      id: "3",
-      title: "Developer Experience Platform",
-      description: "Architected and led development of internal developer platform that streamlined deployment processes and reduced time-to-production by 60% for engineering teams.",
-      category: "Client Work", 
-      type: "Technical Consulting",
-      technologies: ["Docker", "Kubernetes", "CI/CD", "Internal Tools", "Developer Experience"],
-      status: "Completed",
-      duration: "4 months",
-      impact: "60% faster deployments, improved developer satisfaction",
-      featured: false,
-      liveUrl: null,
-      githubUrl: null
-    },
-    {
-      id: "4",
-      title: "Customer Onboarding Optimization",
-      description: "Redesigned customer onboarding flow for enterprise SaaS product. Implemented progressive disclosure, in-app guidance, and success metrics tracking.",
-      category: "Client Work",
-      type: "Fractional Product Management", 
-      technologies: ["UX Design", "Analytics", "A/B Testing", "Customer Success"],
-      status: "Completed",
-      duration: "2 months",
-      impact: "45% improvement in trial-to-paid conversion",
-      featured: false,
-      liveUrl: null,
-      githubUrl: null
-    },
-    {
-      id: "5",
-      title: "API Pricing Strategy Framework",
-      description: "Developed comprehensive API pricing strategy and implementation for developer-focused platform. Balanced adoption with revenue through tiered pricing model.",
-      category: "Client Work",
-      type: "Fractional Product Management",
-      technologies: ["Pricing Strategy", "API Design", "Developer Experience", "Revenue Optimization"],
-      status: "Completed", 
-      duration: "3 months",
-      impact: "35% increase in API revenue, improved developer adoption",
-      featured: false,
-      liveUrl: null,
-      githubUrl: null
-    },
-    {
-      id: "6",
-      title: "Personal Portfolio Website",
-      description: "Complete rebuild of personal website with modern design system, dynamic content management, and conversion optimization. Built with Next.js and Tailwind CSS.",
-      category: "Personal",
-      type: "Full-Stack Development",
-      technologies: ["Next.js", "Tailwind CSS", "Prisma", "Supabase", "TypeScript"],
-      status: "In Progress",
-      duration: "1 month",
-      impact: "Showcases technical expertise and design skills",
-      featured: false,
-      liveUrl: "https://mbernier.com",
-      githubUrl: "https://github.com/mbernier/mbernier.com"
-    }
-  ];
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedType, setSelectedType] = useState<'All' | 'Client' | 'Personal'>('All');
+  const [loading, setLoading] = useState(true);
 
-  const categories = ["All", "Client Work", "Personal"];
-  const types = ["All", "Fractional Product Management", "Technical Consulting", "Full-Stack Development"];
+  // Mock data for now - replace with actual API call
+  useEffect(() => {
+    const mockProjects: Project[] = [
+      {
+        id: '1',
+        slug: 'ai-image-recognition',
+        title: 'AI Image Recognition Pipeline',
+        description: 'Built a comprehensive AI-powered image recognition system for automated content tagging and categorization.',
+        features: ['Computer Vision', 'Machine Learning', 'API Integration', 'Real-time Processing'],
+        image: '/images/ai_images.jpg',
+        url: 'https://example.com/ai-project',
+        projectType: 'Client',
+        tech: ['Python', 'TensorFlow', 'AWS', 'Docker'],
+        createdAt: '2024-01-15T10:00:00Z',
+        showOnOffersPage: true,
+        recentlyUpdated: true,
+      },
+      {
+        id: '2',
+        slug: 'product-management-dashboard',
+        title: 'Product Management Dashboard',
+        description: 'A comprehensive dashboard for tracking product metrics, user feedback, and roadmap planning.',
+        features: ['Analytics', 'Data Visualization', 'User Management', 'Reporting'],
+        image: '/images/pm_dashboard.png',
+        projectType: 'Personal',
+        tech: ['React', 'TypeScript', 'Chart.js', 'Node.js'],
+        createdAt: '2024-01-10T14:30:00Z',
+        showOnOffersPage: false,
+        recentlyUpdated: false,
+      },
+      {
+        id: '3',
+        slug: 'event-management-tool',
+        title: 'Event Management Platform',
+        description: 'Full-featured event management system with registration, payment processing, and attendee tracking.',
+        features: ['Event Planning', 'Payment Processing', 'Attendee Management', 'Analytics'],
+        image: '/images/event_management.jpg',
+        projectType: 'Client',
+        tech: ['Next.js', 'Stripe', 'PostgreSQL', 'Tailwind CSS'],
+        createdAt: '2024-01-05T09:15:00Z',
+        showOnOffersPage: true,
+        recentlyUpdated: true,
+      },
+      {
+        id: '4',
+        slug: 'developer-tools-cli',
+        title: 'Developer Productivity CLI',
+        description: 'Command-line tool to streamline common development workflows and automate repetitive tasks.',
+        features: ['CLI Interface', 'Workflow Automation', 'Git Integration', 'Template Generation'],
+        // No image - will use fallback
+        projectType: 'Personal',
+        tech: ['Go', 'CLI', 'Git', 'Shell Scripting'],
+        createdAt: '2023-12-20T16:45:00Z',
+        showOnOffersPage: false,
+        recentlyUpdated: false,
+      },
+      {
+        id: '5',
+        slug: 'api-pricing-calculator',
+        title: 'API Pricing Calculator',
+        description: 'Interactive tool to help developers understand and calculate API pricing across different usage tiers.',
+        features: ['Pricing Models', 'Usage Calculation', 'Comparison Tool', 'Export Features'],
+        image: '/images/api-pricing-experience.png',
+        url: 'https://example.com/pricing-calculator',
+        projectType: 'Personal',
+        tech: ['React', 'TypeScript', 'Recharts', 'Vercel'],
+        createdAt: '2023-12-15T11:20:00Z',
+        showOnOffersPage: true,
+        recentlyUpdated: false,
+      },
+      {
+        id: '6',
+        slug: 'vehicle-identification-system',
+        title: 'Vehicle Identification System',
+        description: 'Computer vision system for automatic vehicle identification and tracking in parking facilities.',
+        features: ['Computer Vision', 'License Plate Recognition', 'Real-time Tracking', 'Database Integration'],
+        image: '/images/vehicle_id.jpg',
+        projectType: 'Client',
+        tech: ['Python', 'OpenCV', 'PostgreSQL', 'Redis'],
+        createdAt: '2023-11-30T13:10:00Z',
+        showOnOffersPage: true,
+        recentlyUpdated: false,
+      },
+    ];
+
+    setProjects(mockProjects);
+    setFilteredProjects(mockProjects);
+    setLoading(false);
+  }, []);
+
+  // Filter projects based on type
+  useEffect(() => {
+    let filtered = projects;
+
+    if (selectedType !== 'All') {
+      filtered = filtered.filter(project => project.projectType === selectedType);
+    }
+
+    setFilteredProjects(filtered);
+    setCurrentPage(1);
+  }, [selectedType, projects]);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * PROJECTS_PER_PAGE;
+  const endIndex = startIndex + PROJECTS_PER_PAGE;
+  const currentProjects = filteredProjects.slice(startIndex, endIndex);
+
+  const getProjectImage = (project: Project) => {
+    if (project.image) {
+      return project.image;
+    }
+    // Fallback image based on project type
+    return project.projectType === 'Client' 
+      ? '/images/default-project.jpg' 
+      : '/images/default-project.jpg';
+  };
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="container-custom py-20">
+          <div className="text-center">Loading projects...</div>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-white">
+    <Layout>
       {/* Hero Section */}
-      <section className="hero-gradient py-16">
+      <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-20">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-graphite mb-6">
-              Featured <span className="text-gradient">Work & Projects</span>
+            <h1 className="text-4xl md:text-6xl font-bold text-graphite-500 mb-6">
+              Projects & <span className="text-gradient">Work</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              A selection of client work and personal projects showcasing expertise in product management, 
-              technical consulting, and full-stack development. Real results for real businesses.
+              A showcase of recent projects and technical achievements. From client work to personal experiments, 
+              these projects demonstrate expertise across product management and technical domains.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="primary" size="lg">
-                Discuss Your Project
-              </Button>
-              <Button variant="outline" size="lg">
-                View My Services
-              </Button>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Filter Bar */}
-      <section className="py-8 border-b border-gray-200">
+      {/* Filter Section */}
+      <section className="py-12 bg-white border-b border-gray-200">
         <div className="container-custom">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap gap-2 justify-center">
-              <span className="text-sm font-medium text-gray-600 mr-2">Category:</span>
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    category === "All" 
-                      ? "bg-primary text-white" 
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-graphite-500">Filter Projects</h3>
+              <div className="text-gray-600">
+                {filteredProjects.length === projects.length
+                  ? `Showing all ${projects.length} projects`
+                  : `Showing ${filteredProjects.length} of ${projects.length} projects`}
+              </div>
             </div>
-            <div className="flex flex-wrap gap-2 justify-center">
-              <span className="text-sm font-medium text-gray-600 mr-2">Type:</span>
-              {types.map((type) => (
-                <button
+
+            <div className="flex flex-wrap gap-2">
+              {(['All', 'Client', 'Personal'] as const).map((type) => (
+                <Tag
                   key={type}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    type === "All" 
-                      ? "bg-secondary text-white" 
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
+                  variant={selectedType === type ? 'primary' : 'outline'}
+                  className="cursor-pointer"
+                  onClick={() => setSelectedType(type)}
                 >
-                  {type}
-                </button>
+                  {type} Work
+                  {type !== 'All' && (
+                    <span className="ml-1 text-xs">
+                      ({projects.filter(p => p.projectType === type).length})
+                    </span>
+                  )}
+                </Tag>
               ))}
             </div>
           </div>
@@ -156,183 +213,195 @@ export default function ProjectsPage() {
       </section>
 
       {/* Projects Grid */}
-      <section className="py-20">
+      <section className="py-20 bg-gray-50">
         <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {projects.map((project) => (
-              <article key={project.id} className={`card group transition-all duration-200 hover:scale-[1.02] ${project.featured ? 'ring-2 ring-primary ring-opacity-20' : ''}`}>
-                {project.featured && (
-                  <div className="flex items-center mb-4">
-                    <div className="w-2 h-2 bg-secondary rounded-full mr-2"></div>
-                    <span className="text-xs font-medium text-secondary uppercase tracking-wide">Featured Project</span>
-                  </div>
-                )}
-                
-                <div className="mb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="tag-pill">
-                      {project.category}
-                    </span>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      project.status === 'Completed' 
-                        ? 'bg-green-100 text-green-700' 
-                        : 'bg-blue-100 text-blue-700'
-                    }`}>
-                      {project.status}
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    <span className="font-medium">{project.type}</span> • {project.duration}
-                  </p>
-                </div>
-
-                <h2 className="text-xl font-semibold text-graphite mb-3 group-hover:text-primary transition-colors duration-200">
-                  {project.title}
-                </h2>
-
-                <p className="text-gray-600 mb-4 line-clamp-3">
-                  {project.description}
-                </p>
-
-                {/* Impact/Results */}
-                <div className="bg-gradient-to-r from-primary-50 to-secondary-50 rounded-lg p-3 mb-4">
-                  <p className="text-sm font-medium text-gray-700">
-                    <span className="text-primary">Impact:</span> {project.impact}
-                  </p>
-                </div>
-
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies.slice(0, 4).map((tech) => (
-                    <span 
-                      key={tech} 
-                      className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.technologies.length > 4 && (
-                    <span className="px-2 py-1 bg-gray-200 text-gray-500 text-xs rounded-md">
-                      +{project.technologies.length - 4} more
-                    </span>
-                  )}
-                </div>
-
-                {/* Actions */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    {project.liveUrl && (
-                      <a 
-                        href={project.liveUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-primary hover:text-primary-700 text-sm font-medium transition-colors duration-200"
-                      >
-                        View Live →
-                      </a>
-                    )}
-                    {project.githubUrl && (
-                      <a 
-                        href={project.githubUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-gray-600 hover:text-gray-800 text-sm font-medium transition-colors duration-200"
-                      >
-                        GitHub →
-                      </a>
-                    )}
-                    {!project.liveUrl && !project.githubUrl && (
-                      <span className="text-gray-500 text-sm">
-                        {project.category === 'Client Work' ? 'Confidential Client Work' : 'Private Repository'}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    {project.type === 'Fractional Product Management' && (
-                      <div className="w-3 h-3 bg-primary rounded-full"></div>
-                    )}
-                    {project.type === 'Technical Consulting' && (
-                      <div className="w-3 h-3 bg-secondary rounded-full"></div>
-                    )}
-                    {project.type === 'Full-Stack Development' && (
-                      <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-                    )}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-12 text-graphite">
-              Project Impact by the Numbers
-            </h2>
-            <div className="grid md:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">15+</div>
-                <p className="text-gray-600">Projects Completed</p>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-secondary mb-2">$2M+</div>
-                <p className="text-gray-600">Client Savings Generated</p>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">60%</div>
-                <p className="text-gray-600">Average Efficiency Improvement</p>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-secondary mb-2">100%</div>
-                <p className="text-gray-600">Client Satisfaction Rate</p>
-              </div>
+          {currentProjects.length === 0 ? (
+            <div className="text-center py-12">
+              <h3 className="text-xl font-semibold text-graphite-500 mb-2">
+                No projects found
+              </h3>
+              <p className="text-gray-600 mb-4">
+                Try adjusting your filter selection.
+              </p>
+              <Button variant="outline" onClick={() => setSelectedType('All')}>
+                Show All Projects
+              </Button>
             </div>
-          </div>
+          ) : (
+            <>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                {currentProjects.map((project) => (
+                  <Card key={project.id} className="h-full hover:shadow-lg transition-shadow overflow-hidden">
+                    {/* Project Image */}
+                    <div className="relative h-48 bg-gray-200">
+                      <Image
+                        src={getProjectImage(project)}
+                        alt={project.title}
+                        fill
+                        className="object-cover"
+                        onError={(e) => {
+                          // Fallback to a solid color background if image fails
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                      
+                      {/* Project Type Badge */}
+                      <div className="absolute top-4 left-4">
+                        <Tag
+                          size="sm"
+                          variant={project.projectType === 'Client' ? 'primary' : 'secondary'}
+                        >
+                          {project.projectType}
+                        </Tag>
+                      </div>
+
+                      {/* Recently Updated Badge */}
+                      {project.recentlyUpdated && (
+                        <div className="absolute top-4 right-4">
+                          <Tag size="sm" variant="success">
+                            Updated
+                          </Tag>
+                        </div>
+                      )}
+
+                      {/* External Link Icon */}
+                      {project.url && (
+                        <div className="absolute bottom-4 right-4">
+                          <a
+                            href={project.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors"
+                            aria-label="View live project"
+                          >
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                              <polyline points="15,3 21,3 21,9" />
+                              <line x1="10" y1="14" x2="21" y2="3" />
+                            </svg>
+                          </a>
+                        </div>
+                      )}
+                    </div>
+
+                    <CardHeader>
+                      <CardTitle className="text-xl">
+                        <Link
+                          href={`/projects/${project.slug}`}
+                          className="hover:text-[var(--color-primary-500)] transition-colors"
+                        >
+                          {project.title}
+                        </Link>
+                      </CardTitle>
+                      <CardDescription className="line-clamp-3">
+                        {project.description}
+                      </CardDescription>
+                    </CardHeader>
+
+                    <CardContent>
+                      <div className="space-y-4">
+                        {/* Features */}
+                        {project.features.length > 0 && (
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-medium text-graphite-500">Key Features</h4>
+                            <div className="flex flex-wrap gap-1">
+                              {project.features.slice(0, 4).map((feature, index) => (
+                                <Tag key={index} size="sm" variant="outline">
+                                  {feature}
+                                </Tag>
+                              ))}
+                                                             {project.features.length > 4 && (
+                                 <Tag size="sm" variant="default">
+                                   +{project.features.length - 4} more
+                                 </Tag>
+                               )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Tech Stack */}
+                        {project.tech.length > 0 && (
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-medium text-graphite-500">Tech Stack</h4>
+                            <div className="flex flex-wrap gap-1">
+                              {project.tech.slice(0, 3).map((tech, index) => (
+                                <Tag key={index} size="sm" variant="secondary">
+                                  {tech}
+                                </Tag>
+                              ))}
+                                                             {project.tech.length > 3 && (
+                                 <Tag size="sm" variant="default">
+                                   +{project.tech.length - 3} more
+                                 </Tag>
+                               )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Meta */}
+                        <div className="flex items-center justify-between text-sm text-gray-500 pt-2 border-t border-gray-200">
+                          <time>
+                            {new Date(project.createdAt).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'short',
+                            })}
+                          </time>
+                          <Button variant="outline" size="sm" asChild>
+                            <Link href={`/projects/${project.slug}`}>
+                              View Details
+                            </Link>
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                  className="justify-center"
+                />
+              )}
+            </>
+          )}
         </div>
       </section>
 
-      {/* Services CTA */}
-      <section className="py-20">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6 text-graphite">
-              Ready to See Similar Results?
-            </h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Whether you need fractional product management or technical consulting, 
-              I bring the same strategic thinking and execution excellence to every project.
-            </p>
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <div className="bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-6">
-                <h3 className="text-lg font-semibold text-primary mb-2">Fractional Product Management</h3>
-                <p className="text-gray-600 mb-4">
-                  Like the product strategy and roadmap optimization projects above, 
-                  I help teams build better products faster.
-                </p>
-                <Button variant="primary" className="w-full">
-                  Discuss Product Strategy
-                </Button>
-              </div>
-              <div className="bg-gradient-to-br from-secondary-50 to-secondary-100 rounded-2xl p-6">
-                <h3 className="text-lg font-semibold text-secondary mb-2">Technical Consulting</h3>
-                <p className="text-gray-600 mb-4">
-                  Like the AI pipeline and developer platform projects above, 
-                  I solve complex technical challenges efficiently.
-                </p>
-                <Button variant="secondary" className="w-full">
-                  Discuss Technical Needs
-                </Button>
-              </div>
-            </div>
-            <p className="text-sm text-gray-500">
-              Each project is unique, but the approach is consistent: understand the problem, build the right solution, measure the impact.
-            </p>
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-primary-500 to-secondary-500">
+        <div className="container-custom text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Have a Project in Mind?
+          </h2>
+          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+            Let's discuss how I can help bring your product vision to life with strategic planning and technical expertise.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" variant="outline" className="bg-white text-[var(--color-primary-500)] hover:bg-gray-50" asChild>
+              <Link href="/contact">Start a Project</Link>
+            </Button>
+            <Button size="lg" variant="ghost" className="text-white hover:bg-white/10" asChild>
+              <Link href="/services">View Services</Link>
+            </Button>
           </div>
         </div>
       </section>
-    </div>
+    </Layout>
   );
 }

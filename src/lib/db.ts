@@ -8,41 +8,53 @@ export const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
-// Database utility functions
+/**
+ * Get featured content for the homepage
+ */
+export async function getFeaturedContent() {
+  const [articles, projects, testimonials] = await Promise.all([
+    prisma.article.findMany({
+      where: { featured: true, status: 'published' },
+      take: 3,
+      orderBy: { createdAt: 'desc' },
+    }),
+    prisma.project.findMany({
+      take: 6,
+      orderBy: { createdAt: 'desc' },
+    }),
+    prisma.testimonial.findMany({
+      take: 3,
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
+  return { articles, projects, testimonials };
+}
+
+/**
+ * Get testimonials for the services page
+ */
+export async function getTestimonials() {
+  return await prisma.testimonial.findMany({
+    orderBy: { createdAt: 'desc' },
+  });
+}
+
+/**
+ * Create a new contact submission
+ */
 export async function createContactSubmission(data: {
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
   company?: string;
-  serviceType: string;
-  projectType?: string;
-  urgency?: string;
   budget?: string;
   timeline?: string;
-  message: string;
-  hearAbout?: string;
+  serviceType?: string;
 }) {
-  try {
-    const submission = await prisma.contactSubmission.create({
-      data: {
-        name: data.name,
-        email: data.email,
-        company: data.company,
-        serviceType: data.serviceType,
-        projectType: data.projectType,
-        urgency: data.urgency,
-        budget: data.budget,
-        timeline: data.timeline,
-        message: data.message,
-        hearAbout: data.hearAbout,
-        status: 'new',
-        priority: data.urgency === 'immediate' ? 'high' : 'normal',
-      },
-    });
-    return submission;
-  } catch (error) {
-    console.error('Error creating contact submission:', error);
-    throw new Error('Failed to save contact submission');
-  }
+  return await prisma.contactSubmission.create({
+    data,
+  });
 }
 
 export async function getPublishedArticles(limit?: number) {
@@ -134,29 +146,3 @@ export async function getWorkHistory() {
   }
 }
 
-export async function getTestimonials(limit?: number) {
-  try {
-    const testimonials = await prisma.testimonial.findMany({
-      where: {
-        approved: true,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      take: limit,
-      select: {
-        id: true,
-        clientName: true,
-        clientTitle: true,
-        clientCompany: true,
-        content: true,
-        rating: true,
-        featured: true,
-      },
-    });
-    return testimonials;
-  } catch (error) {
-    console.error('Error fetching testimonials:', error);
-    return [];
-  }
-}
