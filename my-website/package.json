@@ -12,6 +12,7 @@
     "perf:build": "npm run build && npm run analyze"
   },
   "dependencies": {
+    "@email-template-manager/core": "file:../../../Tools/email-template-manager/packages/core",
     "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.518.0",

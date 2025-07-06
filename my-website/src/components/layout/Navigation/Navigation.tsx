@@ -137,6 +137,7 @@ export const mainSiteNavigation: NavigationItem[] = [
   { label: "Work", href: "/work" },
   { label: "Services", href: "/services" },
   { label: "Resume", href: "/resume" },
+  { label: "Contact", href: "/contact" },
   { 
     label: "Links", 
     href: "https://links.mbernier.com", 
