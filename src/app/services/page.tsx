@@ -7,12 +7,12 @@ import { Tag } from '@/components/ui/Tag';
 import { getTestimonials } from '@/lib/db';
 
 export default async function ServicesPage() {
-  const testimonials = await getTestimonials(6);
+  const testimonials = await getTestimonials();
 
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="hero-gradient py-24">
+      <section className="hero-gradient py-16">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-graphite-500 mb-8 animate-slide-up">
@@ -23,15 +23,15 @@ export default async function ServicesPage() {
               Strategic product management and technical consulting designed to accelerate your growth. 
               Get the expertise you need without the full-time commitment.
             </p>
-            <Link href="/contact" className="btn-primary animate-slide-up">
-              Start a Conversation
-            </Link>
+            <Button size="lg" className="animate-slide-up" asChild>
+              <Link href="/contact">Start a Conversation</Link>
+            </Button>
           </div>
         </div>
       </section>
 
       {/* Two-Lane Services */}
-      <section className="py-24 bg-white">
+      <section className="py-16 bg-white">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
             {/* Fractional Product Management */}
@@ -100,9 +100,9 @@ export default async function ServicesPage() {
               </div>
 
               <div className="text-center">
-                <Link href="/contact?service=fractional-pm" className="btn-primary">
-                  Get Started
-                </Link>
+                <Button asChild>
+                  <Link href="/contact?service=fractional-pm">Get Started</Link>
+                </Button>
               </div>
             </div>
 
@@ -171,9 +171,9 @@ export default async function ServicesPage() {
               </div>
 
               <div className="text-center">
-                <Link href="/contact?service=technical-consulting" className="btn-secondary">
-                  Get Started
-                </Link>
+                <Button variant="secondary" asChild>
+                  <Link href="/contact?service=technical-consulting">Get Started</Link>
+                </Button>
               </div>
             </div>
           </div>
@@ -182,7 +182,7 @@ export default async function ServicesPage() {
 
       {/* Testimonials */}
       {testimonials.length > 0 && (
-        <section className="py-20 bg-gray-50">
+        <section className="py-16 bg-gray-50">
           <div className="container-custom">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-graphite-500 mb-4">
@@ -194,7 +194,7 @@ export default async function ServicesPage() {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {testimonials.map((testimonial) => (
+              {testimonials.map((testimonial: any) => (
                 <Card key={testimonial.id} className="h-full">
                   <CardContent className="pt-6">
                     <blockquote className="text-gray-600 mb-4">

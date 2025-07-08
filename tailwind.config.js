@@ -5,6 +5,36 @@ export default {
       './components/**/*.{js,ts,jsx,tsx,mdx}',
       './shared/**/*.{js,ts,jsx,tsx,mdx}',
     ],
+    safelist: [
+      // Button variants
+      'bg-primary-500', 'bg-primary-600', 'text-white', 'hover:bg-primary-600', 'hover:shadow-lg',
+      'bg-secondary-500', 'bg-secondary-600', 'hover:bg-secondary-600',
+      'border-2', 'border-primary-500', 'text-primary-500', 'hover:bg-primary-500', 'hover:text-white',
+      'text-primary-500', 'hover:bg-primary-50', 'hover:text-primary-600',
+      'underline-offset-4', 'hover:underline',
+      // Card variants
+      'bg-white', 'border-gray-200', 'shadow-card', 'hover:shadow-card-hover',
+      'border-gray-300', 'hover:border-primary-300',
+      'bg-transparent', 'border-transparent', 'hover:bg-gray-50',
+      'bg-gradient-to-br', 'from-primary-50', 'to-secondary-50', 'border-primary-200',
+      'shadow-lg', 'hover:shadow-xl', 'transform', 'hover:-translate-y-1', 'transition-all', 'duration-200',
+      'cursor-pointer',
+      // Tag/Badge/Alert
+      'rounded-full', 'px-2.5', 'py-0.5', 'text-xs', 'font-semibold',
+      'bg-success-500', 'bg-warning-500', 'bg-error-500', 'bg-info-500',
+      'text-success-600', 'text-warning-600', 'text-error-600', 'text-info-600',
+      'border-success-500', 'border-warning-500', 'border-error-500', 'border-info-500',
+      'hover:bg-success-600', 'hover:bg-warning-600', 'hover:bg-error-600', 'hover:bg-info-600',
+      // Misc
+      'rounded-xl', 'rounded-2xl', 'rounded-3xl',
+      'text-lg', 'text-xl', 'text-2xl', 'text-3xl', 'text-4xl', 'text-5xl',
+      'font-bold', 'font-medium', 'font-semibold',
+      'text-graphite-500', 'text-graphite-600', 'text-graphite-700',
+      'bg-gray-100', 'text-gray-700', 'text-gray-500',
+      'bg-primary-50', 'text-primary-600', 'bg-secondary-50', 'text-secondary-600',
+      'w-full', 'h-full', 'flex', 'items-center', 'justify-center', 'gap-2', 'gap-4',
+      'transition-colors', 'duration-200',
+    ],
     theme: {
       extend: {
         // Map CSS custom properties to Tailwind theme colors
