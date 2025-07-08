@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Input, Label, Textarea, Select } from '@/components/ui/Input';
-import { Tag } from '@/components/ui/Tag';
+import { Badge } from '@/components/ui/Badge';
+import { Clock, CheckCircle2, Mail, Phone } from 'lucide-react';
 
 export default function ContactPage() {
   const searchParams = useSearchParams();
@@ -114,25 +114,16 @@ export default function ContactPage() {
 
   if (submitted) {
     return (
-      <Layout>
-        <section className="py-20 bg-gradient-to-br from-primary-50 to-secondary-50">
-          <div className="container-custom">
+      <>
+        <section className="bg-gradient-to-br from-blue-50 to-teal-50 py-20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-white to-teal-100/50"></div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="max-w-2xl mx-auto text-center">
               <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="20,6 9,17 4,12" />
-                </svg>
+                <CheckCircle2 className="h-8 w-8 text-white" />
               </div>
-              <h1 className="text-4xl font-bold text-graphite-500 mb-4">
+              <h1 className="text-4xl font-bold text-gray-900 mb-4">
                 Thank You!
               </h1>
               <p className="text-xl text-gray-600 mb-8">
@@ -145,24 +136,27 @@ export default function ContactPage() {
                   </p>
                 </div>
               )}
-              <Button asChild>
+              <Button size="lg" asChild>
                 <a href="/">Return to Home</a>
               </Button>
             </div>
           </div>
         </section>
-      </Layout>
+      </>
     );
   }
 
   return (
-    <Layout>
+    <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-20">
-        <div className="container-custom">
+      <section className="bg-gradient-to-br from-blue-50 to-teal-50 py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-white to-teal-100/50"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-200/30 to-teal-200/20 rounded-full blur-3xl transform translate-x-32 -translate-y-32"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-graphite-500 mb-6">
-              Let's Work <span className="text-gradient">Together</span>
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              Let's Work <span className="text-blue-600">Together</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               Ready to accelerate your product development or solve complex technical challenges? 
@@ -174,14 +168,14 @@ export default function ContactPage() {
 
       {/* Contact Form */}
       <section className="py-20 bg-white">
-        <div className="container-custom">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="grid lg:grid-cols-3 gap-12">
               {/* Contact Info */}
               <div className="lg:col-span-1">
                 <div className="space-y-8">
                   <div>
-                    <h2 className="text-2xl font-bold text-graphite-500 mb-4">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">
                       Get in Touch
                     </h2>
                     <p className="text-gray-600 mb-6">
@@ -193,40 +187,60 @@ export default function ContactPage() {
                   <div className="space-y-6">
                     <Card>
                       <CardHeader>
-                        <CardTitle className="text-lg text-[var(--color-primary-600)]">
-                          Response Times
-                        </CardTitle>
+                        <div className="flex items-center gap-2">
+                          <Clock className="h-5 w-5 text-blue-600" />
+                          <CardTitle className="text-lg text-blue-600">
+                            Response Times
+                          </CardTitle>
+                        </div>
                       </CardHeader>
-                      <CardContent>
-                        <div className="space-y-3">
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Regular inquiries</span>
-                            <span className="font-medium">24 hours</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">Urgent requests</span>
-                            <span className="font-medium text-orange-600">4 hours</span>
-                          </div>
+                      <CardContent className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-600">Standard</span>
+                          <Badge variant="default">24 hours</Badge>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-600">Urgent</span>
+                          <Badge variant="warning">4 hours</Badge>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-gray-600">Emergency</span>
+                          <Badge variant="error">1 hour</Badge>
                         </div>
                       </CardContent>
                     </Card>
 
                     <Card>
                       <CardHeader>
-                        <CardTitle className="text-lg text-secondary-600">
-                          What to Include
-                        </CardTitle>
+                        <div className="flex items-center gap-2">
+                          <Mail className="h-5 w-5 text-teal-600" />
+                          <CardTitle className="text-lg text-teal-600">
+                            Direct Contact
+                          </CardTitle>
+                        </div>
                       </CardHeader>
-                      <CardContent>
-                        <ul className="space-y-2 text-sm text-gray-600">
-                          <li>• Brief description of your challenge</li>
-                          <li>• Current team size and structure</li>
-                          <li>• Desired timeline</li>
-                          <li>• Budget range (if known)</li>
-                          <li>• Any specific requirements</li>
-                        </ul>
+                      <CardContent className="space-y-3">
+                        <div>
+                          <p className="text-sm text-gray-600 mb-1">Email</p>
+                          <a href="mailto:hello@mbernier.com" className="text-blue-600 hover:text-blue-700">
+                            hello@mbernier.com
+                          </a>
+                        </div>
+                        <div>
+                          <p className="text-sm text-gray-600 mb-1">LinkedIn</p>
+                          <a href="https://linkedin.com/in/mattbernier" className="text-blue-600 hover:text-blue-700" target="_blank" rel="noopener noreferrer">
+                            /in/mattbernier
+                          </a>
+                        </div>
                       </CardContent>
                     </Card>
+
+                    <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                      <p className="text-sm text-blue-900">
+                        <strong>Prefer a quick call?</strong> Include your preferred time zone and 
+                        availability in your message, and I'll send you a calendar link.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -235,30 +249,29 @@ export default function ContactPage() {
               <div className="lg:col-span-2">
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-2xl">Start a Conversation</CardTitle>
+                    <CardTitle className="text-2xl text-gray-900">Send a Message</CardTitle>
                     <CardDescription>
-                      Fill out the form below and I'll get back to you as soon as possible.
+                      Fill out the form below and I'll get back to you shortly.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <form onSubmit={handleSubmit} className="space-y-6">
                       {error && (
-                        <div className="bg-red-100 border border-red-300 rounded-xl p-4">
-                          <p className="text-red-800">{error}</p>
+                        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                          <p className="text-sm text-red-600">{error}</p>
                         </div>
                       )}
 
-                      {/* Basic Info */}
-                      <div className="grid md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="name">Name *</Label>
                           <Input
                             id="name"
                             name="name"
                             type="text"
-                            required
                             value={formData.name}
                             onChange={handleInputChange}
+                            required
                             placeholder="Your full name"
                           />
                         </div>
@@ -268,9 +281,9 @@ export default function ContactPage() {
                             id="email"
                             name="email"
                             type="email"
-                            required
                             value={formData.email}
                             onChange={handleInputChange}
+                            required
                             placeholder="your@email.com"
                           />
                         </div>
@@ -288,8 +301,7 @@ export default function ContactPage() {
                         />
                       </div>
 
-                      {/* Service Details */}
-                      <div className="grid md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="serviceType">Service Type</Label>
                           <Select
@@ -307,17 +319,17 @@ export default function ContactPage() {
                           </Select>
                         </div>
                         <div>
-                          <Label htmlFor="budget">Budget Range</Label>
+                          <Label htmlFor="timeline">Timeline</Label>
                           <Select
-                            id="budget"
-                            name="budget"
-                            value={formData.budget}
+                            id="timeline"
+                            name="timeline"
+                            value={formData.timeline}
                             onChange={handleInputChange}
                           >
-                            <option value="">Select budget range</option>
-                            {budgetRanges.map((budget) => (
-                              <option key={budget} value={budget}>
-                                {budget}
+                            <option value="">Select timeline</option>
+                            {timelineOptions.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
                               </option>
                             ))}
                           </Select>
@@ -325,27 +337,20 @@ export default function ContactPage() {
                       </div>
 
                       <div>
-                        <Label htmlFor="timeline">Timeline</Label>
+                        <Label htmlFor="budget">Budget Range</Label>
                         <Select
-                          id="timeline"
-                          name="timeline"
-                          value={formData.timeline}
+                          id="budget"
+                          name="budget"
+                          value={formData.budget}
                           onChange={handleInputChange}
                         >
-                          <option value="">Select timeline</option>
-                          {timelineOptions.map((timeline) => (
-                            <option key={timeline} value={timeline}>
-                              {timeline}
+                          <option value="">Select budget range</option>
+                          {budgetRanges.map((range) => (
+                            <option key={range} value={range}>
+                              {range}
                             </option>
                           ))}
                         </Select>
-                        {isUrgent && (
-                          <div className="mt-2 p-3 bg-yellow-100 border border-yellow-300 rounded-lg">
-                            <p className="text-yellow-800 text-sm font-medium">
-                              Urgent request noted. I'll prioritize your inquiry and respond within 4 hours.
-                            </p>
-                          </div>
-                        )}
                       </div>
 
                       <div>
@@ -356,7 +361,7 @@ export default function ContactPage() {
                           type="text"
                           value={formData.subject}
                           onChange={handleInputChange}
-                          placeholder="Brief summary of your request"
+                          placeholder="Brief description of your project"
                         />
                       </div>
 
@@ -365,19 +370,27 @@ export default function ContactPage() {
                         <Textarea
                           id="message"
                           name="message"
-                          required
-                          rows={6}
                           value={formData.message}
                           onChange={handleInputChange}
-                          placeholder="Please describe your challenge, goals, and how I can help. Include any relevant details about your current situation."
+                          required
+                          rows={6}
+                          placeholder="Tell me about your project, challenges, and goals..."
                         />
                       </div>
+
+                      {isUrgent && (
+                        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                          <p className="text-sm text-yellow-800">
+                            <strong>Urgent request detected.</strong> I'll prioritize this and respond within 4 hours during business hours.
+                          </p>
+                        </div>
+                      )}
 
                       <Button
                         type="submit"
                         size="lg"
-                        className="w-full"
                         disabled={isSubmitting}
+                        className="w-full"
                       >
                         {isSubmitting ? 'Sending...' : 'Send Message'}
                       </Button>
@@ -389,72 +402,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-
-      {/* FAQ Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-graphite-500 mb-4">
-                Frequently Asked Questions
-              </h2>
-              <p className="text-xl text-gray-600">
-                Common questions about working together
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">How do you structure engagements?</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">
-                    I offer flexible engagement models from short-term projects to ongoing fractional arrangements. 
-                    We'll find the structure that best fits your needs and budget.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">What's your typical response time?</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">
-                    I respond to all inquiries within 24 hours. For urgent requests, 
-                    I aim to respond within 4 hours during business days.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Do you work with early-stage companies?</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">
-                    Yes! I work with companies of all sizes, from startups to enterprises. 
-                    My fractional model is particularly well-suited for growing companies.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Can you help with specific technical challenges?</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">
-                    Absolutely. From architecture decisions to AI integration, 
-                    I provide hands-on technical consulting to solve complex challenges.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-    </Layout>
+    </>
   );
 }
