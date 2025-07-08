@@ -3,28 +3,26 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const cardVariants = cva(
-  'rounded-2xl transition-all duration-200 border',
+  "rounded-xl border bg-white text-gray-950 shadow-sm transition-all duration-200",
   {
     variants: {
       variant: {
-        default: 'bg-white border-gray-200 shadow-card hover:shadow-card-hover',
-        outline: 'bg-white border-gray-300 hover:border-primary-300 hover:shadow-card',
-        ghost: 'bg-transparent border-transparent hover:bg-gray-50',
-        gradient: 'bg-gradient-to-br from-primary-50 to-secondary-50 border-primary-200 hover:shadow-card-hover',
-        elevated: 'bg-white border-gray-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200',
-        interactive: 'bg-white border-gray-200 shadow-card hover:shadow-card-hover cursor-pointer hover:border-primary-300 transition-all duration-200',
+        default: "border-gray-200",
+        elevated: "border-gray-200 shadow-lg hover:shadow-xl",
+        interactive: "border-gray-200 hover:shadow-md hover:border-gray-300 cursor-pointer hover:-translate-y-1",
+        outline: "border-gray-300 hover:border-gray-400 hover:shadow-md",
+        ghost: "border-transparent bg-transparent hover:bg-gray-50"
       },
       size: {
-        sm: 'p-4',
-        default: 'p-6',
-        lg: 'p-8',
-        xl: 'p-10',
-      },
+        sm: "text-sm",
+        default: "",
+        lg: "text-base"
+      }
     },
     defaultVariants: {
-      variant: 'default',
-      size: 'default',
-    },
+      variant: "default",
+      size: "default"
+    }
   }
 );
 
@@ -33,18 +31,14 @@ export interface CardProps
     VariantProps<typeof cardVariants> {}
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, size, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={cn(cardVariants({ variant, size, className }))}
-        {...props}
-      />
-    );
-  }
+  ({ className, variant, size, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(cardVariants({ variant, size, className }))}
+      {...props}
+    />
+  )
 );
-
-Card.displayName = 'Card';
 
 const CardHeader = React.forwardRef<
   HTMLDivElement,
@@ -52,12 +46,10 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('flex flex-col space-y-1.5 pb-4', className)}
+    className={cn("flex flex-col space-y-1.5 p-6", className)}
     {...props}
   />
 ));
-
-CardHeader.displayName = 'CardHeader';
 
 const CardTitle = React.forwardRef<
   HTMLParagraphElement,
@@ -65,12 +57,10 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn('text-xl font-semibold leading-none tracking-tight text-graphite-500', className)}
+    className={cn("text-lg font-semibold leading-none tracking-tight", className)}
     {...props}
   />
 ));
-
-CardTitle.displayName = 'CardTitle';
 
 const CardDescription = React.forwardRef<
   HTMLParagraphElement,
@@ -78,25 +68,17 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn('text-sm text-gray-600 leading-relaxed', className)}
+    className={cn("text-sm text-gray-600", className)}
     {...props}
   />
 ));
-
-CardDescription.displayName = 'CardDescription';
 
 const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn('pt-0', className)}
-    {...props}
-  />
+  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
 ));
-
-CardContent.displayName = 'CardContent';
 
 const CardFooter = React.forwardRef<
   HTMLDivElement,
@@ -104,11 +86,16 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('flex items-center pt-4', className)}
+    className={cn("flex items-center p-6 pt-0", className)}
     {...props}
   />
 ));
 
-CardFooter.displayName = 'CardFooter';
+Card.displayName = "Card";
+CardHeader.displayName = "CardHeader";
+CardTitle.displayName = "CardTitle";
+CardDescription.displayName = "CardDescription";
+CardContent.displayName = "CardContent";
+CardFooter.displayName = "CardFooter";
 
 export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, cardVariants };
