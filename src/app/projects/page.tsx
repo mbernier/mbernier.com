@@ -3,11 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
-import { Tag } from '@/components/ui/Tag';
-import { Pagination } from '@/components/ui/Pagination';
+import { Badge } from '@/components/ui/Badge';
+import { ExternalLink, Github, Calendar, Zap } from 'lucide-react';
+import { generateFallbackImage } from '@/lib/utils';
 
 interface Project {
   id: string;
@@ -145,30 +145,42 @@ export default function ProjectsPage() {
     if (project.image) {
       return project.image;
     }
-    // Fallback image based on project type
-    return project.projectType === 'Client' 
-      ? '/images/default-project.jpg' 
-      : '/images/default-project.jpg';
+    // Use fallback from utils
+    return generateFallbackImage(project.title);
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   };
 
   if (loading) {
     return (
-      <Layout>
-        <div className="container-custom py-20">
-          <div className="text-center">Loading projects...</div>
+      <>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading projects...</p>
+          </div>
         </div>
-      </Layout>
+      </>
     );
   }
 
   return (
-    <Layout>
+    <>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary-50 to-secondary-50 py-20">
-        <div className="container-custom">
+      <section className="bg-gradient-to-br from-blue-50 to-teal-50 py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-white to-teal-100/50"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-200/30 to-teal-200/20 rounded-full blur-3xl transform translate-x-32 -translate-y-32"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-graphite-500 mb-6">
-              Projects & <span className="text-gradient">Work</span>
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+              Projects & <span className="text-blue-600">Work</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               A showcase of recent projects and technical achievements. From client work to personal experiments, 
@@ -180,10 +192,10 @@ export default function ProjectsPage() {
 
       {/* Filter Section */}
       <section className="py-12 bg-white border-b border-gray-200">
-        <div className="container-custom">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-graphite-500">Filter Projects</h3>
+              <h3 className="text-lg font-semibold text-gray-900">Filter Projects</h3>
               <div className="text-gray-600">
                 {filteredProjects.length === projects.length
                   ? `Showing all ${projects.length} projects`
@@ -193,19 +205,14 @@ export default function ProjectsPage() {
 
             <div className="flex flex-wrap gap-2">
               {(['All', 'Client', 'Personal'] as const).map((type) => (
-                <Tag
+                <Badge
                   key={type}
                   variant={selectedType === type ? 'primary' : 'outline'}
-                  className="cursor-pointer"
+                  className="cursor-pointer hover:bg-blue-100 transition-colors px-4 py-2"
                   onClick={() => setSelectedType(type)}
                 >
-                  {type} Work
-                  {type !== 'All' && (
-                    <span className="ml-1 text-xs">
-                      ({projects.filter(p => p.projectType === type).length})
-                    </span>
-                  )}
-                </Tag>
+                  {type} {type === 'All' ? `(${projects.length})` : `(${projects.filter(p => p.projectType === type).length})`}
+                </Badge>
               ))}
             </div>
           </div>
@@ -213,195 +220,194 @@ export default function ProjectsPage() {
       </section>
 
       {/* Projects Grid */}
-      <section className="py-20 bg-gray-50">
-        <div className="container-custom">
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {currentProjects.length === 0 ? (
             <div className="text-center py-12">
-              <h3 className="text-xl font-semibold text-graphite-500 mb-2">
-                No projects found
-              </h3>
-              <p className="text-gray-600 mb-4">
-                Try adjusting your filter selection.
-              </p>
-              <Button variant="outline" onClick={() => setSelectedType('All')}>
-                Show All Projects
-              </Button>
+              <div className="max-w-md mx-auto">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="h-8 w-8 text-gray-400" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No projects found</h3>
+                <p className="text-gray-600 mb-4">
+                  Try adjusting your filter criteria
+                </p>
+                <Button variant="outline" onClick={() => setSelectedType('All')}>
+                  Show all projects
+                </Button>
+              </div>
             </div>
           ) : (
-            <>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                {currentProjects.map((project) => (
-                  <Card key={project.id} className="h-full hover:shadow-lg transition-shadow overflow-hidden">
-                    {/* Project Image */}
-                    <div className="relative h-48 bg-gray-200">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {currentProjects.map((project) => (
+                <Card key={project.id} className="group hover:shadow-xl transition-all duration-300 h-full overflow-hidden">
+                  {/* Project Image */}
+                  <div className="relative h-48 overflow-hidden bg-gray-100">
+                    {project.image ? (
                       <Image
-                        src={getProjectImage(project)}
+                        src={project.image}
                         alt={project.title}
                         fill
-                        className="object-cover"
-                        onError={(e) => {
-                          // Fallback to a solid color background if image fails
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                        }}
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                      
-                      {/* Project Type Badge */}
-                      <div className="absolute top-4 left-4">
-                        <Tag
-                          size="sm"
-                          variant={project.projectType === 'Client' ? 'primary' : 'secondary'}
-                        >
-                          {project.projectType}
-                        </Tag>
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-blue-400 to-teal-500 flex items-center justify-center">
+                        <span className="text-white text-2xl font-bold">
+                          {project.title.split(' ').map(word => word[0]).join('').slice(0, 2)}
+                        </span>
                       </div>
+                    )}
+                    
+                    {/* Type Badge */}
+                    <div className="absolute top-3 left-3">
+                      <Badge variant={project.projectType === 'Client' ? 'primary' : 'secondary'}>
+                        {project.projectType}
+                      </Badge>
+                    </div>
+                    
+                    {/* Recently Updated Badge */}
+                    {project.recentlyUpdated && (
+                      <div className="absolute top-3 right-3">
+                        <Badge variant="accent" className="bg-green-100 text-green-800">
+                          Updated
+                        </Badge>
+                      </div>
+                    )}
+                  </div>
 
-                      {/* Recently Updated Badge */}
-                      {project.recentlyUpdated && (
-                        <div className="absolute top-4 right-4">
-                          <Tag size="sm" variant="success">
-                            Updated
-                          </Tag>
-                        </div>
-                      )}
+                  <CardHeader>
+                    <CardTitle className="text-xl group-hover:text-blue-600 transition-colors line-clamp-2">
+                      {project.title}
+                    </CardTitle>
+                    <CardDescription className="line-clamp-3">
+                      {project.description}
+                    </CardDescription>
+                  </CardHeader>
 
-                      {/* External Link Icon */}
-                      {project.url && (
-                        <div className="absolute bottom-4 right-4">
-                          <a
-                            href={project.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors"
-                            aria-label="View live project"
-                          >
-                            <svg
-                              width="16"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                              <polyline points="15,3 21,3 21,9" />
-                              <line x1="10" y1="14" x2="21" y2="3" />
-                            </svg>
-                          </a>
-                        </div>
-                      )}
+                  <CardContent className="space-y-4">
+                    {/* Features */}
+                    <div>
+                      <h4 className="text-sm font-medium text-gray-900 mb-2">Key Features</h4>
+                      <div className="flex flex-wrap gap-1">
+                        {project.features.slice(0, 3).map((feature) => (
+                          <Badge key={feature} variant="outline" className="text-xs">
+                            {feature}
+                          </Badge>
+                        ))}
+                        {project.features.length > 3 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{project.features.length - 3} more
+                          </Badge>
+                        )}
+                      </div>
                     </div>
 
-                    <CardHeader>
-                      <CardTitle className="text-xl">
-                        <Link
-                          href={`/projects/${project.slug}`}
-                          className="hover:text-[var(--color-primary-500)] transition-colors"
-                        >
-                          {project.title}
-                        </Link>
-                      </CardTitle>
-                      <CardDescription className="line-clamp-3">
-                        {project.description}
-                      </CardDescription>
-                    </CardHeader>
-
-                    <CardContent>
-                      <div className="space-y-4">
-                        {/* Features */}
-                        {project.features.length > 0 && (
-                          <div className="space-y-2">
-                            <h4 className="text-sm font-medium text-graphite-500">Key Features</h4>
-                            <div className="flex flex-wrap gap-1">
-                              {project.features.slice(0, 4).map((feature, index) => (
-                                <Tag key={index} size="sm" variant="outline">
-                                  {feature}
-                                </Tag>
-                              ))}
-                                                             {project.features.length > 4 && (
-                                 <Tag size="sm" variant="default">
-                                   +{project.features.length - 4} more
-                                 </Tag>
-                               )}
-                            </div>
-                          </div>
+                    {/* Tech Stack */}
+                    <div>
+                      <h4 className="text-sm font-medium text-gray-900 mb-2">Tech Stack</h4>
+                      <div className="flex flex-wrap gap-1">
+                        {project.tech.slice(0, 4).map((tech) => (
+                          <Badge key={tech} variant="default" className="text-xs">
+                            {tech}
+                          </Badge>
+                        ))}
+                        {project.tech.length > 4 && (
+                          <Badge variant="default" className="text-xs">
+                            +{project.tech.length - 4} more
+                          </Badge>
                         )}
-
-                        {/* Tech Stack */}
-                        {project.tech.length > 0 && (
-                          <div className="space-y-2">
-                            <h4 className="text-sm font-medium text-graphite-500">Tech Stack</h4>
-                            <div className="flex flex-wrap gap-1">
-                              {project.tech.slice(0, 3).map((tech, index) => (
-                                <Tag key={index} size="sm" variant="secondary">
-                                  {tech}
-                                </Tag>
-                              ))}
-                                                             {project.tech.length > 3 && (
-                                 <Tag size="sm" variant="default">
-                                   +{project.tech.length - 3} more
-                                 </Tag>
-                               )}
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Meta */}
-                        <div className="flex items-center justify-between text-sm text-gray-500 pt-2 border-t border-gray-200">
-                          <time>
-                            {new Date(project.createdAt).toLocaleDateString('en-US', {
-                              year: 'numeric',
-                              month: 'short',
-                            })}
-                          </time>
-                          <Button variant="outline" size="sm" asChild>
-                            <Link href={`/projects/${project.slug}`}>
-                              View Details
-                            </Link>
-                          </Button>
-                        </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+                    </div>
 
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={setCurrentPage}
-                  className="justify-center"
-                />
-              )}
-            </>
+                    {/* Date */}
+                    <div className="flex items-center gap-1 text-sm text-gray-500">
+                      <Calendar className="h-4 w-4" />
+                      <span>{formatDate(project.createdAt)}</span>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex gap-2 pt-2">
+                      {project.url && (
+                        <Button variant="default" size="sm" asChild className="flex-1">
+                          <a href={project.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                            <ExternalLink className="h-4 w-4" />
+                            View Live
+                          </a>
+                        </Button>
+                      )}
+                      <Button variant="outline" size="sm" asChild className="flex-1">
+                        <Link href={`/projects/${project.slug}`} className="flex items-center gap-1">
+                          Details
+                        </Link>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="mt-12 flex justify-center">
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </Button>
+                
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <Button
+                      key={page}
+                      variant={currentPage === page ? 'default' : 'ghost'}
+                      size="sm"
+                      onClick={() => setCurrentPage(page)}
+                      className="w-8 h-8 p-0"
+                    >
+                      {page}
+                    </Button>
+                  ))}
+                </div>
+
+                <Button
+                  variant="outline"
+                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </Button>
+              </div>
+            </div>
           )}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary-500 to-secondary-500">
-        <div className="container-custom text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Have a Project in Mind?
-          </h2>
-          <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Let's discuss how I can help bring your product vision to life with strategic planning and technical expertise.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="outline" className="bg-white text-[var(--color-primary-500)] hover:bg-gray-50" asChild>
-              <Link href="/contact">Start a Project</Link>
-            </Button>
-            <Button size="lg" variant="ghost" className="text-white hover:bg-white/10" asChild>
-              <Link href="/services">View Services</Link>
-            </Button>
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center bg-white rounded-xl border border-gray-200 p-8 max-w-4xl mx-auto">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              Ready to Start Your Project?
+            </h3>
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+              Whether you need product management leadership or technical consulting, 
+              let's discuss how I can help bring your vision to life.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button size="lg" asChild>
+                <Link href="/contact">Start a Project</Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild>
+                <Link href="/services">View Services</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
-    </Layout>
+    </>
   );
 }
