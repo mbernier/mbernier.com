@@ -6,8 +6,12 @@ import { ArrowRight, Coffee } from 'lucide-react';
 
 export default function HeroSection() {
   return (
-    <section className="bg-gradient-to-br from-blue-50 via-white to-teal-50 py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="bg-gradient-to-br from-blue-50 to-teal-50 py-16 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-100/50 via-white to-teal-100/50"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-200/30 to-teal-200/20 rounded-full blur-3xl transform translate-x-32 -translate-y-32"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div>
@@ -26,7 +30,7 @@ export default function HeroSection() {
             </p>
 
             {/* Latest Update */}
-            <div className="bg-white/70 backdrop-blur border border-gray-200 rounded-lg p-4 mb-8">
+            <div className="bg-white/80 backdrop-blur-sm border border-gray-200/60 rounded-lg p-4 mb-8 shadow-sm">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <p className="text-sm text-gray-600 mb-1">Latest Article</p>
@@ -66,13 +70,15 @@ export default function HeroSection() {
           {/* Image */}
           <div className="flex justify-center lg:justify-end">
             <div className="relative">
-              <div className="w-80 h-80 bg-gradient-to-br from-blue-400 to-teal-400 rounded-full opacity-20 absolute -inset-4"></div>
+              {/* Multiple decorative backgrounds for better visibility */}
+              <div className="w-80 h-80 bg-gradient-to-br from-blue-400/40 to-teal-400/30 rounded-full absolute -inset-4 blur-sm"></div>
+              <div className="w-72 h-72 bg-gradient-to-br from-blue-300/20 to-teal-300/20 rounded-full absolute -inset-2"></div>
               <Image 
                 src="/matt.hat.jpg"
                 alt="Matt Bernier"
                 width={288}
                 height={288}
-                className="relative w-72 h-72 rounded-full object-cover shadow-xl"
+                className="relative w-72 h-72 rounded-full object-cover shadow-xl ring-4 ring-white/50"
               />
             </div>
           </div>
