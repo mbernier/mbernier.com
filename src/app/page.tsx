@@ -8,10 +8,10 @@ import { Rocket, Settings, ArrowRight, Clock } from 'lucide-react';
 import { getFeaturedContent } from '@/lib/db';
 
 export default async function HomePage() {
-  // Temporarily disable database call to test if that's causing the issue
-  // const { featuredArticles, recentProjects } = await getFeaturedContent();
-  const featuredArticles: any[] = [];
-  const recentProjects: any[] = [];
+  // Re-enable database call to test new components with real data
+  const { articles: featuredArticles, projects: recentProjects } = await getFeaturedContent();
+  // const featuredArticles: any[] = [];
+  // const recentProjects: any[] = [];
 
   return (
     <Layout>
@@ -165,7 +165,7 @@ export default async function HomePage() {
                 <Card key={article.id} variant="interactive" className="h-full">
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between mb-2">
-                      <Badge variant="secondary">{article.category || 'Article'}</Badge>
+                      <Badge variant="secondary">{article.categories?.[0] || 'Article'}</Badge>
                       <div className="flex items-center text-xs text-gray-500">
                         <Clock className="h-3 w-3 mr-1" />
                         {article.readingTime || '5 min read'}

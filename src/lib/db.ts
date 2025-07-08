@@ -17,10 +17,34 @@ export async function getFeaturedContent() {
       where: { featured: true, status: 'published' },
       take: 3,
       orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        excerpt: true,
+        description: true,
+        categories: true,
+        tags: true,
+        readingTime: true,
+        createdAt: true,
+        featured: true,
+      },
     }),
     prisma.project.findMany({
       take: 6,
       orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        description: true,
+        features: true,
+        createdAt: true,
+        appUpdates: {
+          take: 1,
+          orderBy: { createdAt: 'desc' }
+        },
+      },
     }),
     prisma.testimonial.findMany({
       take: 3,
