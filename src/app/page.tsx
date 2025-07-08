@@ -8,10 +8,10 @@ import { Rocket, Settings, ArrowRight, Clock } from 'lucide-react';
 import { getFeaturedContent } from '@/lib/db';
 
 export default async function HomePage() {
-  // Re-enable database call to test new components with real data
-  const { articles: featuredArticles, projects: recentProjects } = await getFeaturedContent();
-  // const featuredArticles: any[] = [];
-  // const recentProjects: any[] = [];
+  // Temporarily disable database call until we fix the connection
+  // const { articles: featuredArticles, projects: recentProjects } = await getFeaturedContent();
+  const featuredArticles: any[] = [];
+  const recentProjects: any[] = [];
 
   return (
     <Layout>
