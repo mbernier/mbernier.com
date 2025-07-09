@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     // Fetch content from different sources
     const [articles, projects, offers] = await Promise.all([
       // Articles
-      (type === 'all' || type === 'article') ? prisma.article.findMany({
+              (type === 'all' || type === 'article') ? prisma.articles.findMany({
         where: {
           status: 'published',
           ...(query && {

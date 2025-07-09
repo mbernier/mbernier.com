@@ -29,7 +29,7 @@ async function getDashboardStats() {
     recentActivity,
     recentContacts,
   ] = await Promise.all([
-    prisma.article.count(),
+            prisma.articles.count(),
     prisma.project.count(),
     prisma.contactSubmission.count(),
     prisma.contactSubmission.count({ where: { isRead: false } }),

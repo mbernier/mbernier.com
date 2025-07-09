@@ -32,67 +32,36 @@ export default function ArticlesPage() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  // Mock data for now - replace with actual API call
+  // Fetch articles from API
   useEffect(() => {
-    const mockArticles: Article[] = [
-      {
-        id: '1',
-        slug: 'developer-experience-is-product-strategy',
-        title: 'Developer Experience is Product Strategy',
-        excerpt: 'How prioritizing developer experience can drive product success and business growth.',
-        description: 'A deep dive into why developer experience should be treated as a core product strategy.',
-        categories: ['Product Management', 'Developer Experience'],
-        tags: ['Product Strategy', 'DX', 'Developer Tools'],
-        readingTime: 8,
-        createdAt: '2024-01-15T10:00:00Z',
-        featured: true,
-      },
-      {
-        id: '2',
-        slug: 'api-pricing-is-developer-experience',
-        title: 'API Pricing is Developer Experience',
-        excerpt: 'Why your API pricing model is a crucial part of the developer experience.',
-        description: 'Exploring the relationship between pricing strategy and developer adoption.',
-        categories: ['Developer Experience', 'Pricing'],
-        tags: ['API Design', 'Pricing Strategy', 'DX'],
-        readingTime: 6,
-        createdAt: '2024-01-10T14:30:00Z',
-        featured: false,
-      },
-      {
-        id: '3',
-        slug: 'fractional-product-management-guide',
-        title: 'Getting Started with Fractional Product Management',
-        excerpt: 'A comprehensive guide to building your fractional product management career.',
-        description: 'Everything you need to know about becoming a fractional product manager.',
-        categories: ['Product Management', 'Career'],
-        tags: ['Fractional', 'Product Management', 'Career Advice'],
-        readingTime: 12,
-        createdAt: '2024-01-05T09:15:00Z',
-        featured: true,
-      },
-      {
-        id: '4',
-        slug: 'ai-integration-best-practices',
-        title: 'AI Integration Best Practices for Product Teams',
-        excerpt: 'Practical approaches to successfully integrate AI capabilities into your product.',
-        description: 'A guide to AI integration without the hype.',
-        categories: ['Technical Consulting', 'AI'],
-        tags: ['AI Integration', 'Product Strategy', 'Technical Leadership'],
-        readingTime: 10,
-        createdAt: '2024-01-01T12:00:00Z',
-        featured: true,
-      },
-    ];
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/articles');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch articles');
+        }
+        
+        const data = await response.json();
+        setArticles(data.articles);
+        setFilteredArticles(data.articles);
+        
+        // Set all available tags and categories
+        const allFilters = [...data.filters.categories, ...data.filters.tags];
+        setAllTags(Array.from(new Set(allFilters)));
+        
+      } catch (err) {
+        console.error('Error fetching articles:', err);
+        setError('Failed to load articles. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    setArticles(mockArticles);
-    setFilteredArticles(mockArticles);
-    
-    // Extract unique tags
-    const tags = Array.from(new Set(mockArticles.flatMap(article => [...article.categories, ...article.tags])));
-    setAllTags(tags);
-    setLoading(false);
+    fetchArticles();
   }, []);
 
   // Filter articles based on search and tags
@@ -157,6 +126,19 @@ export default function ArticlesPage() {
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
             <p className="mt-4 text-gray-600">Loading articles...</p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="text-center">
+            <p className="text-red-600 mb-4">{error}</p>
+            <Button onClick={() => window.location.reload()}>Try Again</Button>
           </div>
         </div>
       </>

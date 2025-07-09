@@ -14,6 +14,23 @@ export function formatDate(dateString: string): string {
   }).format(date);
 }
 
+export function debounce<T extends (...args: any[]) => any>(
+  func: T,
+  delay: number
+): (...args: Parameters<T>) => void {
+  let timeoutId: NodeJS.Timeout | null = null;
+  
+  return (...args: Parameters<T>) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+}
+
 export function generateFallbackImage(title: string): string {
   // Generate a simple gradient background with initials for projects without images
   const initials = title

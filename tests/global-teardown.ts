@@ -32,7 +32,7 @@ async function cleanupTestData(prisma: PrismaClient) {
   
   try {
     // Delete test articles
-    await prisma.article.deleteMany({
+    await prisma.articles.deleteMany({
       where: {
         slug: {
           startsWith: 'test-',

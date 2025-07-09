@@ -5,7 +5,7 @@ export async function GET() {
   try {
     // Get site data for llms.txt
     const [articles, projects, workHistory, testimonials] = await Promise.all([
-      prisma.article.findMany({
+      prisma.articles.findMany({
         where: { status: 'published' },
         select: { 
           slug: true, 

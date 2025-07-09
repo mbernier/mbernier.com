@@ -4,16 +4,24 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+export const prisma = globalForPrisma.prisma ?? new PrismaClient({
+  log: ['query', 'error', 'warn'],
+});
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+
+console.log('Database connection initialized');
+console.log('Environment variables:', {
+  SUPABASE_SESSION_POOLER_URL: !!process.env.SUPABASE_SESSION_POOLER_URL,
+  NODE_ENV: process.env.NODE_ENV,
+});
 
 /**
  * Get featured content for the homepage
  */
 export async function getFeaturedContent() {
   const [articles, projects, testimonials] = await Promise.all([
-    prisma.article.findMany({
+    prisma.articles.findMany({
       where: { featured: true, status: 'published' },
       take: 3,
       orderBy: { createdAt: 'desc' },
@@ -83,7 +91,7 @@ export async function createContactSubmission(data: {
 
 export async function getPublishedArticles(limit?: number) {
   try {
-    const articles = await prisma.article.findMany({
+    const articles = await prisma.articles.findMany({
       where: {
         status: 'published',
       },

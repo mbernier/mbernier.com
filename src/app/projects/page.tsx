@@ -17,11 +17,8 @@ interface Project {
   features: string[];
   image?: string;
   url?: string;
-  projectType: 'Client' | 'Personal';
-  tech: string[];
   createdAt: string;
   showOnOffersPage: boolean;
-  recentlyUpdated?: boolean;
 }
 
 const PROJECTS_PER_PAGE = 9;
@@ -30,110 +27,34 @@ export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedType, setSelectedType] = useState<'All' | 'Client' | 'Personal'>('All');
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  // Mock data for now - replace with actual API call
+  // Fetch projects from API
   useEffect(() => {
-    const mockProjects: Project[] = [
-      {
-        id: '1',
-        slug: 'ai-image-recognition',
-        title: 'AI Image Recognition Pipeline',
-        description: 'Built a comprehensive AI-powered image recognition system for automated content tagging and categorization.',
-        features: ['Computer Vision', 'Machine Learning', 'API Integration', 'Real-time Processing'],
-        image: '/images/ai_images.jpg',
-        url: 'https://example.com/ai-project',
-        projectType: 'Client',
-        tech: ['Python', 'TensorFlow', 'AWS', 'Docker'],
-        createdAt: '2024-01-15T10:00:00Z',
-        showOnOffersPage: true,
-        recentlyUpdated: true,
-      },
-      {
-        id: '2',
-        slug: 'product-management-dashboard',
-        title: 'Product Management Dashboard',
-        description: 'A comprehensive dashboard for tracking product metrics, user feedback, and roadmap planning.',
-        features: ['Analytics', 'Data Visualization', 'User Management', 'Reporting'],
-        image: '/images/pm_dashboard.png',
-        projectType: 'Personal',
-        tech: ['React', 'TypeScript', 'Chart.js', 'Node.js'],
-        createdAt: '2024-01-10T14:30:00Z',
-        showOnOffersPage: false,
-        recentlyUpdated: false,
-      },
-      {
-        id: '3',
-        slug: 'event-management-tool',
-        title: 'Event Management Platform',
-        description: 'Full-featured event management system with registration, payment processing, and attendee tracking.',
-        features: ['Event Planning', 'Payment Processing', 'Attendee Management', 'Analytics'],
-        image: '/images/event_management.jpg',
-        projectType: 'Client',
-        tech: ['Next.js', 'Stripe', 'PostgreSQL', 'Tailwind CSS'],
-        createdAt: '2024-01-05T09:15:00Z',
-        showOnOffersPage: true,
-        recentlyUpdated: true,
-      },
-      {
-        id: '4',
-        slug: 'developer-tools-cli',
-        title: 'Developer Productivity CLI',
-        description: 'Command-line tool to streamline common development workflows and automate repetitive tasks.',
-        features: ['CLI Interface', 'Workflow Automation', 'Git Integration', 'Template Generation'],
-        // No image - will use fallback
-        projectType: 'Personal',
-        tech: ['Go', 'CLI', 'Git', 'Shell Scripting'],
-        createdAt: '2023-12-20T16:45:00Z',
-        showOnOffersPage: false,
-        recentlyUpdated: false,
-      },
-      {
-        id: '5',
-        slug: 'api-pricing-calculator',
-        title: 'API Pricing Calculator',
-        description: 'Interactive tool to help developers understand and calculate API pricing across different usage tiers.',
-        features: ['Pricing Models', 'Usage Calculation', 'Comparison Tool', 'Export Features'],
-        image: '/images/api-pricing-experience.png',
-        url: 'https://example.com/pricing-calculator',
-        projectType: 'Personal',
-        tech: ['React', 'TypeScript', 'Recharts', 'Vercel'],
-        createdAt: '2023-12-15T11:20:00Z',
-        showOnOffersPage: true,
-        recentlyUpdated: false,
-      },
-      {
-        id: '6',
-        slug: 'vehicle-identification-system',
-        title: 'Vehicle Identification System',
-        description: 'Computer vision system for automatic vehicle identification and tracking in parking facilities.',
-        features: ['Computer Vision', 'License Plate Recognition', 'Real-time Tracking', 'Database Integration'],
-        image: '/images/vehicle_id.jpg',
-        projectType: 'Client',
-        tech: ['Python', 'OpenCV', 'PostgreSQL', 'Redis'],
-        createdAt: '2023-11-30T13:10:00Z',
-        showOnOffersPage: true,
-        recentlyUpdated: false,
-      },
-    ];
+    const fetchProjects = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/projects');
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch projects');
+        }
+        
+        const data = await response.json();
+        setProjects(data.projects);
+        setFilteredProjects(data.projects);
+        
+      } catch (err) {
+        console.error('Error fetching projects:', err);
+        setError('Failed to load projects. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    setProjects(mockProjects);
-    setFilteredProjects(mockProjects);
-    setLoading(false);
+    fetchProjects();
   }, []);
-
-  // Filter projects based on type
-  useEffect(() => {
-    let filtered = projects;
-
-    if (selectedType !== 'All') {
-      filtered = filtered.filter(project => project.projectType === selectedType);
-    }
-
-    setFilteredProjects(filtered);
-    setCurrentPage(1);
-  }, [selectedType, projects]);
 
   // Pagination
   const totalPages = Math.ceil(filteredProjects.length / PROJECTS_PER_PAGE);
@@ -170,6 +91,19 @@ export default function ProjectsPage() {
     );
   }
 
+  if (error) {
+    return (
+      <>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="text-center">
+            <p className="text-red-600 mb-4">{error}</p>
+            <Button onClick={() => window.location.reload()}>Try Again</Button>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       {/* Hero Section */}
@@ -190,31 +124,13 @@ export default function ProjectsPage() {
         </div>
       </section>
 
-      {/* Filter Section */}
+      {/* Projects Count */}
       <section className="py-12 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Filter Projects</h3>
-              <div className="text-gray-600">
-                {filteredProjects.length === projects.length
-                  ? `Showing all ${projects.length} projects`
-                  : `Showing ${filteredProjects.length} of ${projects.length} projects`}
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {(['All', 'Client', 'Personal'] as const).map((type) => (
-                <Badge
-                  key={type}
-                  variant={selectedType === type ? 'primary' : 'outline'}
-                  className="cursor-pointer hover:bg-blue-100 transition-colors px-4 py-2"
-                  onClick={() => setSelectedType(type)}
-                >
-                  {type} {type === 'All' ? `(${projects.length})` : `(${projects.filter(p => p.projectType === type).length})`}
-                </Badge>
-              ))}
-            </div>
+          <div className="text-center">
+            <p className="text-gray-600">
+              Showing {filteredProjects.length} project{filteredProjects.length !== 1 ? 's' : ''}
+            </p>
           </div>
         </div>
       </section>
@@ -230,10 +146,10 @@ export default function ProjectsPage() {
                 </div>
                 <h3 className="text-lg font-medium text-gray-900 mb-2">No projects found</h3>
                 <p className="text-gray-600 mb-4">
-                  Try adjusting your filter criteria
+                  Check back soon for new project showcases!
                 </p>
-                <Button variant="outline" onClick={() => setSelectedType('All')}>
-                  Show all projects
+                <Button variant="outline" asChild>
+                  <Link href="/contact">Discuss Your Project</Link>
                 </Button>
               </div>
             </div>
@@ -258,21 +174,7 @@ export default function ProjectsPage() {
                       </div>
                     )}
                     
-                    {/* Type Badge */}
-                    <div className="absolute top-3 left-3">
-                      <Badge variant={project.projectType === 'Client' ? 'primary' : 'secondary'}>
-                        {project.projectType}
-                      </Badge>
-                    </div>
-                    
-                    {/* Recently Updated Badge */}
-                    {project.recentlyUpdated && (
-                      <div className="absolute top-3 right-3">
-                        <Badge variant="accent" className="bg-green-100 text-green-800">
-                          Updated
-                        </Badge>
-                      </div>
-                    )}
+
                   </div>
 
                   <CardHeader>
@@ -302,22 +204,7 @@ export default function ProjectsPage() {
                       </div>
                     </div>
 
-                    {/* Tech Stack */}
-                    <div>
-                      <h4 className="text-sm font-medium text-gray-900 mb-2">Tech Stack</h4>
-                      <div className="flex flex-wrap gap-1">
-                        {project.tech.slice(0, 4).map((tech) => (
-                          <Badge key={tech} variant="default" className="text-xs">
-                            {tech}
-                          </Badge>
-                        ))}
-                        {project.tech.length > 4 && (
-                          <Badge variant="default" className="text-xs">
-                            +{project.tech.length - 4} more
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
+
 
                     {/* Date */}
                     <div className="flex items-center gap-1 text-sm text-gray-500">

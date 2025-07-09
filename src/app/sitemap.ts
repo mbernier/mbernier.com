@@ -5,7 +5,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://mbernier.com';
   
   // Get all published articles
-  const articles = await prisma.article.findMany({
+  const articles = await prisma.articles.findMany({
     where: { status: 'published' },
     select: { slug: true, updatedAt: true },
   });

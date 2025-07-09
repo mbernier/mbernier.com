@@ -1,210 +1,180 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("SUPABASE_SESSION_POOLER_URL")
 }
 
-model Article {
-  id                    String   @id @default(cuid())
-  slug                  String   @unique
-  title                 String
-  excerpt               String?
-  content               String?
-  description           String?
-  focusKeyword          String?
-  secondaryKeywords     String[]
-  metaTitle             String?
-  canonicalUrl          String?
-  categories            String[]
-  tags                  String[]
-  topic                 String?
-  status                String   @default("draft")
-  featured              Boolean  @default(false)
-  tech                  String[]
-  projectType           String?
-  complexity            String?
-  duration              String?
-  teamSize              String?
-  image                 String?
-  imageAlt              String?
-  ogImage               String?
-  readingTime           Int?
-  wordCount             Int?
-  commentsEnabled       Boolean  @default(true)
-  callToAction          String?
-  googleAnalyticsEvent  String?
-  conversionGoal        String?
-  utmCampaign           String?
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+model activity_items {
+  id             String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type           String
+  item_id        String           @db.Uuid
+  source_url     String?
+  published_at   DateTime?        @default(now()) @db.Timestamp(6)
+  context_json   Json?
+  status         String?          @default("posted")
+  scheduled_at   DateTime?        @db.Timestamp(6)
+  social_metrics social_metrics[]
 }
 
-model Project {
-  id                String   @id @default(cuid())
-  slug              String   @unique
-  title             String
-  url               String?
-  description       String?
-  features          String[]
-  image             String?
-  showOnOffersPage  Boolean  @default(false)
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  appUpdates        AppUpdate[]
+model admin_actions {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  actor_id  String
+  action    String
+  target    String
+  target_id String
+  timestamp DateTime? @default(now()) @db.Timestamp(6)
 }
 
-model Offer {
-  id        String   @id @default(cuid())
-  section   String?
-  company   String?
-  offer     String?
-  link      String?
-  g2Link    String?
-  tags      String[]
-  logo      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model app_updates {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  app        String
+  project_id String?   @db.Uuid
+  link       String?
+  summary    String?
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  projects   projects? @relation(fields: [project_id], references: [id], onUpdate: NoAction)
 }
 
-model WorkHistory {
-  id          String   @id @default(cuid())
-  companyName String
-  logo        String?
-  url         String?
-  description String?
-  showOnSite  Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model articles {
+  id                     String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug                   String    @unique
+  title                  String
+  excerpt                String?
+  content                String?
+  description            String?
+  focus_keyword          String?
+  secondary_keywords     String[]
+  meta_title             String?
+  canonical_url          String?
+  categories             String[]
+  tags                   String[]
+  topic                  String?
+  status                 String?   @default("draft")
+  featured               Boolean?  @default(false)
+  tech                   String[]
+  project_type           String?
+  complexity             String?
+  duration               String?
+  team_size              String?
+  image                  String?
+  image_alt              String?
+  og_image               String?
+  reading_time           Int?
+  word_count             Int?
+  comments_enabled       Boolean?  @default(true)
+  call_to_action         String?
+  google_analytics_event String?
+  conversion_goal        String?
+  utm_campaign           String?
+  created_at             DateTime? @default(now()) @db.Timestamp(6)
+  date                   DateTime? @db.Timestamp(6)
+  author                 String?
+  updated_at             DateTime? @db.Timestamp(6)
+  is_published           Boolean?  @default(true)
 }
 
-model Testimonial {
-  id        String   @id @default(cuid())
-  author    String
-  company   String?
-  title     String?
-  quote     String
-  sourceUrl String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model client_app_usage {
+  id            String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  client_app_id String?      @db.Uuid
+  endpoint      String
+  ip_address    String?
+  timestamp     DateTime?    @default(now()) @db.Timestamp(6)
+  client_apps   client_apps? @relation(fields: [client_app_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
-model ContactSubmission {
-  id          String   @id @default(cuid())
-  name        String?
-  email       String?
-  subject     String?
-  message     String?
-  company     String?
-  budget      String?
-  timeline    String?
-  serviceType String?
-  isRead      Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model client_apps {
+  id               String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name             String
+  api_key          String             @unique
+  default_logo     String?
+  permissions      String[]
+  purposes         String[]
+  created_at       DateTime?          @default(now()) @db.Timestamp(6)
+  client_app_usage client_app_usage[]
 }
 
-model Notification {
-  id          String   @id @default(cuid())
-  type        String?
-  relatedId   String?
-  isRead      Boolean  @default(false)
-  triggeredBy String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model contact_submissions {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String?
+  email        String?
+  subject      String?
+  message      String?
+  company      String?
+  budget       String?
+  timeline     String?
+  service_type String?
+  is_read      Boolean?  @default(false)
+  created_at   DateTime? @default(now()) @db.Timestamp(6)
 }
 
-model AppUpdate {
-  id        String   @id @default(cuid())
-  app       String
-  projectId String?
-  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
-  link      String?
-  summary   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model notifications {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type         String?
+  related_id   String?   @db.Uuid
+  is_read      Boolean?  @default(false)
+  triggered_by String?
+  created_at   DateTime? @default(now()) @db.Timestamp(6)
 }
 
-// Additional tables from migration 02
-model ClientApp {
-  id           String   @id @default(cuid())
-  name         String
-  apiKey       String   @unique
-  defaultLogo  String?
-  permissions  String[]
-  purposes     String[]
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  usage        ClientAppUsage[]
+model offers {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  section    String?
+  company    String?
+  offer      String?
+  link       String?
+  g2_link    String?
+  tags       String[]
+  logo       String?
+  created_at DateTime? @default(now()) @db.Timestamp(6)
 }
 
-model ActivityItem {
-  id          String   @id @default(cuid())
-  type        String   // article, project, app_update, offer
-  itemId      String
-  sourceUrl   String?
-  publishedAt DateTime @default(now())
-  contextJson Json?    // post metadata and social push logs
-  status      String   @default("posted") // draft, queued, posted, failed
-  scheduledAt DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  socialMetrics SocialMetric[]
+model projects {
+  id                  String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug                String        @unique
+  title               String
+  url                 String?
+  description         String?
+  features            String[]
+  image               String?
+  show_on_offers_page Boolean?      @default(false)
+  created_at          DateTime?     @default(now()) @db.Timestamp(6)
+  app_updates         app_updates[]
 }
 
-model SocialMetric {
-  id         String   @id @default(cuid())
-  activityId String
-  activity   ActivityItem @relation(fields: [activityId], references: [id])
-  platform   String?  // linkedin, x, ig
-  impressions Int?
-  likes      Int?
-  shares     Int?
-  comments   Int?
-  postTime   DateTime?
-  fetchedAt  DateTime @default(now())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model social_metrics {
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  activity_id    String?         @db.Uuid
+  platform       String?
+  impressions    Int?
+  likes          Int?
+  shares         Int?
+  comments       Int?
+  post_time      DateTime?       @db.Timestamp(6)
+  fetched_at     DateTime?       @default(now()) @db.Timestamp(6)
+  activity_items activity_items? @relation(fields: [activity_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
-// Additional tables from migration 03
-model ClientAppUsage {
-  id          String   @id @default(cuid())
-  clientAppId String
-  clientApp   ClientApp @relation(fields: [clientAppId], references: [id], onDelete: Cascade)
-  endpoint    String
-  ipAddress   String?
-  timestamp   DateTime @default(now())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model testimonials {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  author     String
+  company    String?
+  title      String?
+  quote      String
+  source_url String?
+  created_at DateTime? @default(now()) @db.Timestamp(6)
 }
 
-model AdminAction {
-  id        String   @id @default(cuid())
-  actorId   String   // Clerk user ID
-  action    String   // create, edit, delete
-  target    String   // article, project, etc.
-  targetId  String
-  timestamp DateTime @default(now())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model SocialMediaConfig {
-  id           String    @id @default(cuid())
-  platform     String
-  userId       String
-  accessToken  String?
-  refreshToken String?
-  expiresAt    DateTime?
-  isActive     Boolean   @default(true)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-
-  @@unique([platform, userId])
+model work_history {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  company_name String
+  logo         String?
+  url          String?
+  description  String?
+  show_on_site Boolean?  @default(true)
+  created_at   DateTime? @default(now()) @db.Timestamp(6)
+  start_date   DateTime? @db.Date
+  end_date     DateTime? @db.Date
 }

@@ -8,10 +8,18 @@ import { Rocket, Settings, ArrowRight, Clock } from 'lucide-react';
 import { getFeaturedContent } from '@/lib/db';
 
 export default async function HomePage() {
-  // Temporarily disable database call until we fix the connection
-  // const { articles: featuredArticles, projects: recentProjects } = await getFeaturedContent();
-  const featuredArticles: any[] = [];
-  const recentProjects: any[] = [];
+  // Get featured content from database
+  let featuredArticles: any[] = [];
+  let recentProjects: any[] = [];
+  
+  try {
+    const { articles, projects } = await getFeaturedContent();
+    featuredArticles = articles;
+    recentProjects = projects;
+  } catch (error) {
+    console.error('Error loading featured content:', error);
+    // Keep empty arrays as fallback
+  }
 
   return (
     <Layout>

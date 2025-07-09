@@ -41,12 +41,12 @@ async function globalSetup(config: FullConfig) {
 
 async function seedTestData(prisma: PrismaClient) {
   // Create test articles (real data, not mocks)
-  const existingArticles = await prisma.article.count();
+  const existingArticles = await prisma.articles.count();
   
   if (existingArticles === 0) {
     console.log('Creating test articles...');
     
-    await prisma.article.createMany({
+    await prisma.articles.createMany({
       data: [
         {
           slug: 'test-article-1',

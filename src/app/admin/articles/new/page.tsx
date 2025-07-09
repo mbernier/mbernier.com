@@ -30,7 +30,7 @@ async function createArticle(content: string, metadata: ContentMetadata) {
   const user = await requireAdminAuth();
   
   try {
-    const article = await prisma.article.create({
+    const article = await prisma.articles.create({
       data: {
         slug: generateSlug(metadata.title),
         title: metadata.title,
