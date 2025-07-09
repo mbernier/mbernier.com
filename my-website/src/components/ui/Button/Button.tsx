@@ -48,7 +48,8 @@ export const Button: React.FC<ButtonProps> = ({
     "inline-flex items-center justify-center font-medium transition-all duration-200",
     "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background",
     "disabled:opacity-50 disabled:cursor-not-allowed",
-    "active:scale-[0.98]"
+    "active:scale-[0.98]",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
   ].join(" ");
 
   const variantClasses = {
@@ -95,9 +96,11 @@ export const Button: React.FC<ButtonProps> = ({
         className
       )}
       disabled={disabled || isLoading}
+      aria-busy={isLoading}
+      aria-live={isLoading ? "polite" : undefined}
       {...props}
     >
-      {isLoading && <Spinner />}
+      {isLoading && <Spinner aria-hidden="true" />}
       {children}
     </button>
   );

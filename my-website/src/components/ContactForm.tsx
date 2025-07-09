@@ -149,6 +149,8 @@ export default function ContactForm() {
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         required={required}
+        aria-required={required}
+        aria-invalid={!!error}
         className={`
           w-full px-3 py-2 border rounded-md text-foreground bg-background
           focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary

@@ -1,0 +1,324 @@
+# Accessibility Rules
+
+## Overview
+This file contains accessibility rules that must be followed for all UI components. These rules ensure WCAG 2.1 AA compliance and provide a better experience for users with disabilities.
+
+## Core Rules
+
+### 1. Semantic HTML
+- Always use semantic HTML elements (`<button>`, `<nav>`, `<main>`, `<header>`, `<footer>`, etc.)
+- Use proper heading hierarchy (h1 → h2 → h3)
+- Add `role` attributes only when semantic HTML isn't sufficient
+
+### 2. Keyboard Accessibility
+- All interactive elements must be keyboard accessible
+- Tab order should follow logical visual flow
+- Focus indicators must be clearly visible
+- Escape key should close modals/dropdowns
+- Enter/Space keys should activate buttons
+
+### 3. Screen Reader Support
+- All images must have appropriate `alt` text
+- Decorative images should have `alt=""` or `aria-hidden="true"`
+- Form fields must have associated labels
+- Error messages should be announced to screen readers
+- Use `aria-live` for dynamic content updates
+
+### 4. Color and Contrast
+- Text must meet 4.5:1 contrast ratio for normal text
+- Large text (18pt+ or 14pt+ bold) must meet 3:1 contrast ratio
+- Never rely solely on color to convey information
+- Provide additional visual indicators (icons, patterns, text)
+
+### 5. Form Accessibility
+- All form fields must have `<label>` elements
+- Required fields should be marked with `aria-required="true"`
+- Error states should use `aria-invalid="true"`
+- Error messages should be associated with fields via `aria-describedby`
+- Form validation should provide clear, specific feedback
+
+## Component-Specific Rules
+
+### Button Components
+```tsx
+// ✅ Required attributes
+<button
+  type="button"
+  aria-label="Descriptive label" // if no visible text
+  aria-pressed={isPressed} // for toggle buttons
+  aria-busy={isLoading} // for loading states
+  disabled={isDisabled}
+>
+  Button Text
+</button>
+```
+
+### Input Components
+```tsx
+// ✅ Required structure
+<label htmlFor="input-id">Label Text</label>
+<input
+  id="input-id"
+  type="text"
+  aria-required="true" // for required fields
+  aria-invalid={hasError} // for error states
+  aria-describedby={error ? "error-id" : undefined}
+/>
+{error && <div id="error-id" role="alert">{error}</div>}
+```
+
+### Navigation Components
+```tsx
+// ✅ Required structure
+<nav role="navigation" aria-label="Main navigation">
+  <a href="#main-content" className="skip-link">Skip to main content</a>
+  <ul>
+    <li><a href="/" aria-current={isCurrent ? "page" : undefined}>Home</a></li>
+  </ul>
+</nav>
+```
+
+### Image Components
+```tsx
+// ✅ Informative image
+<img src="chart.png" alt="Bar chart showing sales growth of 25%" />
+
+// ✅ Decorative image
+<img src="border.png" alt="" aria-hidden="true" />
+
+// ✅ Complex image with description
+<img 
+  src="diagram.png" 
+  alt="System architecture diagram"
+  aria-describedby="diagram-desc"
+/>
+<div id="diagram-desc">Detailed description...</div>
+```
+
+### Modal/Dialog Components
+```tsx
+// ✅ Required structure
+<div
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modal-title"
+  aria-describedby="modal-description"
+>
+  <h2 id="modal-title">Modal Title</h2>
+  <div id="modal-description">Modal description</div>
+  {/* Focus trap implementation required */}
+</div>
+```
+
+## Common Patterns
+
+### Skip Links
+```tsx
+// Add to main layout
+<a 
+  href="#main-content" 
+  className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-white px-4 py-2 rounded z-50"
+>
+  Skip to main content
+</a>
+```
+
+### Focus Management
+```tsx
+// Focus trap for modals
+useEffect(() => {
+  const focusableElements = modalRef.current?.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+  
+  if (focusableElements?.length) {
+    const firstElement = focusableElements[0] as HTMLElement;
+    const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+    
+    firstElement.focus();
+    
+    const handleTabKey = (e: KeyboardEvent) => {
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    };
+    
+    document.addEventListener('keydown', handleTabKey);
+    return () => document.removeEventListener('keydown', handleTabKey);
+  }
+}, []);
+```
+
+### Loading States
+```tsx
+// Loading state with screen reader support
+<button 
+  disabled={isLoading}
+  aria-busy={isLoading}
+  aria-live="polite"
+>
+  {isLoading ? (
+    <>
+      <Spinner aria-hidden="true" />
+      <span>Loading...</span>
+    </>
+  ) : (
+    'Submit'
+  )}
+</button>
+```
+
+## CSS Requirements
+
+### Focus Indicators
+```css
+/* Required focus styles */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+a:focus {
+  outline: 2px solid #007acc;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  button:focus,
+  input:focus,
+  select:focus,
+  textarea:focus,
+  a:focus {
+    outline: 3px solid;
+    outline-offset: 1px;
+  }
+}
+```
+
+### Reduced Motion
+```css
+/* Respect user preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+```
+
+### Screen Reader Only
+```css
+/* Utility class for screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+```
+
+## Testing Requirements
+
+### Automated Testing
+- Run axe-core tests on all components
+- Check Lighthouse accessibility score
+- Validate HTML semantics
+- Test color contrast ratios
+
+### Manual Testing
+- Navigate with keyboard only
+- Test with screen reader (NVDA, JAWS, VoiceOver)
+- Test with high contrast mode
+- Test at 200% zoom
+- Test with reduced motion preferences
+
+## Common Violations to Avoid
+
+### ❌ Don't Do This
+```tsx
+// No label association
+<input type="email" />
+
+// Non-descriptive link text
+<a href="/contact">Click here</a>
+
+// Missing alt text
+<img src="chart.png" />
+
+// Color-only indicators
+<span style={{ color: 'red' }}>Error</span>
+
+// No focus indicator
+button:focus { outline: none; }
+
+// Non-semantic elements for interactive content
+<div onClick={handleClick}>Button</div>
+```
+
+### ✅ Do This Instead
+```tsx
+// Proper label association
+<label htmlFor="email">Email Address</label>
+<input id="email" type="email" />
+
+// Descriptive link text
+<a href="/contact">Contact us for support</a>
+
+// Descriptive alt text
+<img src="chart.png" alt="Sales growth chart showing 25% increase" />
+
+// Multiple indicators
+<span style={{ color: 'red' }}>⚠️ Error: Please check your input</span>
+
+// Clear focus indicator
+button:focus { 
+  outline: 2px solid #007acc;
+  outline-offset: 2px;
+}
+
+// Semantic button
+<button onClick={handleClick}>Button</button>
+```
+
+## Resources
+
+- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
+- [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/)
+- [WebAIM Color Contrast Checker](https://webaim.org/resources/contrastchecker/)
+- [axe-core Testing](https://github.com/dequelabs/axe-core)
+- [Screen Reader Testing Guide](https://www.nvaccess.org/about-nvda/)
+
+## Documentation Links
+
+- [Accessibility Guidelines](../docs/accessibility/guidelines.md)
+- [Developer Checklist](../docs/accessibility/developer-checklist.md)
+- [Compliance Plan](../plans/accessibility-compliance.md)
