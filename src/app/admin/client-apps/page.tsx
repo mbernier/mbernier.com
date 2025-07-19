@@ -14,7 +14,6 @@ import {
   Trash2, 
   Activity, 
   Users, 
-  Calendar,
   Settings,
   Shield,
   MoreVertical
@@ -45,7 +44,18 @@ async function getClientApps() {
   return { apps, stats };
 }
 
-function ClientAppCard({ app }: { app: any }) {
+interface ClientApp {
+  id: string;
+  name: string;
+  apiKey: string;
+  permissions: string[];
+  purposes: string[];
+  createdAt: Date;
+  usage: Array<{ timestamp: Date }>;
+  _count: { usage: number };
+}
+
+function ClientAppCard({ app }: { app: ClientApp }) {
   const [showApiKey, setShowApiKey] = React.useState(false);
   
   const formatDate = (date: Date) => {
@@ -64,7 +74,7 @@ function ClientAppCard({ app }: { app: any }) {
   const getUsageLastWeek = () => {
     const weekAgo = new Date();
     weekAgo.setDate(weekAgo.getDate() - 7);
-    return app.usage.filter((usage: any) => usage.timestamp >= weekAgo).length;
+    return app.usage.filter((usage: { timestamp: Date }) => usage.timestamp >= weekAgo).length;
   };
 
   return (
@@ -179,7 +189,7 @@ function ClientAppCard({ app }: { app: any }) {
 }
 
 export default async function ClientAppsPage() {
-  const user = await requireAdminAuth();
+  await requireAdminAuth();
   const { apps, stats } = await getClientApps();
 
   return (

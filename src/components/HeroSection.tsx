@@ -21,7 +21,7 @@ export default function HeroSection() {
             </div>
             
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
-              Hi, I'm <span className="text-blue-600">Matt Bernier</span>
+              Hi, I&apos;m <span className="text-blue-600">Matt Bernier</span>
             </h1>
             
             <p className="text-xl text-gray-700 leading-relaxed mb-8">

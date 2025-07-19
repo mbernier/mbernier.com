@@ -27,7 +27,7 @@ interface ContentMetadata {
 async function createArticle(content: string, metadata: ContentMetadata) {
   'use server';
   
-  const user = await requireAdminAuth();
+  await requireAdminAuth();
   
   try {
     const article = await prisma.articles.create({

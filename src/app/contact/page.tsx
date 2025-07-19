@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Input, Label, Textarea, Select } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
-import { Clock, CheckCircle2, Mail, Phone } from 'lucide-react';
+import { Clock, CheckCircle2, Mail } from 'lucide-react';
 
 export default function ContactPage() {
   const searchParams = useSearchParams();
@@ -127,17 +128,17 @@ export default function ContactPage() {
                 Thank You!
               </h1>
               <p className="text-xl text-gray-600 mb-8">
-                Your message has been received successfully. I'll get back to you within 24 hours.
+                Your message has been received successfully. I&apos;ll get back to you within 24 hours.
               </p>
               {isUrgent && (
                 <div className="bg-yellow-100 border border-yellow-300 rounded-xl p-4 mb-6">
                   <p className="text-yellow-800 font-medium">
-                    I see this is urgent. I'll prioritize your request and reach out within 4 hours.
+                    I see this is urgent. I&apos;ll prioritize your request and reach out within 4 hours.
                   </p>
                 </div>
               )}
               <Button size="lg" asChild>
-                <a href="/">Return to Home</a>
+                <Link href="/">Return to Home</Link>
               </Button>
             </div>
           </div>
@@ -156,11 +157,11 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Let's Work <span className="text-blue-600">Together</span>
+              Let&apos;s Work <span className="text-blue-600">Together</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
               Ready to accelerate your product development or solve complex technical challenges? 
-              Let's start a conversation about how I can help.
+              Let&apos;s start a conversation about how I can help.
             </p>
           </div>
         </div>
@@ -238,7 +239,7 @@ export default function ContactPage() {
                     <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
                       <p className="text-sm text-blue-900">
                         <strong>Prefer a quick call?</strong> Include your preferred time zone and 
-                        availability in your message, and I'll send you a calendar link.
+                        availability in your message, and I&apos;ll send you a calendar link.
                       </p>
                     </div>
                   </div>
@@ -251,7 +252,7 @@ export default function ContactPage() {
                   <CardHeader>
                     <CardTitle className="text-2xl text-gray-900">Send a Message</CardTitle>
                     <CardDescription>
-                      Fill out the form below and I'll get back to you shortly.
+                      Fill out the form below and I&apos;ll get back to you shortly.
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -381,7 +382,7 @@ export default function ContactPage() {
                       {isUrgent && (
                         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                           <p className="text-sm text-yellow-800">
-                            <strong>Urgent request detected.</strong> I'll prioritize this and respond within 4 hours during business hours.
+                            <strong>Urgent request detected.</strong> I&apos;ll prioritize this and respond within 4 hours during business hours.
                           </p>
                         </div>
                       )}

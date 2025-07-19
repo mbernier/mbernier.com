@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
-import { ArrowRight, Search, Clock, User } from 'lucide-react';
+import { ArrowRight, Search, Clock } from 'lucide-react';
 import { debounce } from '@/lib/utils';
 
 interface Article {

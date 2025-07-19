@@ -14,7 +14,7 @@ export default clerkMiddleware(async (auth, request) => {
     }
 
     // Check if user has admin role
-    const role = (sessionClaims?.metadata as any)?.role;
+    const role = (sessionClaims?.metadata as { role?: string })?.role;
     if (!role || !['admin', 'editor'].includes(role)) {
       return NextResponse.redirect(new URL('/unauthorized', request.url));
     }
@@ -32,7 +32,7 @@ export default clerkMiddleware(async (auth, request) => {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
 
-      const role = (sessionClaims?.metadata as any)?.role;
+      const role = (sessionClaims?.metadata as { role?: string })?.role;
       if (!role || !['admin', 'editor'].includes(role)) {
         return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
       }

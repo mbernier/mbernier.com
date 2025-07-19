@@ -49,7 +49,7 @@ const AvatarImage = React.forwardRef<
         alt={props.alt || 'Avatar'}
         fill
         className={cn('aspect-square h-full w-full object-cover', className)}
-        {...(props as any)}
+        {...(props as React.ComponentProps<typeof Image>)}
       />
     );
   }
@@ -58,6 +58,7 @@ const AvatarImage = React.forwardRef<
     <img
       ref={ref}
       className={cn('aspect-square h-full w-full object-cover', className)}
+      alt={props.alt || 'Avatar'}
       {...props}
     />
   );

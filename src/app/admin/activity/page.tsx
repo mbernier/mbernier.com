@@ -22,45 +22,17 @@ import {
 
 async function getActivityData() {
   const [activities, socialMetrics, adminActions] = await Promise.all([
-    prisma.activityItem.findMany({
+    prisma.activity_items.findMany({
       orderBy: { publishedAt: 'desc' },
       take: 50,
       include: {
-        socialMetrics: {
-          orderBy: { fetchedAt: 'desc' },
-        },
+        socialMetrics: true,
       },
     }),
-    prisma.socialMetric.findMany({
-      orderBy: { fetchedAt: 'desc' },
-      take: 10,
-      include: {
-        activity: true,
-      },
-    }),
-    prisma.adminAction.findMany({
-      orderBy: { timestamp: 'desc' },
-      take: 20,
-    }),
+    prisma.social_metrics.findMany({ orderBy: { createdAt: 'desc' }, take: 50 }),
+    prisma.adminAction.findMany({ orderBy: { createdAt: 'desc' }, take: 50 }),
   ]);
-
-  // Calculate aggregate metrics
-  const totalImpressions = socialMetrics.reduce((sum, metric) => sum + (metric.impressions || 0), 0);
-  const totalLikes = socialMetrics.reduce((sum, metric) => sum + (metric.likes || 0), 0);
-  const totalShares = socialMetrics.reduce((sum, metric) => sum + (metric.shares || 0), 0);
-  const totalComments = socialMetrics.reduce((sum, metric) => sum + (metric.comments || 0), 0);
-
-  return {
-    activities,
-    socialMetrics,
-    adminActions,
-    aggregateMetrics: {
-      totalImpressions,
-      totalLikes,
-      totalShares,
-      totalComments,
-    },
-  };
+  return { activities, aggregateMetrics: aggregateSocialMetrics(socialMetrics), adminActions };
 }
 
 function ActivityIcon({ type }: { type: string }) {
@@ -118,7 +90,7 @@ function ActivityCard({ activity }: { activity: Activity }) {
     }
   };
 
-  const totalEngagement = activity.socialMetrics.reduce((sum: number, metric: any) => {
+  const totalEngagement = activity.socialMetrics.reduce((sum: number, metric: { likes?: number; shares?: number; comments?: number }) => {
     return sum + (metric.likes || 0) + (metric.shares || 0) + (metric.comments || 0);
   }, 0);
 

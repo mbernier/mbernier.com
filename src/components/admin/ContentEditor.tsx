@@ -16,8 +16,7 @@ import {
   Store,
   Sparkles,
   X,
-  Plus,
-  Search
+  Plus
 } from 'lucide-react';
 
 interface ContentEditorProps {
@@ -50,7 +49,7 @@ interface RelatedContentItem {
 interface SlashCommand {
   command: string;
   description: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<{ className?: string }>;
   action: () => void;
 }
 
@@ -58,7 +57,7 @@ export function ContentEditor({
   initialContent = '', 
   initialTitle = '',
   onSave,
-  contentType = 'article'
+  // contentType = 'article'
 }: ContentEditorProps) {
   const [content, setContent] = useState(initialContent);
   const [title, setTitle] = useState(initialTitle);
@@ -71,10 +70,17 @@ export function ContentEditor({
   });
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [showSlashCommands, setShowSlashCommands] = useState(false);
-  const [slashPosition, setSlashPosition] = useState(0);
-  const [showRelatedModal, setShowRelatedModal] = useState(false);
+  // const [slashPosition, setSlashPosition] = useState(0);
+  // const [showRelatedModal, setShowRelatedModal] = useState(false);
   const [availableContent, setAvailableContent] = useState<RelatedContentItem[]>([]);
-  const [aiSuggestions, setAiSuggestions] = useState<any>(null);
+  const [aiSuggestions, setAiSuggestions] = useState<{
+    title?: string;
+    excerpt?: string;
+    tags?: string[];
+    categories?: string[];
+    focusKeyword?: string;
+    secondaryKeywords?: string[];
+  } | null>(null);
   
   const editorRef = useRef<HTMLTextAreaElement>(null);
   const slashMenuRef = useRef<HTMLDivElement>(null);
@@ -84,19 +90,19 @@ export function ContentEditor({
       command: '/project',
       description: 'Link to a project',
       icon: FolderOpen,
-      action: () => handleSlashCommand('project'),
+      action: () => handleSlashCommand(),
     },
     {
       command: '/article',
       description: 'Link to an article',
       icon: FileText,
-      action: () => handleSlashCommand('article'),
+      action: () => handleSlashCommand(),
     },
     {
       command: '/offer',
       description: 'Link to a resource/offer',
       icon: Store,
-      action: () => handleSlashCommand('offer'),
+      action: () => handleSlashCommand(),
     },
     {
       command: '/enhance',
@@ -156,7 +162,7 @@ export function ContentEditor({
     setShowSlashCommands(false);
   };
 
-  const handleSlashCommand = (type: string) => {
+  const handleSlashCommand = () => {
     setShowSlashCommands(false);
     setShowRelatedModal(true);
     // Filter available content by type
@@ -247,7 +253,7 @@ export function ContentEditor({
     }));
   };
 
-  const applySuggestion = (key: string, value: any) => {
+  const applySuggestion = (key: string, value: string | string[]) => {
     setMetadata(prev => ({ ...prev, [key]: value }));
     if (key === 'title') {
       setTitle(value);
@@ -528,7 +534,7 @@ export function ContentEditor({
                 onClick={handleGenerateImage}
                 className="w-full justify-start"
               >
-                <Image className="h-4 w-4 mr-2" />
+                <Image className="h-4 w-4 mr-2" alt="Generate AI Image" />
                 Generate Image
               </Button>
               <Button

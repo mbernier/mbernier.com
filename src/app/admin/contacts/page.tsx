@@ -10,11 +10,9 @@ import {
   Clock, 
   DollarSign, 
   Building, 
-  User, 
   MessageSquare,
   Calendar,
-  Check,
-  X
+  Check
 } from 'lucide-react';
 
 async function getContactSubmissions() {
@@ -35,7 +33,21 @@ async function getContactSubmissions() {
   return { contacts, stats };
 }
 
-function ContactCard({ contact }: { contact: any }) {
+interface ContactSubmission {
+  id: string;
+  name?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
+  company?: string;
+  budget?: string;
+  timeline?: string;
+  serviceType?: string;
+  isRead?: boolean;
+  createdAt: Date;
+}
+
+function ContactCard({ contact }: { contact: ContactSubmission }) {
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat('en-US', {
       month: 'short',
@@ -159,7 +171,7 @@ function ContactCard({ contact }: { contact: any }) {
 }
 
 export default async function ContactsPage() {
-  const user = await requireAdminAuth();
+  await requireAdminAuth();
   const { contacts, stats } = await getContactSubmissions();
 
   return (

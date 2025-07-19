@@ -3,10 +3,10 @@ import { emailService } from '@/lib/email';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { trackingId: string } }
+  { params }: { params: Promise<{ trackingId: string }> }
 ) {
   try {
-    const { trackingId } = params;
+    const { trackingId } = await params;
     
     // Track the email open
     await emailService.trackEmailOpen(trackingId);

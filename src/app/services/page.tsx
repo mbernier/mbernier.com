@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Rocket, Settings, CheckCircle, AlertCircle, Lightbulb } from 'lucide-react';
@@ -62,7 +62,7 @@ export default async function ServicesPage() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600">
-                    You need senior product management expertise but can't justify a full-time hire. 
+                    You need senior product management expertise but can&apos;t justify a full-time hire. 
                     Your product roadmap lacks clarity, feature prioritization is chaotic, and your team 
                     is building without strategic direction.
                   </p>
@@ -79,7 +79,7 @@ export default async function ServicesPage() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <p className="text-gray-700">
-                    Get seasoned product management leadership on a fractional basis. I'll work directly 
+                    Get seasoned product management leadership on a fractional basis. I&apos;ll work directly 
                     with your team to establish product strategy, optimize processes, and drive execution.
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -130,7 +130,7 @@ export default async function ServicesPage() {
               {/* Testimonial */}
               <div className="bg-blue-50 border border-blue-100 rounded-lg p-6">
                 <blockquote className="text-sm text-blue-900 italic">
-                  "Matt quickly identified our product bottlenecks and got our team shipping features 3x faster."
+                  &quot;Matt quickly identified our product bottlenecks and got our team shipping features 3x faster.&quot;
                 </blockquote>
                 <cite className="text-xs text-blue-700 not-italic mt-2 block">
                   — Sarah Chen, CEO at TechFlow
@@ -186,7 +186,7 @@ export default async function ServicesPage() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <p className="text-gray-700">
-                    Get hands-on technical consulting to solve complex challenges. I'll work directly 
+                    Get hands-on technical consulting to solve complex challenges. I&apos;ll work directly 
                     with your engineering team to architect solutions, implement best practices, and optimize your development process.
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -237,7 +237,7 @@ export default async function ServicesPage() {
               {/* Testimonial */}
               <div className="bg-teal-50 border border-teal-100 rounded-lg p-6">
                 <blockquote className="text-sm text-teal-900 italic">
-                  "Matt's technical expertise helped us integrate AI seamlessly. What seemed impossible became our advantage."
+                  &quot;Matt&apos;s technical expertise helped us integrate AI seamlessly. What seemed impossible became our advantage.&quot;
                 </blockquote>
                 <cite className="text-xs text-teal-700 not-italic mt-2 block">
                   — David Rodriguez, CTO at DataCorp
@@ -262,7 +262,7 @@ export default async function ServicesPage() {
               Ready to Get Started?
             </h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Whether you need product leadership or technical expertise, let's discuss how 
+              Whether you need product leadership or technical expertise, let&apos;s discuss how 
               I can help accelerate your goals without the overhead of a full-time hire.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

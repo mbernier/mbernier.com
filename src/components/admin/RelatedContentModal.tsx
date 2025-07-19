@@ -50,7 +50,7 @@ export function RelatedContentModal({
   onSelect,
   currentContent,
   selectedItems = [],
-  contentType = 'all'
+  // contentType = 'all'
 }: RelatedContentModalProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [availableContent, setAvailableContent] = useState<RelatedContentItem[]>([]);
@@ -69,7 +69,7 @@ export function RelatedContentModal({
         generateTopicClusters();
       }
     }
-  }, [isOpen, currentContent]);
+  }, [isOpen, currentContent, availableContent]);
 
   const fetchAvailableContent = async () => {
     try {
@@ -275,7 +275,7 @@ export function RelatedContentModal({
                   </div>
                   <select
                     value={filterType}
-                    onChange={(e) => setFilterType(e.target.value as any)}
+                    onChange={(e) => setFilterType(e.target.value as 'all' | 'article' | 'project' | 'offer')}
                     className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                   >
                     <option value="all">All Types</option>

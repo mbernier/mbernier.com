@@ -9,8 +9,26 @@ import { getFeaturedContent } from '@/lib/db';
 
 export default async function HomePage() {
   // Get featured content from database
-  let featuredArticles: any[] = [];
-  let recentProjects: any[] = [];
+  let featuredArticles: Array<{
+    id: string;
+    slug: string;
+    title: string;
+    excerpt?: string;
+    description?: string;
+    categories?: string[];
+    readingTime?: number;
+    createdAt: string;
+  }> = [];
+  let recentProjects: Array<{
+    id: string;
+    slug: string;
+    title: string;
+    description?: string;
+    features: string[];
+    image?: string;
+    url?: string;
+    createdAt: string;
+  }> = [];
   
   try {
     const { articles, projects } = await getFeaturedContent();
@@ -55,7 +73,7 @@ export default async function HomePage() {
               <CardContent>
                 <p className="text-gray-600 mb-6">
                   Get senior product leadership to drive strategy, align teams, and accelerate development. 
-                  Perfect for startups and SMBs who need expertise but can't afford a full-time CPO.
+                  Perfect for startups and SMBs who need expertise but can&apos;t afford a full-time CPO.
                 </p>
                 
                 <div className="space-y-3 mb-6">
@@ -75,7 +93,7 @@ export default async function HomePage() {
 
                 <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6">
                   <blockquote className="text-sm text-blue-900 italic">
-                    "Matt quickly identified our product bottlenecks and got our team shipping features 3x faster."
+                    &quot;Matt quickly identified our product bottlenecks and got our team shipping features 3x faster.&quot;
                   </blockquote>
                   <cite className="text-xs text-blue-700 not-italic mt-2 block">— Sarah Chen, CEO at TechFlow</cite>
                 </div>
@@ -123,7 +141,7 @@ export default async function HomePage() {
 
                 <div className="bg-teal-50 border border-teal-100 rounded-lg p-4 mb-6">
                   <blockquote className="text-sm text-teal-900 italic">
-                    "Matt's technical expertise helped us integrate AI seamlessly. What seemed impossible became our advantage."
+                    &quot;Matt&apos;s technical expertise helped us integrate AI seamlessly. What seemed impossible became our advantage.&quot;
                   </blockquote>
                   <cite className="text-xs text-teal-700 not-italic mt-2 block">— David Rodriguez, CTO at DataCorp</cite>
                 </div>
@@ -139,7 +157,7 @@ export default async function HomePage() {
           <div className="text-center bg-white rounded-xl border border-gray-200 p-8">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">Ready to Get Started?</h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Whether you need product leadership or technical expertise, let's discuss how I can help 
+              Whether you need product leadership or technical expertise, let&apos;s discuss how I can help 
               accelerate your goals without the overhead of a full-time hire.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -250,7 +268,7 @@ export default async function HomePage() {
                     </CardDescription>
                     {project.features && project.features.length > 0 && (
                       <div className="flex flex-wrap gap-2 mb-4">
-                        {project.features.slice(0, 3).map((feature: any, index: any) => (
+                        {project.features.slice(0, 3).map((feature: string, index: number) => (
                           <Badge key={index} variant="default">{feature}</Badge>
                         ))}
                       </div>
@@ -270,7 +288,7 @@ export default async function HomePage() {
             </div>
           ) : (
             <div className="text-center py-12">
-              <p className="text-gray-500 mb-4">Featured projects coming soon! In the meantime, let's discuss your project.</p>
+              <p className="text-gray-500 mb-4">Featured projects coming soon! In the meantime, let&apos;s discuss your project.</p>
               <Button asChild>
                 <a href="/contact">Start a Project</a>
               </Button>

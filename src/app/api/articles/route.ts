@@ -20,7 +20,17 @@ export async function GET(request: NextRequest) {
     const offset = (page - 1) * limit;
 
     // Build where conditions
-    const whereConditions: any = {
+    const whereConditions: {
+      status: string;
+      OR?: Array<{
+        title?: { contains: string; mode: string };
+        excerpt?: { contains: string; mode: string };
+        content?: { contains: string; mode: string };
+      }>;
+      categories?: { has: string };
+      tags?: { has: string };
+      featured?: boolean;
+    } = {
       status: 'published',
     };
 

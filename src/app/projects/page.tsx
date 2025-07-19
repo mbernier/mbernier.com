@@ -6,8 +6,8 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
-import { ExternalLink, Github, Calendar, Zap } from 'lucide-react';
-import { generateFallbackImage } from '@/lib/utils';
+import { ExternalLink, Calendar, Zap } from 'lucide-react';
+// import { generateFallbackImage } from '@/lib/utils';
 
 interface Project {
   id: string;
@@ -24,7 +24,7 @@ interface Project {
 const PROJECTS_PER_PAGE = 9;
 
 export default function ProjectsPage() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  // const [projects, setProjects] = useState<Project[]>([]);
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -42,7 +42,7 @@ export default function ProjectsPage() {
         }
         
         const data = await response.json();
-        setProjects(data.projects);
+        // setProjects(data.projects);
         setFilteredProjects(data.projects);
         
       } catch (err) {
@@ -62,13 +62,13 @@ export default function ProjectsPage() {
   const endIndex = startIndex + PROJECTS_PER_PAGE;
   const currentProjects = filteredProjects.slice(startIndex, endIndex);
 
-  const getProjectImage = (project: Project) => {
-    if (project.image) {
-      return project.image;
-    }
-    // Use fallback from utils
-    return generateFallbackImage(project.title);
-  };
+  // const getProjectImage = (project: Project) => {
+  //   if (project.image) {
+  //     return project.image;
+  //   }
+  //   // Use fallback from utils
+  //   return generateFallbackImage(project.title);
+  // };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -282,7 +282,7 @@ export default function ProjectsPage() {
             </h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
               Whether you need product management leadership or technical consulting, 
-              let's discuss how I can help bring your vision to life.
+              let&apos;s discuss how I can help bring your vision to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>

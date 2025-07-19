@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from '@/lib/auth';
-import { suggestRelatedLinks } from '@/lib/openai';
+// import { suggestRelatedLinks } from '@/lib/openai';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({

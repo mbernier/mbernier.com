@@ -14,7 +14,7 @@ export default function UnauthorizedPage() {
               Access Denied
             </h2>
             <p className="mt-2 text-sm text-gray-600">
-              You don't have permission to access the admin dashboard. Please contact the site administrator if you believe this is an error.
+              You don&apos;t have permission to access the admin dashboard. Please contact the site administrator if you believe this is an error.
             </p>
           </div>
           
