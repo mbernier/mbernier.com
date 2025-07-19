@@ -92,9 +92,17 @@ export default function Footer() {
         </div>
         
         <div className="mt-8 border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col md:flex-row md:items-center md:justify-between">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            &copy; {currentYear} Matt Bernier. All rights reserved.
-          </p>
+          <div className="flex flex-col md:flex-row md:items-center gap-4">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              &copy; {currentYear} Matt Bernier. All rights reserved.
+            </p>
+            <Link 
+              href="/privacy-policy" 
+              className="text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
+            >
+              Privacy Policy
+            </Link>
+          </div>
           
           <div className="mt-4 md:mt-0 flex justify-end">
             <ThemeToggle />

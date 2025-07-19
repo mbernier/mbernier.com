@@ -1,9 +1,3 @@
----
-title: "Privacy Policy"
-date: "2025-07-19"
-description: "Privacy Policy for Bernier LLC and Associated Applications"
----
-
 ## Privacy Policy for Bernier LLC and Associated Applications
 
 **Effective Date:** July 19, 2025  
@@ -59,7 +53,7 @@ We use the information we collect to:
 - For applications like VibeApp.studio that collect IP data or idea submissions, we encrypt that information both in transit and at rest.
 - We use third-party infrastructure (including Supabase, Vercel, DigitalOcean, Clerk, Stripe, Google Analytics) to store and process data securely.
 
-Your data may be stored on servers located in the United States. For Shopify apps, we follow Shopify's hosting and data residency requirements.
+Your data may be stored on servers located in the United States. For Shopify apps, we follow Shopify’s hosting and data residency requirements.
 
 ---
 
@@ -85,7 +79,7 @@ We may send newsletters, product updates, or promotional messages if you have op
 
 ---
 
-### 7. Children's Privacy
+### 7. Children’s Privacy
 
 Where applicable, we treat information from minors with additional safeguards. For platforms involving students or minors, their personal data is encrypted at rest and access is restricted.
 
@@ -134,3 +128,4 @@ Contact mkbernier@gmail.com if you need help implementing this API-based usage m
 ---
 
 **Last updated:** July 19, 2025
+
